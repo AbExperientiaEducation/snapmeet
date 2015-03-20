@@ -1,5 +1,5 @@
-var dest = "./public/js";
-var src = './src';
+var dest = "./public/js"
+var src = './src'
 
 module.exports = {
   browserSync: {
@@ -20,7 +20,7 @@ module.exports = {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: src + '/js/main.jsx',
+      entries: src + '/js/main.es6',
       dest: dest,
       outputName: 'bundle.js',
       // list of externally available modules to exclude from the bundle
@@ -32,4 +32,4 @@ module.exports = {
     jsSrc: dest + '/*.js',
     dest: dest
   }
-};
+}
