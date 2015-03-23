@@ -4,9 +4,11 @@
   "description": "Super fast meeting collaboration",
   "main": "index.js",
   "dependencies": {
+    "babel": "^4.7.16",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
     "flux": "^2.0.1",
+    "keymirror": "^0.1.1",
     "morgan": "^1.5.2",
     "react": "~0.12.2"
   },
