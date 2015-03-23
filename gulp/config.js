@@ -20,7 +20,7 @@ module.exports = {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: src + '/js/main.es6',
+      entries: [require.resolve('babelify/polyfill'), src + '/js/main.es6'],
       dest: dest,
       outputName: 'bundle.js',
       // list of externally available modules to exclude from the bundle

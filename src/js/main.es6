@@ -1,7 +1,12 @@
-var React = require('react')
+const MeetgunApp = require('./components/MeetgunApp.react.es6')
+const ExampleData = require('./ExampleData.es6')
+const MeetingWebAPIUtils = require('./utils/MeetingWebAPIUtils.es6')
+const React = require('react')
+ExampleData.init()
 
-var DemoView = require('./views/demo.es6') // need to specify the es6 extension
+MeetingWebAPIUtils.getAllMeetings()
+
 React.render(
-  <DemoView />, 
-  document.getElementById('content')
+    <MeetgunApp />,
+    document.getElementById('content')
 )

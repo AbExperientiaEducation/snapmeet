@@ -25,8 +25,7 @@ var browserifyTask = function(callback, devMode) {
   var browserifyThis = function(bundleConfig) {
 
     var b = browserify(bundleConfig)
-    .add(require.resolve('babel/polyfill'))
-    .transform(babelify)
+    .transform(babelify.configure({only: /.*\.es6/}))
     
     var bundle = function() {
       // Log when bundling starts
