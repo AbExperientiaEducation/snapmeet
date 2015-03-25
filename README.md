@@ -14,3 +14,13 @@
 
 ### Start build process/server
 `gulp`
+
+### Server-side Debugging
+Node-inspector looks/works a lot like the chrome inspector, and makes it significantly easier to debug node.
+
+- Make sure you have node-inspector installed
+`npm install -g node-inspector`
+- Start build process/server in debug mode
+`gulp --debug`
+- Start node-inspector (it should attach to the running node process)
+`node-debug`

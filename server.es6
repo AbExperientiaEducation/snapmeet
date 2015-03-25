@@ -11,5 +11,8 @@ app.engine('html', require('ejs').renderFile);
 app.get('/', function (req, res) {
   res.render('./index.html');
 });
+const FetchMeetings = require('./src/server/db/meetings.es6')
+FetchMeetings()
+
 
 app.listen(port);

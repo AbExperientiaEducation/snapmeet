@@ -3,10 +3,9 @@ var src = './src'
 
 module.exports = {
   browserSync: {
-    server: {
-      // Serve up our build folder
-      baseDir: ["./views", "public"]
-    }
+    proxy: "http://localhost:3000",
+    port: "5000",
+    browser: ['google chrome']
   },
   sass: {
     src: src + "/sass/**/*.{sass,scss}",
@@ -26,6 +25,17 @@ module.exports = {
       // list of externally available modules to exclude from the bundle
       external: ['jquery', 'underscore']
     }]
+  },
+  nodemon: {
+    script: 'server.es6',
+    ignore: [
+      '../bower_components/**',
+      '../node_modules/**',
+      '../public/**'
+    ],
+    execMap: {
+      es6: 'node --harmony'
+    }
   },
   production: {
     cssSrc: dest + '/*.css',
