@@ -1,18 +1,25 @@
 // Require our dependencies
-var express = require('express'),
-  http = require('http');
+const express = require('express')
+const http = require('http')
+const Q = require('Q')
+
 // Create an express instance and set a port variable
-var app = express();
-var port = process.env.PORT || 3000;
-app.use(express.static(__dirname + '/public'));
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
+const app = express()
+const port = process.env.PORT || 3000
+app.use(express.static(__dirname + '/public'))
+app.set('views', __dirname + '/views')
+app.engine('html', require('ejs').renderFile)
 
 app.get('/', function (req, res) {
-  res.render('./index.html');
-});
-const FetchMeetings = require('./src/server/db/meetings.es6')
-FetchMeetings()
+  res.render('./index.html')
+})
 
+const DBMeetings = require('./src/server/db/meetings.es6')
+app.get('/api/meetings', function(req, res) {
+  Q.spawn(function* (){
+    var meetings = yield DBMeetings.fetchAll()
+    res.json(meetings)
+  })
+})
 
-app.listen(port);
+app.listen(port)

@@ -12,6 +12,7 @@
     "lodash": "^3.5.0",
     "morgan": "^1.5.2",
     "neo4j": "^2.0.0-RC1",
+    "q": "^1.2.0",
     "react": "~0.12.2"
   },
   "devDependencies": {

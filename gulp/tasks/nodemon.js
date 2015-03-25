@@ -13,8 +13,5 @@ gulp.task('nodemon', function(callback, debug) {
       called = true;
       callback(); 
     }
-    console.log('[nodemon] Node server started')  
-  }).on('restart', function () {
-    console.log('[nodemon] Node server restarting...')
   })
 });
