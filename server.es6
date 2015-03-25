@@ -1,7 +1,7 @@
 // Require our dependencies
 const express = require('express')
 const http = require('http')
-const Q = require('Q')
+const engen = require('engen')
 
 // Create an express instance and set a port variable
 const app = express()
@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 
 const DBMeetings = require('./src/server/db/meetings.es6')
 app.get('/api/meetings', function(req, res) {
-  Q.spawn(function* (){
+  engen.run(function* (){
     var meetings = yield DBMeetings.fetchAll()
     res.json(meetings)
   })
