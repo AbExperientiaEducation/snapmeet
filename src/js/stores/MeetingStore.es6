@@ -47,7 +47,6 @@ MeetingStore.dispatchToken = MeetgunDispatcher.register((action) => {
       break;
 
     case ActionTypes.RECEIVE_RAW_MEETINGS:
-      console.log('raw')
       _addMeetings(action.rawMeetings)
       MeetingStore.emitChange()
       break;

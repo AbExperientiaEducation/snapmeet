@@ -2,6 +2,7 @@
 const express = require('express')
 const http = require('http')
 const engen = require('engen')
+const Q = require('q')
 const morgan = require('morgan')
 
 // Create an express instance and set a port variable
@@ -18,9 +19,17 @@ app.get('/', function (req, res) {
 
 const DBMeetings = require('./src/server/db/meetings.es6')
 app.get('/api/meetings', function(req, res) {
-  engen.run(function* (){
-    var meetings = yield DBMeetings.fetchAll()
+  Q.spawn(function* (){
+    const meetings = yield DBMeetings.fetchAll()
     res.json(meetings)
+  })
+})
+
+app.post('/api/meetings/create', function(req, res){
+  const timestamp = req.params.timestamp
+  Q.spawn(function* (){
+    const meeting = yield DBMeetings.create({timestamp: timestamp}) 
+    res.json(meeting)
   })
 })
 
