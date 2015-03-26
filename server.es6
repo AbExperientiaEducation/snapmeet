@@ -2,11 +2,13 @@
 const express = require('express')
 const http = require('http')
 const engen = require('engen')
+const morgan = require('morgan')
 
 // Create an express instance and set a port variable
 const app = express()
 const port = process.env.PORT || 3000
 app.use(express.static(__dirname + '/public'))
+app.use(morgan('combined'))
 app.set('views', __dirname + '/views')
 app.engine('html', require('ejs').renderFile)
 
