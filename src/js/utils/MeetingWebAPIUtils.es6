@@ -1,4 +1,5 @@
 const MeetingServerActionCreators = require('../actions/MeetingServerActionCreators.es6')
+var $ = require('jquery')
 
 // !!! Please Note !!!
 // We are using localStorage as an example, but in a real-world scenario, this
@@ -12,6 +13,7 @@ module.exports = {
   getAllMeetings: () => {
     // simulate retrieving data from a database
     const rawMeetings = JSON.parse(localStorage.getItem('meetings'))
+    // const rawMeetings = JSON.parse($.get("http://localhost:5000/api/meetings"))
 
     // simulate success callback
     MeetingServerActionCreators.receiveAll(rawMeetings)
