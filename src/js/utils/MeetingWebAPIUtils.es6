@@ -12,11 +12,8 @@ var Q = require('Q')
 module.exports = {
 
   saveNewMeeting: () => {
-    $.post('/api/meetings/create', {
-      url: '/api/meetings/create'
-      , timestamp: Date.now()
-    }, function(){
-      console.log(posted)
+    Q.spawn(function* (){
+      yield $.post('/api/meetings/create', {timestamp: Date.now()})
     })
   }
 
