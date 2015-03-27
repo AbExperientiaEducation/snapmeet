@@ -5,7 +5,7 @@ const React = require('react')
 
 const getStateFromStore = () => {
   return {
-    meetings: _(MeetingStore.getAll()).values()
+    meetings: _.values(MeetingStore.getAll())
   }
 }
 
@@ -13,7 +13,7 @@ const getMeetingListItem = (meeting) => {
   return (
     <MeetingListItem
       key={meeting.id}
-      message={meeting}
+      meeting={meeting}
     />
   )
 }

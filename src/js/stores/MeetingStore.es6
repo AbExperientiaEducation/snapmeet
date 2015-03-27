@@ -41,7 +41,6 @@ const MeetingStore = Object.assign({}, EventEmitter.prototype, {
 MeetingStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE_MEETING:
-      console.log('create')
       const meeting = MeetingUtils.getCreatedMeetingData()
       _meetings[meeting.id] = meeting
       break;

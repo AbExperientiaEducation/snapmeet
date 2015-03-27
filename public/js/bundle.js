@@ -44599,8 +44599,8 @@ var MeetingListItem = React.createClass({
     meeting: ReactPropTypes.object
   },
 
-  render: function () {
-    var meeting = undefined.props.meeting;
+  render: function render() {
+    var meeting = this.props.meeting;
     return React.createElement(
       "li",
       { className: "meeting-list-item" },
@@ -44635,14 +44635,14 @@ var React = require("react");
 
 var getStateFromStore = function () {
   return {
-    meetings: _(MeetingStore.getAll()).values()
+    meetings: _.values(MeetingStore.getAll())
   };
 };
 
 var getMeetingListItem = function (meeting) {
   return React.createElement(MeetingListItem, {
     key: meeting.id,
-    message: meeting
+    meeting: meeting
   });
 };
 
@@ -44759,7 +44759,6 @@ var MeetingStore = Object.assign({}, EventEmitter.prototype, {
 MeetingStore.dispatchToken = MeetgunDispatcher.register(function (action) {
   switch (action.type) {
     case ActionTypes.CREATE_MEETING:
-      console.log("create");
       var meeting = MeetingUtils.getCreatedMeetingData();
       _meetings[meeting.id] = meeting;
       break;
@@ -44784,7 +44783,7 @@ module.exports = {
     return {
       id: rawMeeting._id,
       name: rawMeeting.properties.name,
-      date: new Date(rawMeeting.timestamp) };
+      date: new Date(rawMeeting.properties.timestamp) };
   },
 
   getCreatedMeetingData: function () {

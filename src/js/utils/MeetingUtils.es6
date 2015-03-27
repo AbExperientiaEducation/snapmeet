@@ -3,7 +3,7 @@ module.exports = {
     return {
       id: rawMeeting._id
       , name: rawMeeting.properties.name
-      , date: new Date(rawMeeting.timestamp),
+      , date: new Date(rawMeeting.properties.timestamp),
     }
   },
 
