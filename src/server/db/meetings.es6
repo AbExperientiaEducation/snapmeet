@@ -4,15 +4,16 @@ const db = new neo4j.GraphDatabase({
   url: '***REMOVED***'
   , auth: '***REMOVED***'
 })
-const cypher = Q.denodeify(db.cypher.bind(db)) 
+const cypher = function(query) {
+  promisifiedCypher = Q.denodeify(db.cypher.bind(db))
+  return promisifiedCypher(query).then(function(data) { 
+    return data.map(function(x) { return x.meeting }) 
+  })
+}
+
 
 module.exports.fetchAll = function(){  
-  return Promise.resolve(
-    cypher({ query: 'MATCH (meeting:Meeting) RETURN meeting'})
-    .then(function(data) { 
-      return data.map(function(x) { return x.meeting }) 
-    })
-  )
+  return cypher({ query: 'MATCH (meeting:Meeting) RETURN meeting'})
 }
 
 module.exports.create = function(meetingInfo){

@@ -13,7 +13,8 @@ module.exports = {
 
   saveNewMeeting: () => {
     Q.spawn(function* (){
-      yield $.post('/api/meetings/create', {timestamp: Date.now()})
+      const meeting = yield $.post('/api/meetings/create', {timestamp: Date.now()})
+      MeetingServerActionCreators.receiveCreatedMeeting(meeting)
     })
   }
 
@@ -22,7 +23,6 @@ module.exports = {
       const data = yield $.get('/api/meetings')
       MeetingServerActionCreators.receiveAll(data) 
     })
-
   }
 
   // , createMessage: function(message, threadName) {

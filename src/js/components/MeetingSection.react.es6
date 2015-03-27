@@ -1,11 +1,12 @@
 const MeetingStore = require('../stores/MeetingStore.es6')
 const MeetingListItem = require('./MeetingListItem.react.es6')
+const NewMeetingButton = require('./NewMeetingButton.react.es6')
 const _ = require('lodash')
 const React = require('react')
 
 const getStateFromStore = () => {
   return {
-    meetings: _.values(MeetingStore.getAll())
+    meetings: _(MeetingStore.getAll()).values().reverse().value()
   }
 }
 
@@ -37,6 +38,7 @@ const MeetingSection = React.createClass({
     const meetingListItems = this.state.meetings.map(getMeetingListItem)
     return (
       <div className="meeting-section">
+        <NewMeetingButton />
         <ul className="meeting-list" ref="meetingList">
           {meetingListItems}
         </ul>
