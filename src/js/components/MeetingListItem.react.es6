@@ -12,6 +12,7 @@ const MeetingListItem = React.createClass({
     return (
       <li className="meeting-list-item">
         <div className="meeting-id">{meeting.id}</div>
+        <div className="meeting-id">{meeting.name}</div>
         <div className="meeting-time">
           {meeting.date.toLocaleTimeString()}
         </div>

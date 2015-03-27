@@ -14,7 +14,7 @@
     "morgan": "^1.5.2",
     "neo4j": "^2.0.0-RC1",
     "q": "^1.2.0",
-    "react": "~0.12.2"
+    "react": "~0.13.0"
   },
   "devDependencies": {
     "babelify": "^5.0.4",
