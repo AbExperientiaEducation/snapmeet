@@ -10,8 +10,9 @@ const _meetings = {}
 
 const _addMeetings = (rawMeetings) => {
   rawMeetings.forEach( (meeting) => {
-    if (!_meetings[meeting.id]) {
-      _meetings[meeting.id] = MeetingUtils.convertRawMeeting(meeting)
+    debugger
+    if (!_meetings[meeting._id]) {
+      _meetings[meeting._id] = MeetingUtils.convertRawMeeting(meeting)
     }
   })
 }

@@ -1,7 +1,8 @@
 module.exports = {
   convertRawMeeting: (rawMeeting) => {
     return {
-      id: rawMeeting.id
+      id: rawMeeting._id
+      , name: rawMeeting.properties.name
       , date: new Date(rawMeeting.timestamp),
     }
   },

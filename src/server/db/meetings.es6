@@ -7,7 +7,12 @@ const db = new neo4j.GraphDatabase({
 const cypher = Q.denodeify(db.cypher.bind(db)) 
 
 module.exports.fetchAll = function(){  
-  return cypher({query: 'MATCH (meeting:Meeting) RETURN meeting'})
+  return Promise.resolve(
+    cypher({ query: 'MATCH (meeting:Meeting) RETURN meeting'})
+    .then(function(data) { 
+      return data.map(function(x) { return x.meeting }) 
+    })
+  )
 }
 
 module.exports.create = function(meetingInfo){
