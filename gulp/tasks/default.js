@@ -1,3 +1,3 @@
 var gulp = require('gulp')
 
-gulp.task('default', ['sass', 'browserify', 'watch', 'start-db'])
+gulp.task('default', ['sass', 'watch', 'start-db'])
