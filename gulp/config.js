@@ -16,15 +16,9 @@ module.exports = {
     }
   },
   browserify: {
-    // A separate bundle will be generated for each
-    // bundle config in the list below
-    bundleConfigs: [{
-      entries: [require.resolve('babelify/polyfill'), src + '/js/main.es6'],
-      dest: dest,
-      outputName: 'bundle.js',
-      // list of externally available modules to exclude from the bundle
-      external: ['jquery', 'underscore']
-    }]
+    entries: [require.resolve('babelify/polyfill'), src + '/js/main.es6'],
+    dest: dest,
+    outputName: 'bundle.js',  
   },
   nodemon: {
     script: 'server.es6',
