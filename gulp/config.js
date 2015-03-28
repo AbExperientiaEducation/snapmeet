@@ -16,17 +16,13 @@ module.exports = {
     }
   },
   browserify: {
-    entries: [require.resolve('babelify/polyfill'), src + '/js/main.es6'],
+    entries: [src + '/js/main.es6'],
     dest: dest,
-    outputName: 'bundle.js',  
+    outputName: 'bundle.js'
   },
   nodemon: {
-    script: 'server.es6',
-    ignore: [
-      '../bower_components/**',
-      '../node_modules/**',
-      '../public/**'
-    ],
+    script: 'src/server/server.es6',
+    watch: 'src/server/',
     execMap: {
       es6: 'node --harmony'
     }
@@ -35,5 +31,17 @@ module.exports = {
     cssSrc: dest + '/*.css',
     jsSrc: dest + '/*.js',
     dest: dest
+  },
+  libs: {
+    dest: dest,
+    srcs: [
+      "jquery",
+      "lodash",
+      "keymirror",
+      "flux",
+      "react",
+      "keymirror",
+      "q"
+    ]
   }
 }

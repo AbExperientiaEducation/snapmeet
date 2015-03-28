@@ -6,7 +6,6 @@
    See browserify.bundleConfigs in gulp/config.js
 */
 
-require('babel/register')
 var browserify   = require('browserify')
 var browserSync  = require('browser-sync')
 var watchify     = require('watchify')
@@ -16,18 +15,21 @@ var gulp         = require('gulp')
 var babelify     = require('babelify')
 var handleErrors = require('../util/handleErrors')
 var source       = require('vinyl-source-stream')
-var bundleConfig       = require('../config').browserify
+var configs      = require('../config')
+var bundleConfig = configs.browserify
+var libsConfig    = configs.libs
 var _            = require('lodash')
 
 var browserifyTask = function(callback, devMode) {  
   var b = browserify(bundleConfig)
-    .transform(babelify.configure({only: /.*\.es6/}))
   
   var bundle = function() {
     // Log when bundling starts
     bundleLogger.start(bundleConfig.outputName)
 
     return b
+      .external(libsConfig.srcs)
+      .transform(babelify.configure({only: /.*\.es6/}))
       .bundle()
       // Report compile errors
       .on('error', handleErrors)
