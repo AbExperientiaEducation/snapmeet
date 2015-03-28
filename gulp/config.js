@@ -18,7 +18,9 @@ module.exports = {
   browserify: {
     entries: [src + '/js/main.es6'],
     dest: dest,
-    outputName: 'bundle.js'
+    outputName: 'bundle.js',
+    detectGlobals: false,
+    fast: true
   },
   nodemon: {
     script: 'src/server/server.es6',
