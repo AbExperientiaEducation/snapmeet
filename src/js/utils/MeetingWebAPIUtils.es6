@@ -1,5 +1,5 @@
 const MeetingServerActionCreators = require('../actions/MeetingServerActionCreators.es6')
-var $ = require('jquery')
+var reqwest = require('reqwest')
 var co = require('co')
 
 // !!! Please Note !!!
@@ -13,14 +13,18 @@ module.exports = {
 
   saveNewMeeting: () => {
     co(function* (){
-      const meeting = yield $.post('/api/meetings/create', {timestamp: Date.now()})
+      const meeting = yield reqwest({
+        url: '/api/meetings/create'
+        , method: 'post'
+        , data: {timestamp: Date.now()}
+      })
       MeetingServerActionCreators.receiveCreatedMeeting(meeting)
     }) 
   }
 
   , getAllMeetings: () => {
     co(function* (){
-      const data = yield $.get('/api/meetings')
+      const data = yield reqwest('/api/meetings')
       MeetingServerActionCreators.receiveAll(data) 
     })
   }

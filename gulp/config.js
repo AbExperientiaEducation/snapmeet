@@ -42,12 +42,11 @@ module.exports = {
   libs: {
     dest: dest,
     srcs: [
-      "jquery",
+      "reqwest",
       "lodash",
       "keymirror",
       "flux",
       "react",
-      "keymirror",
       "co",
       "events"
     ]
