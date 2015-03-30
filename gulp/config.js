@@ -16,7 +16,7 @@ module.exports = {
     }
   },
   browserify: {
-    entries: [src + '/js/main.es6'],
+    entries: [src + '/client/main.es6'],
     dest: dest,
     outputName: 'bundle.js',
     detectGlobals: false,

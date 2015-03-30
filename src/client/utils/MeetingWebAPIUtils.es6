@@ -18,7 +18,7 @@ module.exports = {
         , method: 'post'
         , data: {timestamp: Date.now()}
       })
-      MeetingServerActionCreators.receiveCreatedMeeting(meeting)
+      // MeetingServerActionCreators.receiveCreatedMeeting(meeting)
     }) 
   }
 

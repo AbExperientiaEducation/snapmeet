@@ -24,3 +24,15 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 `gulp --debug`
 - Start node-inspector (it should attach to the running node process)
 `node-debug`
+
+## Helpful development stuff
+- Ignore node_modules and bundles in sublime text search
+`Sublime Text -> Preferences -> Settings - User`
+`"binary_file_patterns":
+ [
+   "node_modules/*",
+   "public/js/bundle.js",
+   "public/lib/common.js"
+ ],`
+- Install react developer tools for chrome
+`https://github.com/facebook/react-devtools`
