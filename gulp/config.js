@@ -43,7 +43,8 @@ module.exports = {
       "flux",
       "react",
       "keymirror",
-      "q"
+      "q",
+      "events"
     ]
   }
 }
