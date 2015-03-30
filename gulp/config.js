@@ -20,7 +20,12 @@ module.exports = {
     dest: dest,
     outputName: 'bundle.js',
     detectGlobals: false,
-    fast: true
+    fast: true,
+    noBundleExternal: true,
+    // cache opts are necessary for watchify to work correctly
+    cache: {}, 
+    packageCache: {}, 
+    fullPaths: true
   },
   nodemon: {
     script: 'src/server/server.es6',
