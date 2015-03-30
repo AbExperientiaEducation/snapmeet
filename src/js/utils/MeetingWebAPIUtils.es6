@@ -1,6 +1,6 @@
 const MeetingServerActionCreators = require('../actions/MeetingServerActionCreators.es6')
 var $ = require('jquery')
-var q = require('q')
+var co = require('co')
 
 // !!! Please Note !!!
 // We are using localStorage as an example, but in a real-world scenario, this
@@ -12,14 +12,14 @@ var q = require('q')
 module.exports = {
 
   saveNewMeeting: () => {
-    q.spawn(function* (){
+    co(function* (){
       const meeting = yield $.post('/api/meetings/create', {timestamp: Date.now()})
       MeetingServerActionCreators.receiveCreatedMeeting(meeting)
-    })
+    }) 
   }
 
   , getAllMeetings: () => {
-    q.spawn(function* (){
+    co(function* (){
       const data = yield $.get('/api/meetings')
       MeetingServerActionCreators.receiveAll(data) 
     })
