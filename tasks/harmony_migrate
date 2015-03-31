@@ -3,7 +3,6 @@
 // Strategy ganked from https://github.com/Swatinem/perf-cpuprofile/blob/master/bin/perf-cpuprofile.js
 // We need this so we can actually pass `--harmony` to the real process
 
-console.log(process.argv)
 var spawn = require('child_process').spawn
   , args = [ process.execPath + '/../migrate' ].concat(['-c', 'src/server']);
 
