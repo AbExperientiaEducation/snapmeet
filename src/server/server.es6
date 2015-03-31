@@ -1,7 +1,7 @@
 // Require our dependencies
 const express = require('express')
 const http = require('http')
-const Q = require('q')
+const co = require('co')
 const morgan = require('morgan')
 var bodyParser = require('body-parser')
 require('stackup')
@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
 
 const DBMeetings = require('./db/meetings.es6')
 app.get('/api/meetings', function(req, res) {
-  Q.spawn(function* (){
+  co(function* (){
     const meetings = yield DBMeetings.fetchAll()
     res.json(meetings)
   })
@@ -33,7 +33,7 @@ app.get('/api/meetings', function(req, res) {
 
 app.post('/api/meetings/create', function(req, res){
   const meetingJson = req.body
-  Q.spawn(function* (){
+  co(function* (){
     const meetingResponse = yield DBMeetings.create(meetingJson)
     res.json(meetingResponse[0])
   })

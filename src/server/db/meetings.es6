@@ -1,11 +1,11 @@
 const neo4j = require('neo4j')
-const Q = require('q')
+const denodeify = require('denodeify')
 const db = new neo4j.GraphDatabase({
   url: '***REMOVED***'
   , auth: '***REMOVED***'
 })
 const cypher = function(query) {
-  promisifiedCypher = Q.denodeify(db.cypher.bind(db))
+  promisifiedCypher = denodeify(db.cypher.bind(db))
   return promisifiedCypher(query).then(function(data) { 
     return data.map(function(x) { return x.meeting }) 
   })
