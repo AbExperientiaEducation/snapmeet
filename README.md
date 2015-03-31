@@ -4,6 +4,8 @@
 - Install node through nvm. See https://github.com/creationix/nvm
 - Install gulp
 `npm install --global gulp`
+- install node-migrate from our harmony fork
+`npm install -g migrate`
 - install neo4j
 `brew install neo4j`
 - install JDK7 (neo4j dependency)
@@ -11,6 +13,9 @@
 
 ### Install Project Dependencies
 `npm install`
+
+### Run Migrations
+`tasks/harmony_migrate`
 
 ### Start build process/server
 `gulp`

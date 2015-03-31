@@ -1,12 +1,8 @@
 const neo4j = require('neo4j')
-const denodeify = require('denodeify')
-const db = new neo4j.GraphDatabase({
-  url: '***REMOVED***'
-  , auth: '***REMOVED***'
-})
+const cypherClient = require('../utils/cypher_client.es6')
+
 const cypher = function(query) {
-  promisifiedCypher = denodeify(db.cypher.bind(db))
-  return promisifiedCypher(query).then(function(data) { 
+  return cypherClient(query).then(function(data) { 
     return data.map(function(x) { return x.meeting }) 
   })
 }
