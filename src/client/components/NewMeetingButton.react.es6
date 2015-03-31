@@ -1,9 +1,12 @@
 const React = require('react')
-const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
+const MeetingClientActions = require('../actions/MeetingClientActionCreators.es6')
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const MeetingListItem = React.createClass({
-  createMeeting: function() {
-    MeetingWebAPIUtils.saveNewMeeting()
+  mixins: [PureRenderMixin]
+  
+  , createMeeting: function() {
+    MeetingClientActions.createNewMeeting()
   }
   , render: function() {
     return (

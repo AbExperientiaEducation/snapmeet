@@ -1,9 +1,10 @@
 const React = require('react')
 const ReactPropTypes = React.PropTypes
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const MeetingListItem = React.createClass({
-
-  propTypes: {
+  mixins: [PureRenderMixin]
+  , propTypes: {
     meeting: ReactPropTypes.object
   }
 

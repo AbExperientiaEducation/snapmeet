@@ -32,9 +32,9 @@ app.get('/api/meetings', function(req, res) {
 })
 
 app.post('/api/meetings/create', function(req, res){
-  const timestamp = req.body.timestamp
+  const meetingJson = req.body
   Q.spawn(function* (){
-    const meetingResponse = yield DBMeetings.create({timestamp: timestamp})
+    const meetingResponse = yield DBMeetings.create(meetingJson)
     res.json(meetingResponse[0])
   })
 })

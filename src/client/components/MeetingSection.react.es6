@@ -3,10 +3,11 @@ const MeetingListItem = require('./MeetingListItem.react.es6')
 const NewMeetingButton = require('./NewMeetingButton.react.es6')
 const _ = require('lodash')
 const React = require('react')
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const getStateFromStore = () => {
   return {
-    meetings: _(MeetingStore.getAll()).values().reverse().value()
+    meetings: MeetingStore.getAll().reverse()
   }
 }
 
@@ -20,8 +21,9 @@ const getMeetingListItem = (meeting) => {
 }
 
 const MeetingSection = React.createClass({
+  mixins: [PureRenderMixin]
 
-  getInitialState: function() {
+  , getInitialState: function() {
     return getStateFromStore()
   }
 

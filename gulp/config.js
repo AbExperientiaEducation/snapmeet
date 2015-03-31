@@ -47,8 +47,11 @@ module.exports = {
       "keymirror",
       "flux",
       "react",
+      "react/addons",
       "co",
-      "events"
+      "events",
+      "shortid",
+      "immutable"
     ]
   }
 }
