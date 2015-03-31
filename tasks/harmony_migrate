@@ -4,6 +4,6 @@
 // We need this so we can actually pass `--harmony` to the real process
 
 var spawn = require('child_process').spawn
-  , args = [ process.execPath + '/../migrate' ].concat(['-c', 'src/server']);
+  , args = [ process.execPath + '/../migrate' ].concat(['-c', __dirname + '/../src/server']);
 
 spawn(process.argv[0], ['--harmony'].concat(args), {stdio: [0,1,2]});
