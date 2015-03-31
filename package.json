@@ -18,7 +18,8 @@
     "neo4j": "2.0.0-RC1",
     "react": "~0.13.0",
     "reqwest": "^1.1.5",
-    "shortid": "^2.2.1"
+    "shortid": "^2.2.1",
+    "express-session": "^1.10.4"
   },
   "devDependencies": {
     "babelify": "^5.0.4",

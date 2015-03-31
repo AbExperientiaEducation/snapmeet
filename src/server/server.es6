@@ -3,6 +3,7 @@ const express = require('express')
 const http = require('http')
 const co = require('co')
 const morgan = require('morgan')
+const session = require('express-session')
 var bodyParser = require('body-parser')
 require('stackup')
 
@@ -15,6 +16,12 @@ app.use(express.static(__dirname + '/../../public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
+
 
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
