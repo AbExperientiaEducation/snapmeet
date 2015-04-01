@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser')
+const passport = require('./middleware/passport.es6')
 require('stackup')
 
 // Create an express instance and set a port variable
@@ -18,6 +19,7 @@ app.use(express.static(__dirname + '/../../public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
+app.use(passport.initialize())
 
 var redisOptions = {host: '127.0.0.1', port: '6379'}
 app.use(session({
@@ -29,6 +31,12 @@ app.use(session({
 
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
+
+app.get('/secret',
+  passport.authenticate('basic', { session: false }),
+  function(req, res) {
+    res.json(req.user)
+})
 
 app.get('/', function (req, res) {
   res.render('./index.html')
