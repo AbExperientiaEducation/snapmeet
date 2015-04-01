@@ -27,24 +27,8 @@ app.use(session({
   saveUninitialized: true
 }))
 
-app.use(function (req, res, next) {
-  var views = req.session.views
-  if (!views) {
-    views = req.session.views = {}
-  }
-  // get the url pathname
-  var pathname = req.originalUrl
-  // count the views
-  views[pathname] = (views[pathname] || 0) + 1
-  next()
-})
-
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
-
-app.get('/session-test', function (req, res, next) {
-  res.send('you viewed this page ' + req.session.views['/session-test'] + ' times')
-})
 
 app.get('/', function (req, res) {
   res.render('./index.html')
