@@ -10,6 +10,8 @@
 `brew install neo4j`
 - install JDK7 (neo4j dependency)
 `http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html`
+- install redis
+`brew install redis`
 
 ### Install Project Dependencies
 `npm install`

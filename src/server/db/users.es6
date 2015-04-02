@@ -8,7 +8,7 @@ const cypher = function(query) {
 }
 
 module.exports.findOne = function(username){  
-  return cypherClient({ query: 'MATCH (user:User {username: {username}}) LIMIT 1 RETURN user',
+  return cypherClient({ query: 'MATCH (user:User {username: {username}}) RETURN user LIMIT 1',
                         parameters: {
                           username: username,
                         }
