@@ -1,16 +1,20 @@
 const neo4j = require('neo4j')
 const cypherClient = require('../utils/cypher_client.es6')
 
-const cypher = function(query) {
+const singleCypher = function(query) {
   return cypherClient(query).then(function(data) { 
-    return data.map(function(x) { return x.user }) 
+    return data[0].user
   })
 }
 
 module.exports.findOne = function(username){  
-  return cypherClient({ query: 'MATCH (user:User {username: {username}}) RETURN user LIMIT 1',
-                        parameters: {
+  return singleCypher({ query: 'MATCH (user:User {username: {username}}) RETURN user LIMIT 1',
+                        params: {
                           username: username,
                         }
                       })
+}
+
+module.exports.validPassword = function(user, password){
+  return user.properties.password == password
 }

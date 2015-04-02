@@ -11,16 +11,13 @@ passport.use(new BasicStrategy({
   },
   function(username, password, done) {
     co(function* (){
-      console.log(username)
       const user = yield DBUsers.findOne(username)
-      // var user = {name: 'Ben', password: 'whocares'}
-      // var user = {}
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' })
       }
-      // if (!user.validPassword(password)) {
-      //   return done(null, false, { message: 'Incorrect password.' })
-      // }
+      if (!DBUsers.validPassword(user, password)) {
+        return done(null, false, { message: 'Incorrect password.' })
+      }
       return done(null, user)
     })
   })
