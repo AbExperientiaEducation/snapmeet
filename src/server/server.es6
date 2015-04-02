@@ -5,7 +5,7 @@ const url = require('url')
 const co = require('co')
 const morgan = require('morgan')
 const session = require('express-session')
-const RedisStore = require('connect-redis')(session);
+const RedisStore = require('connect-redis')(session)
 var bodyParser = require('body-parser')
 const passport = require('./middleware/passport.es6')
 require('stackup')
