@@ -19,7 +19,7 @@ passport.use(new BasicStrategy({
         return done(null, false, { message: 'Incorrect password.' })
       }
       return done(null, user)
-    })
+    }).catch(function(err){console.log("Error on co in passport: " + err)})
   })
 )
 

@@ -3,7 +3,7 @@ const cypherClient = require('../utils/cypher_client.es6')
 
 const singleCypher = function(query) {
   return cypherClient(query).then(function(data) { 
-    return data[0].user
+    return data.length > 0 ? data[0].user : false
   })
 }
 
