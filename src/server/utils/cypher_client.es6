@@ -5,4 +5,7 @@ const db = new neo4j.GraphDatabase({
   , auth: '***REMOVED***'
 })
 
-module.exports = denodeify(db.cypher.bind(db))
+module.exports = denodeify(db.cypher.bind(db), function(err, stdout, stderr){
+  if(err) console.log(err)
+  return [err, stdout, stderr]
+})
