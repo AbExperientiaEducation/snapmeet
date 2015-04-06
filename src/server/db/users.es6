@@ -4,13 +4,12 @@ const authSvc = require('../utils/auth_svc.es6')
 
 const singleCypher = function(query) {
   return cypherClient(query).then(function(data) { 
-    console.log(data)
     return data.length > 0 ? data[0].user : false
   })
 }
 
 /* User Data Model
-  uid: int
+  id: int
   email: string
   password: string
 */
@@ -23,6 +22,14 @@ module.exports.findOne = function(email){
                       })
 }
 
+module.exports.findById = function(id) {
+  return singleCypher({ query: 'MATCH (user:User {id: {id}}) RETURN user LIMIT 1',
+                        params: {
+                          id: id,
+                        }
+                      })
+}
+
 module.exports.register = function(email, password){
   // do something hashy with password
   var hashedPassword = authSvc.generateHash(password)
@@ -30,14 +37,6 @@ module.exports.register = function(email, password){
                         params: {
                           email: email,
                           password: hashedPassword,
-                        }
-                      })
-}
-
-module.exports.findById = function(id) {
-  return singleCypher({ query: 'MATCH (user:User {uid: {id}}) RETURN user LIMIT 1',
-                        params: {
-                          id: id,
                         }
                       })
 }
