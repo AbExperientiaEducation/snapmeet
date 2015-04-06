@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "babel": "^4.7.16",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.2",
     "co": "^4.5.1",
     "connect-redis": "^2.2.0",

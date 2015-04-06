@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 app.use(passport.initialize())
+app.use(passport.session())
 
 var redisOptions = {host: '127.0.0.1', port: '6379'}
 app.use(session({
@@ -33,7 +34,7 @@ app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
 app.get('/secret',
-  passport.authenticate('basic', { session: false }),
+  passport.authenticate('basic'),
   function(req, res) {
     res.json(req.user)
 })
