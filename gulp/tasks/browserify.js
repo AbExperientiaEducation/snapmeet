@@ -18,7 +18,6 @@ var source       = require('vinyl-source-stream')
 var configs      = require('../config')
 var bundleConfig = configs.browserify
 var libsConfig    = configs.libs
-var _            = require('lodash')
 
 var browserifyTask = function(callback, devMode) {  
   var b = browserify(bundleConfig)
@@ -29,7 +28,6 @@ var browserifyTask = function(callback, devMode) {
 
     return b
       .external(libsConfig.srcs)
-      .transform(babelify.configure({only: /.*\.es6/}))
       .bundle()
       // Report compile errors
       .on('error', handleErrors)
@@ -51,6 +49,10 @@ var browserifyTask = function(callback, devMode) {
     b.on('update', bundle)
     bundleLogger.watch(bundleConfig.outputName)
   }
+
+  // Transform must happen outside of the bundle function. Otherwise
+  // Watchify will cause it to be applied multiple times
+  b.transform(babelify.configure({only: /.*\.es6/}))
 
   return bundle()
 
