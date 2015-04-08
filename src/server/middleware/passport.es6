@@ -13,7 +13,6 @@ passport.deserializeUser(function(id, done) {
 })
 
 passport.serializeUser(function(user, done) {
-  console.log("Serialize called: " + user)
   done(null, user.id)
 })
 
@@ -23,7 +22,6 @@ passport.use(new LocalStrategy({
   },
   function(username, password, done) {
     co(function* (){
-      console.log("username:" + username + " password:" + password)
       const user = yield DBUsers.findOne(username)
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' })
@@ -31,7 +29,6 @@ passport.use(new LocalStrategy({
       if (!DBUsers.validPassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' })
       }
-      console.log(user)
       return done(null, user)
     }).catch(function(err){console.log("Error on co in passport: " + err)})
   })

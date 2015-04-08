@@ -32,22 +32,6 @@ app.use(passport.session())
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
-// app.post('/login',function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info) {
-//     console.log(err, info, user, req)
-//     if (err) { return next(err); }
-//     if (!user) { return res.redirect('/login'); }
-//     req.logIn(user, function(err) {
-//       if (err) { return next(err); }
-//       return res.redirect('/users/' + user.username);
-//     });
-//   })(req, res, next)
-//   // passport.authenticate('local'), 
-//   // function(req, res){
-//   //   console.log(req)
-//   // }
-// })
-
 app.post('/login',
           passport.authenticate('local', {  successRedirect: '/',
                                             failureRedirect: '/register'
