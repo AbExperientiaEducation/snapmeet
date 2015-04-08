@@ -21,6 +21,7 @@
     "neo4j": "2.0.0-RC1",
     "passport": "^0.2.1",
     "passport-http": "^0.2.2",
+    "passport-local": "^1.0.0",
     "react": "~0.13.0",
     "reqwest": "^1.1.5",
     "shortid": "^2.2.1"

@@ -19,9 +19,6 @@ app.use(express.static(__dirname + '/../../public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
-app.use(passport.initialize())
-app.use(passport.session())
-
 var redisOptions = {host: '127.0.0.1', port: '6379'}
 app.use(session({
   secret: 'keyboard cat',
@@ -29,14 +26,37 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
-app.get('/secret',
-  passport.authenticate('basic'),
-  function(req, res) {
-    res.json(req.user)
+// app.post('/login',function(req, res, next) {
+//   passport.authenticate('local', function(err, user, info) {
+//     console.log(err, info, user, req)
+//     if (err) { return next(err); }
+//     if (!user) { return res.redirect('/login'); }
+//     req.logIn(user, function(err) {
+//       if (err) { return next(err); }
+//       return res.redirect('/users/' + user.username);
+//     });
+//   })(req, res, next)
+//   // passport.authenticate('local'), 
+//   // function(req, res){
+//   //   console.log(req)
+//   // }
+// })
+
+app.post('/login',
+          passport.authenticate('local', {  successRedirect: '/',
+                                            failureRedirect: '/register'
+                                          }
+          )
+)
+
+app.get('/register', function(req, res) {
+  res.send('GET sent to register')
 })
 
 app.get('/', function (req, res) {

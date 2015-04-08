@@ -4,7 +4,7 @@ const authSvc = require('../utils/auth_svc.es6')
 
 const singleCypher = function(query) {
   return cypherClient(query).then(function(data) { 
-    return data.length > 0 ? data[0].user : false
+    return data.length > 0 ? data[0].user.properties : false
   })
 }
 
@@ -42,5 +42,5 @@ module.exports.register = function(email, password){
 }
 
 module.exports.validPassword = function(user, password){
-  return authSvc.validPassword(password, user.properties.password)
+  return authSvc.validPassword(password, user.password)
 }
