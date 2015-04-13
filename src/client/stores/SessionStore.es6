@@ -37,7 +37,7 @@ SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.SIGN_IN:
       // Do stuff
-      alert(action.data)
+      alert(action.data.email)
       SessionStore.emitChange()
       break;
 
