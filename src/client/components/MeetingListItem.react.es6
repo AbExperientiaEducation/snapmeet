@@ -9,7 +9,7 @@ const MeetingListItem = React.createClass({
   }
 
   , render: function() {
-    var meeting = this.props.meeting
+    const meeting = this.props.meeting
     return (
       <li className="meeting-list-item">
         <div className="meeting-id">{meeting.id}</div>

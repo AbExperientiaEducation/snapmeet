@@ -19,7 +19,7 @@ module.exports = {
     entries: [src + '/client/main.es6'],
     dest: dest,
     outputName: 'bundle.js',
-    detectGlobals: false,
+    detectGlobals: true,
     fast: true,
     noBundleExternal: true,
     // cache opts are necessary for watchify to work correctly
@@ -51,7 +51,9 @@ module.exports = {
       "co",
       "events",
       "shortid",
-      "immutable"
+      "immutable",
+      "quill",
+      "rich-text"
     ]
   }
 }

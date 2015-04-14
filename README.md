@@ -10,6 +10,11 @@
 `brew install neo4j`
 - install JDK7 (neo4j dependency)
 `http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html`
+- install and setup mongo
+`brew install mongo`
+`sudo mkdir /data`
+`sudo mkdir /data/db`
+`sudo chown `whoami` /data/db`
 
 ### Install Project Dependencies
 `npm install`
@@ -19,6 +24,7 @@
 
 ### Start build process/server
 `gulp`
+`mongod`
 
 ### Server-side Debugging
 Node-inspector looks/works a lot like the chrome inspector, and makes it significantly easier to debug node.
