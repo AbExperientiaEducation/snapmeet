@@ -55,7 +55,8 @@ module.exports = {
       "quill",
       "rich-text",
       "sockjs-client",
-      "share/lib/client/index.js"
+      "share/lib/client/index.js",
+      "react-router"
     ]
   }
 }

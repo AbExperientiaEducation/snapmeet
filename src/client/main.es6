@@ -1,11 +1,8 @@
 "use strict"
-const MeetgunApp = require('./components/MeetgunApp.react.es6')
-const MeetingWebAPIUtils = require('./utils/MeetingWebAPIUtils.es6')
 const React = require('react')
+const Router = require('react-router')
+const routes = require('./components/MeetgunRouter.react.es6')
 
-MeetingWebAPIUtils.getAllMeetings()
-
-React.render(
-    <MeetgunApp />,
-    document.getElementById('content')
-)
+Router.run(routes, function (Handler) {
+  React.render(<Handler/>, document.body)
+})

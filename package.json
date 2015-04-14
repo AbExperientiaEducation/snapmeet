@@ -22,6 +22,7 @@
     "neo4j": "2.0.0-RC1",
     "quill": "^0.19.1",
     "react": "~0.13.0",
+    "react-router": "^0.13.2",
     "redis": "^0.12.1",
     "reqwest": "^1.1.5",
     "rich-text": "^1.1.0",

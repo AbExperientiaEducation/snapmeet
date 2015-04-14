@@ -29,7 +29,7 @@ module.exports = {
           shareJSOnmessage.apply(this, arguments)  
         }
       }
-      _syncConn.debug = true // shareJS flag for console logging requests
+      // _syncConn.debug = true // shareJS flag for console logging requests
     } 
 
     return _syncConn
