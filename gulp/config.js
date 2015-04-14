@@ -53,7 +53,9 @@ module.exports = {
       "shortid",
       "immutable",
       "quill",
-      "rich-text"
+      "rich-text",
+      "sockjs-client",
+      "share/lib/client/index.js"
     ]
   }
 }
