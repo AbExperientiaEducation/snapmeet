@@ -17,7 +17,7 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.use(new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'password'
   },
   function(username, password, done) {
