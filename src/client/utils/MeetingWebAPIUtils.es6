@@ -5,7 +5,7 @@ var co = require('co')
 
 module.exports = {
 
-  saveNewMeeting: () => {
+  saveNewMeeting() {
     co(function* (){
       const meeting = yield reqwest({
         url: '/api/meetings/create'
@@ -15,7 +15,7 @@ module.exports = {
     }) 
   }
 
-  , saveMeeting: (meeting) => {
+  , saveMeeting(meeting) {
     const jsonifiedMeeting = MeetingUtils.jsonifyMeeting(meeting)
     co(function* (){
       const meeting = yield reqwest({
@@ -27,7 +27,7 @@ module.exports = {
     }) 
   }
 
-  , getAllMeetings: () => {
+  , getAllMeetings() {
     co(function* (){
       const data = yield reqwest('/api/meetings')
       MeetingServerActionCreators.receiveAll(data) 

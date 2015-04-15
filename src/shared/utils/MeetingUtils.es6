@@ -8,7 +8,7 @@ const MeetingRecord = Immutable.Record({
 
 module.exports = {
   // Create a new meeting record
-  createNewMeeting: () => {
+  createNewMeeting() {
     const date = new Date()
     // const 
     return new MeetingRecord({
@@ -28,7 +28,7 @@ module.exports = {
   }
 
   // convert a meeting record to db-friendly JSON
-  , jsonifyMeeting: (meeting) => {
+  , jsonifyMeeting(meeting) {
     return {
       id: meeting.id
       , timestamp: meeting.date.getTime()

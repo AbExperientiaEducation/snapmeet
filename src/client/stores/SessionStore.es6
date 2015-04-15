@@ -20,7 +20,7 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
-  , get: () => {
+  , get() {
     return _session.id
   }
 })

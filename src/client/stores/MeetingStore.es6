@@ -30,11 +30,11 @@ const MeetingStore = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
-  , get: (id) => {
+  , get(id) {
     return _meetings.get(id)
   }
 
-  , getAll: () => {
+  , getAll() {
     return _meetings
   }
 })
