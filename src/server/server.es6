@@ -7,13 +7,9 @@ const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('./middleware/passport.es6')
-const livedb = require('livedb')
-const sharejs = require('share')
-const livedbMongo = require('livedb-mongo')
-const richText = require('rich-text')
-const Duplex = require('stream').Duplex
 const bodyParser = require('body-parser')
-const sockjs = require('sockjs')
+const socketUtils = require('./utils/socket_utils.es6')
+
 require('stackup')
 
 // Create an express instance and set a port variable
@@ -39,74 +35,8 @@ app.use(passport.session())
 const server = require('http').Server(app)
 server.listen(3000)
 
-/* SOCK JS SERVER & SHARE JS
- */
-
-const mongoUrl = 'mongodb://127.0.0.1:27017/test'
-docStore = livedb.client(livedbMongo(mongoUrl + '?auto_reconnect', {
-  safe: false
-}))
-
-const share = require('share').server.createClient({backend: docStore})
-const cursorWatchers = {}
-
-const setAsWatcher = function(docId, conn){
-  if(!cursorWatchers[docId]) cursorWatchers[docId] = []
-  cursorWatchers[docId].push(conn)
-}
-
-const notifyWatchers = function(docId, userId, cursorPos){
-  cursorWatchers[docId].forEach(function(conn){
-    conn.write(JSON.stringify({
-      docId: docId
-      , userId: userId
-      , cursorPos: cursorPos
-      , type: 'cursor-data'
-    }))
-  })
-}
-
-livedb.ot.registerType(richText.type)
-sockServer = sockjs.createServer()
-sockServer.on('connection', function(conn) {
-  const stream = new Duplex({objectMode: true})
-  stream.headers = conn.headers
-  stream.remoteAddress = conn.remoteAddress
-
-  stream._write = function (chunk, encoding, callback) {
-    if (conn.state !== 'closed') {
-      conn.write(JSON.stringify(chunk))
-    }
-    callback()
-  }
-  stream._read = function () {}
-  stream.on('error', function (msg) { conn.close() })
- 
-  conn.on('data', function (data) {
-    parsed = JSON.parse(data)
-    switch(parsed.type) {
-      case 'cursor-data':
-        notifyWatchers(parsed.docId, parsed.userId, parsed.cursorPos)
-        break
-      case 'cursor-watch':
-        setAsWatcher(parsed.docId, conn)
-        break
-      default:
-        stream.push(data)
-    }
-  })
-  conn.on('close', function (reason) {
-    stream.emit('close')
-    stream.emit('end')
-    stream.end()
-  })
-
-  share.listen(stream)
-})
-
+const sockServer = socketUtils.createServer()
 sockServer.installHandlers(server, {prefix:'/democat'})
-// END SOCK JS/SHAREJS
-
 
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
@@ -126,6 +56,7 @@ app.post('/register', function(req, res) {
       req.login()
       res.json(registrationResult)
     } catch(error) {
+      console.log(error.stack)
       res.status(500).json(error)
     }
   })
