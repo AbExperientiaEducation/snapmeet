@@ -1,4 +1,4 @@
-const SessionActions = require('../actions/SessionActionCreators.es6')
+const SessionServerActions = require('../actions/SessionServerActionCreators.es6')
 var reqwest = require('reqwest')
 var co = require('co')
 
@@ -14,11 +14,11 @@ module.exports = {
           , data: {username: data.email, password: data.password}
         })
         console.log("Login suceeded")
-        SessionActions.signInSucceeded()
+        SessionServerActions.signInSucceeded()
       }
       catch (error) {
         console.log("Login failed: " + error.status + ' ' + error.response)
-        SessionActions.signInFailed()
+        SessionServerActions.signInFailed()
       }
     })
   }
@@ -33,11 +33,11 @@ module.exports = {
         })
         console.log(session)
         console.log("Registration suceeded")
-        SessionActions.signUpSucceeded()
+        SessionServerActions.signUpSucceeded()
       }
       catch (error) {
         console.log("Registration failed: " + error.status + ' ' + error.response)
-        SessionActions.signUpFailed()
+        SessionServerActions.signUpFailed()
       }
     })
   }

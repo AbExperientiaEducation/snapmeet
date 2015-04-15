@@ -1,15 +1,11 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const SessionConstants = require('../constants/SessionConstants.es6')
-const SessionWebAPIUtils = require('../utils/SessionWebAPIUtils.es6')
 
 const ActionTypes = SessionConstants.ActionTypes
 
 module.exports = {
 
-  signIn(data) {
-    SessionWebAPIUtils.signIn(data)
-  }
-  , signInSucceeded() {
+  signInSucceeded() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN_SUCCEEDED
     })
@@ -18,9 +14,6 @@ module.exports = {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN_FAILED
     })
-  }
-  , signUp(data) {
-    SessionWebAPIUtils.signUp(action.data)
   }
   , signUpSucceeded() {
     MeetgunDispatcher.dispatch({

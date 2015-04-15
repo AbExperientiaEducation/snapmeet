@@ -26,6 +26,7 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
 
 SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
+    
     case ActionTypes.SIGN_IN_SUCCEEDED:
       // Do stuff
       SessionStore.emitChange()

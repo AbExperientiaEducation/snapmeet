@@ -1,5 +1,5 @@
 const React = require('react')
-const SessionActions = require('../actions/SessionActionCreators.es6')
+const SessionClientActions = require('../actions/SessionClientActionCreators.es6')
 const SessionStore = require('../stores/SessionStore.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
@@ -13,7 +13,7 @@ const SessionSignInForm = React.createClass({
     if (!email || !password) {
       return
     }
-    SessionActions.signIn({email: email, password: password})
+    SessionClientActions.signIn({email: email, password: password})
   }
   , register(e) {
     e.preventDefault()
@@ -22,7 +22,7 @@ const SessionSignInForm = React.createClass({
     if (!email || !password) {
       return
     }
-    SessionActions.signUp({email: email, password: password})
+    SessionClientActions.signUp({email: email, password: password})
   }
 
   , render() {
