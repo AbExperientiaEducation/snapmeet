@@ -22,7 +22,7 @@ const SessionSignInForm = React.createClass({
     if (!email || !password) {
       return
     }
-    SessionActions.register({email: email, password: password})
+    SessionActions.signUp({email: email, password: password})
   }
 
   , render: function() {

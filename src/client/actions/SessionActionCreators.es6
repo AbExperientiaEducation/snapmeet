@@ -21,20 +21,20 @@ module.exports = {
       type: ActionTypes.SIGN_IN_FAILED
     })
   }
-  , register: function(data) {
+  , signUp: function(data) {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.REGISTER
+      type: ActionTypes.SIGN_UP
       , data: data
     })
   }
-  , registrationSucceeded: function() {
+  , signUpSucceeded: function() {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.REGISTRATION_SUCCEEDED
+      type: ActionTypes.SIGN_UP_SUCCEEDED
     })
   }
-  , registrationFailed: function() {
+  , signUpFailed: function() {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.REGISTRATION_FAILED
+      type: ActionTypes.SIGN_UP_FAILED
     })
   }
 

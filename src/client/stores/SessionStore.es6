@@ -7,15 +7,6 @@ const EventEmitter = require('events').EventEmitter
 const CHANGE_EVENT = 'change'
 const ActionTypes = SessionConstants.ActionTypes
 
-let _session = Immutable.Map()
-
-const _addSession = (rawMeetings) => {
-  rawMeetings.forEach( (meeting) => {
-    // Always add to _meetings, or replace whatever was there.
-    _meetings = _meetings.set(meeting.properties.id, MeetingUtils.convertRawMeeting(meeting))
-  })
-}
-
 const SessionStore = Object.assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT)
@@ -49,6 +40,22 @@ SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
       break;
 
     case ActionTypes.SIGN_IN_FAILED:
+      // Do stuff
+      SessionStore.emitChange()
+      break;
+
+    case ActionTypes.SIGN_UP:
+      // Do a sign in via a utility
+      SessionWebAPIUtils.signUp(action.data)
+      SessionStore.emitChange()
+      break;
+
+    case ActionTypes.SIGN_UP_SUCCEEDED:
+      // Do stuff
+      SessionStore.emitChange()
+      break;
+
+    case ActionTypes.SIGN_UP_FAILED:
       // Do stuff
       SessionStore.emitChange()
       break;

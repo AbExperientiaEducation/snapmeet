@@ -22,7 +22,7 @@ module.exports = {
       }
     })
   }
-  , register: (data) => {
+  , signUp: (data) => {
     co(function* (){
       try {
         console.log("Attempting registration with: " + data.email + " and " + data.password)
@@ -31,12 +31,13 @@ module.exports = {
           , method: 'post'
           , data: {username: data.email, password: data.password}
         })
+        console.log(session)
         console.log("Registration suceeded")
-        SessionActions.registrationSucceeded()
+        SessionActions.signUpSucceeded()
       }
       catch (error) {
         console.log("Registration failed: " + error.status + ' ' + error.response)
-        SessionActions.registrationFailed()
+        SessionActions.signUpFailed()
       }
     })
   }

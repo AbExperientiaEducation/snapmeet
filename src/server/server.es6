@@ -116,11 +116,18 @@ app.post('/login', passport.authenticate('local'),
     res.json({ id: req.user.id })
 })
 
+const DBUsers = require('./db/users.es6')
 app.post('/register', function(req, res) {
   const registration = req.body
+  console.log("Attempting registration")
   co(function* (){
-    const registrationResult = yield passport.register(registration)
-    res.send('POST sent to register')
+    try {
+      const registrationResult = yield DBUsers.register(registration.username, registration.password)
+      req.login()
+      res.json(registrationResult)
+    } catch(error) {
+      res.status(500).json(error)
+    }
   })
 })
 
