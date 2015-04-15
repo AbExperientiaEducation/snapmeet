@@ -21,7 +21,6 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
   },
   function(username, password, done) {
-    console.log(username, password)
     co(function* (){
       const user = yield DBUsers.findOne(username)
       if (!user) {

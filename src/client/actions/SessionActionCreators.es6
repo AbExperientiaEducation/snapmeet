@@ -7,9 +7,18 @@ module.exports = {
 
   signIn: function(data) {
     MeetgunDispatcher.dispatch({
-      // Not sure what the action creator for this should be?
       type: ActionTypes.SIGN_IN
       , data: data
+    })
+  }
+  , signInSucceeded: function() {
+    MeetgunDispatcher.dispatch({
+      type: ActionTypes.SIGN_IN_SUCCEEDED
+    })
+  }
+  , signInFailed: function() {
+    MeetgunDispatcher.dispatch({
+      type: ActionTypes.SIGN_IN_FAILED
     })
   }
 

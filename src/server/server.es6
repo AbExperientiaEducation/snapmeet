@@ -32,12 +32,10 @@ app.use(passport.session())
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
-app.post('/login',
-          passport.authenticate('local', {  successRedirect: '/',
-                                            failureRedirect: '/register'
-                                          }
-          )
-)
+app.post('/login', passport.authenticate('local'),
+  function(req, res) {
+    res.json({ id: req.user.id })
+})
 
 app.get('/register', function(req, res) {
   res.send('GET sent to register')
