@@ -8,7 +8,7 @@ const DBUsers = require('../db/users.es6')
 passport.deserializeUser(function(id, done) {
   errorHandler = function(err){done(err)}
   successHandler = function(result){done(null, result)}
-  user = DBUser.findById(id)
+  user = DBUsers.findById(id)
   user.then(successHandler, errorHandler)
 })
 
@@ -21,6 +21,7 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
   },
   function(username, password, done) {
+    console.log(username, password)
     co(function* (){
       const user = yield DBUsers.findOne(username)
       if (!user) {

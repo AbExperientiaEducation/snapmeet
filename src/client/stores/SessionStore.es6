@@ -1,5 +1,6 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const SessionConstants = require('../constants/SessionConstants.es6')
+const SessionWebAPIUtils = require('../utils/SessionWebAPIUtils.es6')
 const Immutable = require('immutable')
 const EventEmitter = require('events').EventEmitter
 
@@ -36,8 +37,9 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
 SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.SIGN_IN:
-      // Do stuff
-      alert(action.data.email)
+      // Do a sign in via a utility
+      SessionWebAPIUtils.signIn(action.data)
+      // In the utility, call the SIGN_IN_SUCCEEDED or FAILED action type
       SessionStore.emitChange()
       break;
 
