@@ -3,8 +3,7 @@ const MeetingConstants = require('../constants/MeetingConstants.es6')
 const ActionTypes = MeetingConstants.ActionTypes;
 
 module.exports = {
-
-  createNewMeeting: function() {
+  createNewMeeting() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.CREATE_MEETING
     })

@@ -5,14 +5,14 @@ const ActionTypes = MeetingConstants.ActionTypes;
 
 module.exports = {
 
-  receiveAll: function(rawMeetings) {
+  receiveAll(rawMeetings) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.RECEIVE_RAW_MEETINGS
       , rawMeetings: rawMeetings
     })
   }
 
-  , receiveCreatedMeeting: function(createdMeeting) {
+  , receiveCreatedMeeting(createdMeeting) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.RECEIVE_RAW_MEETINGS
       , rawMeetings: [createdMeeting]

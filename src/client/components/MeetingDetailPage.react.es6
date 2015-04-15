@@ -12,19 +12,19 @@ const getStateFromStore = (props) => {
 const MeetingDetailPage = React.createClass({
   mixins: [PureRenderMixin]
 
-  , getInitialState: function() {
+  , getInitialState() {
     return getStateFromStore(this.props)
   }
 
-  , componentDidMount: function() {
+  , componentDidMount() {
     MeetingStore.addChangeListener(this._onChange)
   }
 
-  , componentWillUnmount: function() {
+  , componentWillUnmount() {
     MeetingStore.removeChangeListener(this._onChange)
   }
 
-  , render: function() {
+  , render() {
     if(this.state.meeting) {
       return (
         <div className="meeting-detail">
@@ -39,7 +39,7 @@ const MeetingDetailPage = React.createClass({
     }
   }
 
-  , _onChange: function() {
+  , _onChange() {
     this.setState(getStateFromStore(this.props))
   }
 })

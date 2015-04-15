@@ -5,34 +5,34 @@ const ActionTypes = SessionConstants.ActionTypes
 
 module.exports = {
 
-  signIn: function(data) {
+  signIn(data) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN
       , data: data
     })
   }
-  , signInSucceeded: function() {
+  , signInSucceeded() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN_SUCCEEDED
     })
   }
-  , signInFailed: function() {
+  , signInFailed() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN_FAILED
     })
   }
-  , signUp: function(data) {
+  , signUp(data) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_UP
       , data: data
     })
   }
-  , signUpSucceeded: function() {
+  , signUpSucceeded() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_UP_SUCCEEDED
     })
   }
-  , signUpFailed: function() {
+  , signUpFailed() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_UP_FAILED
     })

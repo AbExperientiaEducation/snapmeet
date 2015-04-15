@@ -6,7 +6,7 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const SessionSignInForm = React.createClass({
   mixins: [PureRenderMixin]
 
-  , signIn: function(e) {
+  , signIn(e) {
     e.preventDefault()
     let email = React.findDOMNode(this.refs.email).value.trim()
     let password = React.findDOMNode(this.refs.password).value.trim()
@@ -15,7 +15,7 @@ const SessionSignInForm = React.createClass({
     }
     SessionActions.signIn({email: email, password: password})
   }
-  , register: function(e) {
+  , register(e) {
     e.preventDefault()
     let email = React.findDOMNode(this.refs.email).value.trim()
     let password = React.findDOMNode(this.refs.password).value.trim()
@@ -25,7 +25,7 @@ const SessionSignInForm = React.createClass({
     SessionActions.signUp({email: email, password: password})
   }
 
-  , render: function() {
+  , render() {
     return (
       // A sign in form
       <form>

@@ -5,10 +5,10 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MeetingListItem = React.createClass({
   mixins: [PureRenderMixin]
   
-  , createMeeting: function() {
+  , createMeeting() {
     MeetingClientActions.createNewMeeting()
   }
-  , render: function() {
+  , render() {
     return (
       <button onClick={this.createMeeting}>New Meeting</button>
     )

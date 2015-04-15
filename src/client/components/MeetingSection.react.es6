@@ -23,20 +23,20 @@ const getMeetingListItem = (meeting) => {
 const MeetingSection = React.createClass({
   mixins: [PureRenderMixin]
 
-  , getInitialState: function() {
+  , getInitialState() {
     return getStateFromStore()
   }
 
-  , componentDidMount: function() {
+  , componentDidMount() {
     this._scrollToBottom()
     MeetingStore.addChangeListener(this._onChange)
   }
 
-  , componentWillUnmount: function() {
+  , componentWillUnmount() {
     MeetingStore.removeChangeListener(this._onChange)
   }
 
-  , render: function() {
+  , render() {
     const meetingListItems = this.state.meetings.map(getMeetingListItem)
     return (
       <div className="meeting-section">
@@ -48,11 +48,11 @@ const MeetingSection = React.createClass({
     )
   }
 
-  , componentDidUpdate: function() {
+  , componentDidUpdate() {
     this._scrollToBottom()
   }
 
-  , _scrollToBottom: function() {
+  , _scrollToBottom() {
     const ul = this.refs.meetingList.getDOMNode()
     ul.scrollTop = ul.scrollHeight
   }
@@ -60,7 +60,7 @@ const MeetingSection = React.createClass({
   /**
    * Event handler for 'change' events coming from the MessageStore
    */
-  , _onChange: function() {
+  , _onChange() {
     this.setState(getStateFromStore())
   }
 })
