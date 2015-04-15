@@ -22,4 +22,22 @@ module.exports = {
       }
     })
   }
+  , register: (data) => {
+    co(function* (){
+      try {
+        console.log("Attempting registration with: " + data.email + " and " + data.password)
+        const session = yield reqwest({
+          url: '/register'
+          , method: 'post'
+          , data: {username: data.email, password: data.password}
+        })
+        console.log("Registration suceeded")
+        SessionActions.registrationSucceeded()
+      }
+      catch (error) {
+        console.log("Registration failed: " + error.status + ' ' + error.response)
+        SessionActions.registrationFailed()
+      }
+    })
+  }
 }

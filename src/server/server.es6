@@ -116,8 +116,12 @@ app.post('/login', passport.authenticate('local'),
     res.json({ id: req.user.id })
 })
 
-app.get('/register', function(req, res) {
-  res.send('GET sent to register')
+app.post('/register', function(req, res) {
+  const registration = req.body
+  co(function* (){
+    const registrationResult = yield passport.register(registration)
+    res.send('POST sent to register')
+  })
 })
 
 app.get('/', function (req, res) {
