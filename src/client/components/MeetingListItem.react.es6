@@ -1,5 +1,6 @@
 const React = require('react')
 const ReactPropTypes = React.PropTypes
+const Link = require('react-router').Link
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const MeetingListItem = React.createClass({
@@ -12,7 +13,7 @@ const MeetingListItem = React.createClass({
     const meeting = this.props.meeting
     return (
       <li className="meeting-list-item">
-        <div className="meeting-id">{meeting.id}</div>
+        <div className="meeting-id"><Link to="meeting" params={ {id: meeting.id} }>{meeting.id}</Link></div>
         <div className="meeting-id">{meeting.name}</div>
         <div className="meeting-time">
           {meeting.date.toLocaleTimeString()}

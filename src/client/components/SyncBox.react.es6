@@ -31,7 +31,7 @@ const SyncBox = React.createClass({
   }
 
   , componentWillUnmount() {
-    quillBox.editor.destroy()
+    this.quillBox.editor.destroy()
     SyncConnUtils.removeCursorChangeListener('foodoc') 
     SyncdocStore.removeChangeListener(this._onChange)
   }

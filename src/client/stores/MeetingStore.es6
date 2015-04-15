@@ -31,7 +31,7 @@ const MeetingStore = Object.assign({}, EventEmitter.prototype, {
   }
 
   , get: (id) => {
-    return _meetings[id]
+    return _meetings.get(id)
   }
 
   , getAll: () => {
