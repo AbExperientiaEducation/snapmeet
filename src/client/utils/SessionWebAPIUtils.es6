@@ -17,7 +17,7 @@ module.exports = {
         SessionActions.signInSucceeded()
       }
       catch (error) {
-        console.log("Login failed")
+        console.log("Login failed: " + error)
         SessionActions.signInFailed()
       }
     })
