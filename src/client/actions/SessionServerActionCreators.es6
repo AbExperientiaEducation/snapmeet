@@ -5,9 +5,10 @@ const ActionTypes = SessionConstants.ActionTypes
 
 module.exports = {
 
-  signInSucceeded() {
+  signInSucceeded(session) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_IN_SUCCEEDED
+      , session: session
     })
   }
   , signInFailed() {
@@ -15,9 +16,10 @@ module.exports = {
       type: ActionTypes.SIGN_IN_FAILED
     })
   }
-  , signUpSucceeded() {
+  , signUpSucceeded(session) {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.SIGN_UP_SUCCEEDED
+      , session: session
     })
   }
   , signUpFailed() {

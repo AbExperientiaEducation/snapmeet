@@ -43,7 +43,7 @@ app.engine('html', require('ejs').renderFile)
 
 app.post('/login', passport.authenticate('local'),
   function(req, res) {
-    res.json({ id: req.user.id })
+    res.json({ user: req.user })
 })
 
 const DBUsers = require('./db/users.es6')
@@ -55,7 +55,7 @@ app.post('/register', function(req, res) {
       const registrationResult = yield DBUsers.register(registration.username, registration.password)
       req.login({id: registrationResult.id, username: registrationResult.email},
                   function(err){})
-      res.status(200).send("User registered")
+      res.status(200).json({user: req.user})
     } catch(error) {
       console.log(error.stack)
       res.status(500).json(error)

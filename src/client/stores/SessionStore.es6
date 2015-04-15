@@ -5,6 +5,10 @@ const EventEmitter = require('events').EventEmitter
 
 const CHANGE_EVENT = 'change'
 const ActionTypes = SessionConstants.ActionTypes
+var _session = null
+const _setSession = function(session) {
+  _session = session
+}
 
 const SessionStore = Object.assign({}, EventEmitter.prototype, {
   emitChange() {
@@ -19,8 +23,8 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
-  , get() {
-    return _session.id
+  , currentUserSession() {
+    return _session
   }
 })
 
@@ -28,7 +32,7 @@ SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     
     case ActionTypes.SIGN_IN_SUCCEEDED:
-      // Do stuff
+      _setSession(action.session)
       SessionStore.emitChange()
       break;
 
@@ -38,7 +42,7 @@ SessionStore.dispatchToken = MeetgunDispatcher.register((action) => {
       break;
 
     case ActionTypes.SIGN_UP_SUCCEEDED:
-      // Do stuff
+      _setSession(action.session)
       SessionStore.emitChange()
       break;
 

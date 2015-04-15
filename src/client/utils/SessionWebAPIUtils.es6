@@ -14,7 +14,7 @@ module.exports = {
           , data: {username: data.email, password: data.password}
         })
         console.log("Login suceeded")
-        SessionServerActions.signInSucceeded()
+        SessionServerActions.signInSucceeded(session)
       }
       catch (error) {
         console.log("Login failed: " + error.status + ' ' + error.response)
@@ -33,7 +33,7 @@ module.exports = {
         })
         console.log(session)
         console.log("Registration suceeded")
-        SessionServerActions.signUpSucceeded()
+        SessionServerActions.signUpSucceeded(session)
       }
       catch (error) {
         console.log("Registration failed: " + error.status + ' ' + error.response)
