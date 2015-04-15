@@ -19,7 +19,7 @@ module.exports = {
   }
 
   // Take meeting JSON from db and turn it into a meeting record
-  , convertRawMeeting: (rawMeeting) => {
+  , convertRawMeeting(rawMeeting) {
     return new MeetingRecord({
         id: rawMeeting.properties.id  
         , date: new Date(rawMeeting.properties.timestamp)
