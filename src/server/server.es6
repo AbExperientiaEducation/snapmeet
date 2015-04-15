@@ -6,6 +6,7 @@ const co = require('co')
 const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
+const passport = require('./middleware/passport.es6')
 const livedb = require('livedb')
 const sharejs = require('share')
 const livedbMongo = require('livedb-mongo')
@@ -13,7 +14,6 @@ const richText = require('rich-text')
 const Duplex = require('stream').Duplex
 const bodyParser = require('body-parser')
 const sockjs = require('sockjs')
-const passport = require('./middleware/passport.es6')
 require('stackup')
 
 // Create an express instance and set a port variable
