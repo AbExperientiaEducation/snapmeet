@@ -1,5 +1,6 @@
 const MeetingSection = require('./MeetingSection.react.es6')
 const SyncBox = require('./SyncBox.react.es6')
+const SignInForm = require('./SignInForm.react.es6')
 const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const RouteHandler = require('react-router').RouteHandler
@@ -13,6 +14,7 @@ const MeetgunApp = React.createClass({
     return (
       <div className="meetingapp">
         <RouteHandler />
+        <SignInForm />
         <SyncBox /> 
         <MeetingSection />
       </div>

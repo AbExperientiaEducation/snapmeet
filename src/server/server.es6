@@ -13,6 +13,7 @@ const richText = require('rich-text')
 const Duplex = require('stream').Duplex
 const bodyParser = require('body-parser')
 const sockjs = require('sockjs')
+const passport = require('./middleware/passport.es6')
 require('stackup')
 
 // Create an express instance and set a port variable
@@ -32,6 +33,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 const server = require('http').Server(app)
 server.listen(3000)
@@ -108,6 +111,15 @@ sockServer.installHandlers(server, {prefix:'/democat'})
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
+app.post('/login', passport.authenticate('local'),
+  function(req, res) {
+    res.json({ id: req.user.id })
+})
+
+app.get('/register', function(req, res) {
+  res.send('GET sent to register')
+})
+
 app.get('/', function (req, res) {
   res.render('./index.html')
 })
@@ -127,3 +139,15 @@ app.post('/api/meetings/create', function(req, res){
     res.json(meetingResponse[0])
   })
 })
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+}
+
+app.listen(port)

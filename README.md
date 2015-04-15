@@ -15,6 +15,8 @@
 `sudo mkdir /data`
 `sudo mkdir /data/db`
 `sudo chown `whoami` /data/db`
+- install redis
+`brew install redis`
 
 ### Install Project Dependencies
 `npm install`

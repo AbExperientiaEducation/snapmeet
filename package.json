@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "babel": "^4.7.16",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.2",
     "co": "^4.5.1",
     "connect-redis": "^2.2.0",
@@ -21,6 +22,9 @@
     "morgan": "^1.5.2",
     "neo4j": "2.0.0-RC1",
     "quill": "^0.19.1",
+    "passport": "^0.2.1",
+    "passport-http": "^0.2.2",
+    "passport-local": "^1.0.0",
     "react": "~0.13.0",
     "react-router": "^0.13.2",
     "redis": "^0.12.1",
