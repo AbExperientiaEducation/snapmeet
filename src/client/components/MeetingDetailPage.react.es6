@@ -25,12 +25,18 @@ const MeetingDetailPage = React.createClass({
   }
 
   , render: function() {
-    return (
-      <div className="meeting-detail">
-        <h2>Page for { this.state.meeting.id }</h2>
-        <SyncBox /> 
-      </div>
-    )
+    if(this.state.meeting) {
+      return (
+        <div className="meeting-detail">
+          <h2>Page for { this.state.meeting.id }</h2>
+          <SyncBox id={ this.state.meeting.id } /> 
+        </div>
+      )      
+    } else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
 
   , _onChange: function() {

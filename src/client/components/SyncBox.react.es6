@@ -4,9 +4,9 @@ const ColorUtils = require('../utils/ColorUtils.es6')
 const React = require('react')
 const Quill = require('quill')
 
-const getStateFromStore = () => {
+const getStateFromStore = (props) => {
   return { 
-    doc: SyncdocStore.getDocument('foodoc')
+    doc: SyncdocStore.getDocument(props.id)
   }
 }
 
@@ -19,7 +19,7 @@ const SyncBox = React.createClass({
   }
 
   , getInitialState() {
-    return getStateFromStore()
+    return getStateFromStore(this.props)
   }
 
   //  Never re-render. Ensures we don't break our quill binding
@@ -32,16 +32,17 @@ const SyncBox = React.createClass({
 
   , componentWillUnmount() {
     this.quillBox.editor.destroy()
-    SyncConnUtils.removeCursorChangeListener('foodoc') 
+    SyncConnUtils.removeCursorChangeListener(this.props.id) 
     SyncdocStore.removeChangeListener(this._onChange)
   }
 
   , _onChange() {
-    this.setState(getStateFromStore())
+    this.setState(getStateFromStore(this.props))
     this.setupQuillIfNecessary()
   }
 
   , setupQuillIfNecessary() {
+    const docId = this.props.id
     if(!this.quillBox && this.state.doc) {
       React.findDOMNode(this).innerHTML = '<div id="toolbar">' + 
         '<!-- Add font size dropdown -->' +
@@ -83,11 +84,11 @@ const SyncBox = React.createClass({
 
       this.quillBox.on('selection-change', function(range){
         const pos = range ? range.end : null
-        SyncConnUtils.broadcastCursor('foodoc', authorId, pos)
+        SyncConnUtils.broadcastCursor(docId, authorId, pos)
       })
 
       this.colorGenerator = ColorUtils.uniqueColorGenerator()
-      SyncConnUtils.addCursorChangeListener('foodoc', (userId, cursorPos) => {
+      SyncConnUtils.addCursorChangeListener(docId, (userId, cursorPos) => {
         if(userId !== authorId) {
           cursorModule.setCursor(userId, cursorPos, 'anonymous', this.colorGenerator.colorForId(userId))  
         }
