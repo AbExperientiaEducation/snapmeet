@@ -23,7 +23,7 @@ module.exports = {
         const parsed = JSON.parse(message.data)
         if(parsed.type === 'cursor-data' && !!parsed.docId) {
           if(_socketObservers[parsed.docId]) {
-            _socketObservers[parsed.docId](parsed.userId, parsed.cursorPos)  
+            _socketObservers[parsed.docId](parsed.userId, parsed.displayString, parsed.cursorPos)  
           }
         } else {
           shareJSOnmessage.apply(this, arguments)  
@@ -56,8 +56,8 @@ module.exports = {
     })
   }
 
-  , broadcastCursor(docId, userId, cursorPos) {
-    _socket.send(JSON.stringify({type: 'cursor-data', docId: docId, userId: userId, cursorPos: cursorPos}))
+  , broadcastCursor(docId, userId, displayString, cursorPos) {
+    _socket.send(JSON.stringify({type: 'cursor-data', docId: docId, userId: userId, displayString: displayString, cursorPos: cursorPos}))
   }
   , addCursorChangeListener(docId, callback) {
     _socket.send(JSON.stringify({type: 'cursor-watch', docId: docId})) 

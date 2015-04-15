@@ -21,11 +21,12 @@ const createServer = function(){
     cursorWatchers[docId].push(conn)
   }
 
-  const notifyWatchers = function(docId, userId, cursorPos){
+  const notifyWatchers = function(docId, userId, displayString, cursorPos){
     cursorWatchers[docId].forEach(function(conn){
       conn.write(JSON.stringify({
         docId: docId
         , userId: userId
+        , displayString: displayString
         , cursorPos: cursorPos
         , type: 'cursor-data'
       }))
@@ -51,7 +52,7 @@ const createServer = function(){
       parsed = JSON.parse(data)
       switch(parsed.type) {
         case 'cursor-data':
-          notifyWatchers(parsed.docId, parsed.userId, parsed.cursorPos)
+          notifyWatchers(parsed.docId, parsed.userId, parsed.displayString, parsed.cursorPos)
           break
         case 'cursor-watch':
           setAsWatcher(parsed.docId, conn)

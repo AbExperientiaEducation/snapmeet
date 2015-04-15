@@ -3,11 +3,24 @@ const SyncConnUtils = require('../utils/SyncConnUtils.es6')
 const ColorUtils = require('../utils/ColorUtils.es6')
 const React = require('react')
 const Quill = require('quill')
+const Shortid = require('shortid')
+const SessionStore = require('../stores/SessionStore.es6')
 
 const getStateFromStore = (props) => {
-  return { 
+  const userSession = SessionStore.currentUserSession()
+  const user = userSession && userSession.user || null
+  const state = {
     doc: SyncdocStore.getDocument(props.id)
   }
+
+  if(user) {
+    Object.assign(state, {
+      userDisplayString: user.email
+    , userId: user.id
+    })
+  }
+
+  return state
 }
 
 const SyncBox = React.createClass({
@@ -43,6 +56,7 @@ const SyncBox = React.createClass({
 
   , setupQuillIfNecessary() {
     const docId = this.props.id
+    const displayString = this.state.userDisplayString || 'anonymous'
     if(!this.quillBox && this.state.doc) {
       React.findDOMNode(this).innerHTML = '<div id="toolbar">' + 
         '<!-- Add font size dropdown -->' +
@@ -58,17 +72,17 @@ const SyncBox = React.createClass({
       '<div id="editor"></div>' +
       '<div id="authors"></div>'
 
-      const authorId = Math.random(100)
+      const authorId = this.state.userId || 'Author' + Shortid.generate()
       this.quillBox = new Quill('#editor', {
         modules: {
           'authorship': {
-            authorId: 'Author' + authorId,
-            enabled: true
-          },
-          'toolbar': {
+            authorId: authorId
+            , enabled: true
+          }
+          , 'toolbar': {
             container: '#toolbar'
-          },
-          'link-tooltip': true
+          }
+          , 'link-tooltip': true
         },
         theme: 'snow'
       })
@@ -84,13 +98,13 @@ const SyncBox = React.createClass({
 
       this.quillBox.on('selection-change', function(range){
         const pos = range ? range.end : null
-        SyncConnUtils.broadcastCursor(docId, authorId, pos)
+        SyncConnUtils.broadcastCursor(docId, authorId, displayString, pos)
       })
 
       this.colorGenerator = ColorUtils.uniqueColorGenerator()
-      SyncConnUtils.addCursorChangeListener(docId, (userId, cursorPos) => {
+      SyncConnUtils.addCursorChangeListener(docId, (userId, displayString, cursorPos) => {
         if(userId !== authorId) {
-          cursorModule.setCursor(userId, cursorPos, 'anonymous', this.colorGenerator.colorForId(userId))  
+          cursorModule.setCursor(userId, cursorPos, displayString, this.colorGenerator.colorForId(userId))  
         }
       })
 
