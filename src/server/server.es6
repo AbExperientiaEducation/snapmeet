@@ -53,8 +53,9 @@ app.post('/register', function(req, res) {
   co(function* (){
     try {
       const registrationResult = yield DBUsers.register(registration.username, registration.password)
-      req.login()
-      res.json(registrationResult)
+      req.login({id: registrationResult.id, username: registrationResult.email},
+                  function(err){})
+      res.status(200).send("User registered")
     } catch(error) {
       console.log(error.stack)
       res.status(500).json(error)
