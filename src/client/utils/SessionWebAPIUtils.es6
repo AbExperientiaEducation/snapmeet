@@ -4,7 +4,7 @@ var co = require('co')
 
 module.exports = {
 
-  signIn: (data) => {
+  signIn(data) {
     co(function* (){
       try {
         console.log("Attempting login with: " + data.email + " and " + data.password)
@@ -22,7 +22,7 @@ module.exports = {
       }
     })
   }
-  , signUp: (data) => {
+  , signUp(data) {
     co(function* (){
       try {
         console.log("Attempting registration with: " + data.email + " and " + data.password)
