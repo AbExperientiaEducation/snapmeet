@@ -6,6 +6,8 @@
 `npm install --global gulp`
 - install node-migrate from our harmony fork
 `npm install -g migrate`
+- install npm-shrinkwrap
+`npm install -g npm-shrinkwrap`
 - install neo4j
 `brew install neo4j`
 - install JDK7 (neo4j dependency)
@@ -49,7 +51,7 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 
         if ( git diff --cached --name-status | grep -q '[[:blank:]]package.json' ) && ! ( git diff --cached --name-status | grep -q npm-shrinkwrap.json ); then
             echo "Running shrinkwrap and adding new npm-shrinkwrap.json to staged files"
-            npm shrinkwrap
+            npm-shrinkwrap --dev
             git add ./npm-shrinkwrap.json
         fi
         ```
