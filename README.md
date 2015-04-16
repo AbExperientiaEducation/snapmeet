@@ -38,6 +38,22 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 - Start node-inspector (it should attach to the running node process)
 `node-debug`
 
+### Dev Environment Additions
+#### Git hooks
+- Add a pre-commit hook for `shrinkwrap`
+    - `touch .git/hooks/pre-commit`
+    - `chmod +x !$`
+    - Add this to the newly created file
+        ```
+        #!/bin/sh
+
+        if ( git diff --cached --name-status | grep -q '[[:blank:]]package.json' ) && ! ( git diff --cached --name-status | grep -q npm-shrinkwrap.json ); then
+            echo "Running shrinkwrap and adding new npm-shrinkwrap.json to staged files"
+            npm shrinkwrap
+            git add ./npm-shrinkwrap.json
+        fi
+        ```
+
 ## Helpful development stuff
 - Ignore node_modules and bundles in sublime text search
 `Sublime Text -> Preferences -> Settings - User`
