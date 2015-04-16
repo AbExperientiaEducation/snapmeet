@@ -7,7 +7,6 @@
 */
 
 var browserify   = require('browserify')
-var browserSync  = require('browser-sync')
 var watchify     = require('watchify')
 var mergeStream  = require('merge-stream')
 var bundleLogger = require('../util/bundleLogger')
@@ -37,9 +36,6 @@ var browserifyTask = function(callback, devMode) {
       .pipe(source(bundleConfig.outputName))
       // Specify the output destination
       .pipe(gulp.dest(bundleConfig.dest))
-      .pipe(browserSync.reload({
-        stream: true
-      }))
   }
 
   if(devMode) {
@@ -47,6 +43,7 @@ var browserifyTask = function(callback, devMode) {
     b = watchify(b)
     // Rebundle on update
     b.on('update', bundle)
+    b.on('time', function(){bundleLogger.end(bundleConfig.outputName)})
     bundleLogger.watch(bundleConfig.outputName)
   }
 

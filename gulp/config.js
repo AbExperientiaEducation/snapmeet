@@ -2,16 +2,11 @@ var dest = "./public/js"
 var src = './src'
 
 module.exports = {
-  browserSync: {
-    proxy: "http://localhost:3000",
-    port: "5000",
-    browser: ['google chrome']
-  },
   sass: {
-    src: src + "/sass/**/*.{sass,scss}",
-    dest: dest,
+    src: src + "/style/app.scss",
+    watch: src + "/style/**/*.{sass,scss}",
+    dest: "./public/css",
     settings: {
-      indentedSyntax: true, // Enable .sass syntax!
       imagePath: 'images' // Used by the image-url helper
     }
   },

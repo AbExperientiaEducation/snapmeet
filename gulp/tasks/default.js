@@ -1,3 +1,3 @@
 var gulp = require('gulp')
 
-gulp.task('default', ['sass', 'build-common-lib', 'watch', 'start-db', 'start-redis'])
+gulp.task('default', ['nodemon', 'watch', 'start-db', 'start-redis', 'build-common-lib'])
