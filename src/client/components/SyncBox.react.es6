@@ -3,7 +3,6 @@ const React = require('react')
 const SessionStore = require('../stores/SessionStore.es6')
 const QuillManager = require('../utils/QuillManager.es6')
 
-
 const getStateFromStore = (props) => {
   const userSession = SessionStore.currentUserSession()
   const user = userSession && userSession.user || null
@@ -36,7 +35,10 @@ const SyncBox = React.createClass({
 
   , componentWillUnmount() {
     SyncdocStore.removeChangeListener(this._onChange)
-    this.QuillManager && this.QuillManager.die()
+    if(this.quillManager) {
+      this.state.doc.removeListener('op', this.opListener)
+      this.quillManager.die()
+    }
   }
 
   , _onChange() {
@@ -50,9 +52,10 @@ const SyncBox = React.createClass({
     const domTarget = React.findDOMNode(this)
     const initialContents = this.state.doc.getSnapshot().ops
     this.quillManager = new QuillManager(this.props.id, this.state.user, onOpFn, domTarget, initialContents)
-    this.state.doc.on('op', (op, isLocal) => {
+    this.opListener = (op, isLocal) => {
       if(!isLocal) this.quillManager.updateContents(op)
-    })
+    }
+    this.state.doc.on('op', this.opListener)
   }
 })
 

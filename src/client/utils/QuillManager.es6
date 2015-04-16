@@ -50,7 +50,7 @@ class QuillManager {
   }
 
   die() {
-    SyncConnUtils.removeCursorChangeListener(this.props.id) 
+    SyncConnUtils.removeCursorChangeListener(this.docId) 
     this.quillBox.editor.destroy()
   }
 
