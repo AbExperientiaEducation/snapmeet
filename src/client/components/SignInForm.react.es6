@@ -45,18 +45,17 @@ const SessionSignInForm = React.createClass({
 
   , render() {
     let session = this.state.session
-    let welcome
+    let signInArea
     if (session) {
-      welcome = <div>Hello, {session.user.email}</div>
+      signInArea = <div>Hello, {session.user.email}</div>
+    } else {
+      signInArea = <form><input type="email" id="email" name="email" ref="email" /><input type="password" id="password" name="password" ref="password" /><button type="submit" onClick={this.signIn}>Sign In</button> or <button type="submit" onClick={this.register}>Register</button></form>
     }
     return (
       // A sign in form
-      <form>
-        {welcome}
-        <input type="email" id="email" name="email" ref="email" />
-        <input type="password" id="password" name="password" ref="password" />
-        <button type="submit" onClick={this.signIn}>Sign In</button> or <button type="submit" onClick={this.register}>Register</button>
-      </form>
+      <div>
+        {signInArea}
+      </div>
     )
   }
 
