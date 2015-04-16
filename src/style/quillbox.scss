@@ -1,3 +1,13 @@
-.ql-container {
+@import '_colors';
+
+.sync-box {
   border: 1px solid #ccc;
+  @include materialShadow(2);
+  max-width: 640px;
+  height: 400px;
+  margin: auto;
+}
+
+.ql-toolbar {
+  border-bottom: 1px solid #ccc;
 }
