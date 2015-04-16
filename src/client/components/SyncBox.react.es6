@@ -31,6 +31,7 @@ const SyncBox = React.createClass({
 
   , componentDidMount() {
     SyncdocStore.addChangeListener(this._onChange)
+    this.setupQuillIfNecessary()
   }
 
   , componentWillUnmount() {
