@@ -3,7 +3,7 @@ const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
-MeetingWebAPIUtils.getAllMeetings()
+MeetingWebAPIUtils.getAll()
 
 const HomePage = React.createClass({
   mixins: [PureRenderMixin]
