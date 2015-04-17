@@ -9,6 +9,7 @@ const RedisStore = require('connect-redis')(session)
 const passport = require('./middleware/passport.es6')
 const bodyParser = require('body-parser')
 const socketUtils = require('./utils/socket_utils.es6')
+const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 
 require('stackup')
 
@@ -67,21 +68,7 @@ app.get('/', function (req, res) {
   res.render('./index.html')
 })
 
-const DBMeetings = require('./db/meetings.es6')
-app.get('/api/meetings', function(req, res) {
-  co(function* (){
-    const meetings = yield DBMeetings.fetchAll() 
-    res.json(meetings)
-  })
-})
-
-app.post('/api/meetings/create', function(req, res){
-  const meetingJson = req.body
-  co(function* (){
-    const meetingResponse = yield DBMeetings.create(meetingJson)
-    res.json(meetingResponse[0])
-  })
-})
+MeetingEndpoints.register(app)
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

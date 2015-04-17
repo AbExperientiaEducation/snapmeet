@@ -34,4 +34,10 @@ module.exports = {
       , timestamp: meeting.date.getTime()
     }
   }
+
+  // Cast meeting JSON to correct native data types
+  , castMeetingJson(meetingJson) {
+    meetingJson.timestamp = parseInt(meetingJson.timestamp)
+    return meetingJson
+  }
 }

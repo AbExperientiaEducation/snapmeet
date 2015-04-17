@@ -26,7 +26,7 @@ module.exports = {
     script: 'src/server/server.es6',
     watch: 'src/server/',
     execMap: {
-      es6: 'node --harmony'
+      es6: 'babel-node'
     }
   },
   production: {

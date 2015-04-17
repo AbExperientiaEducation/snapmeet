@@ -9,7 +9,7 @@ const mongoUrl = 'mongodb://127.0.0.1:27017/test'
 livedb.ot.registerType(richText.type)
 
 const createServer = function(){
-  docStore = livedb.client(livedbMongo(mongoUrl + '?auto_reconnect', {
+  const docStore = livedb.client(livedbMongo(mongoUrl + '?auto_reconnect', {
     safe: false
   }))
 
@@ -33,7 +33,7 @@ const createServer = function(){
     })
   }
 
-  sockServer = sockjs.createServer()
+  const sockServer = sockjs.createServer()
   sockServer.on('connection', function(conn) {
     const stream = new Duplex({objectMode: true})
     stream.headers = conn.headers

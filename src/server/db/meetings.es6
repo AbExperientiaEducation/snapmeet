@@ -13,7 +13,12 @@ module.exports.fetchAll = function(){
 }
 
 module.exports.create = function(meetingInfo){
-  qstring = 'CREATE (meeting:Meeting {timestamp:' + meetingInfo.timestamp + ', id: "' + meetingInfo.id + '"}) RETURN meeting'
-  return cypher({query: qstring})
+  const query = { query: 'CREATE (meeting:Meeting {timestamp:{timestamp}, id:{id}}) RETURN meeting',
+                  params: {
+                    timestamp: meetingInfo.timestamp
+                    , id: meetingInfo.id
+                  }
+                }
+  return cypher(query)
 }
 
