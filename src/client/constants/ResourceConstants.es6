@@ -1,10 +1,10 @@
 const keyMirror = require('keymirror')
 
-const _generateServerActions= function() {
-  return keyMirror({
-    RECEIVE_RAW: null
-    , CREATE: null
-  })
+const _generateServerActions= function(type) {
+  return {
+    RECEIVE_RAW: `RECEIVE_RAW_${type}`
+    , CREATE: `CREATE_${type}`
+  }
 }
 
 const _resourceTypes = keyMirror({
@@ -14,7 +14,7 @@ const _resourceTypes = keyMirror({
 
 const _actionTypes = {}
 Object.keys(_resourceTypes).forEach(function(type) {
-  _actionTypes[type] = _generateServerActions()
+  _actionTypes[type] = _generateServerActions(type)
 })
 
 module.exports = {

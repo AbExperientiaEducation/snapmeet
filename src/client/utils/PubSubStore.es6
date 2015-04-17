@@ -16,3 +16,4 @@ module.exports = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback)
   }  
 })
+  

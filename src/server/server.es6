@@ -10,6 +10,8 @@ const passport = require('./middleware/passport.es6')
 const bodyParser = require('body-parser')
 const socketUtils = require('./utils/socket_utils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
+const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
+
 
 require('stackup')
 
@@ -69,6 +71,7 @@ app.get('/', function (req, res) {
 })
 
 MeetingEndpoints.register(app)
+TaskEndpoints.register(app)
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

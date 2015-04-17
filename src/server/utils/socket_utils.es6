@@ -49,7 +49,7 @@ const createServer = function(){
     stream.on('error', function (msg) { conn.close() })
    
     conn.on('data', function (data) {
-      parsed = JSON.parse(data)
+      const parsed = JSON.parse(data)
       switch(parsed.type) {
         case 'cursor-data':
           notifyWatchers(parsed.docId, parsed.userId, parsed.displayString, parsed.cursorPos)

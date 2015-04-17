@@ -2,7 +2,7 @@ const React = require('react')
 const MeetingClientActions = require('../actions/MeetingClientActionCreators.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
-const MeetingListItem = React.createClass({
+const CreateMeetingButton = React.createClass({
   mixins: [PureRenderMixin]
   
   , createMeeting() {
@@ -15,4 +15,4 @@ const MeetingListItem = React.createClass({
   }
 })
 
-module.exports = MeetingListItem
+module.exports = CreateMeetingButton
