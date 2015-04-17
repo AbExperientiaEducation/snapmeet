@@ -3,9 +3,7 @@ const ResourceConstants = require('../constants/ResourceConstants.es6')
 const MeetingUtils = require('../../shared/utils/MeetingUtils.es6')
 const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
 const Immutable = require('immutable')
-const EventEmitter = require('events').EventEmitter
-
-const CHANGE_EVENT = 'change'
+const PubSubStore = require('../utils/PubSubStore.es6')
 const ActionTypes = ResourceConstants.ActionTypes.MEETING
 
 let _meetings = Immutable.Map()
@@ -17,20 +15,8 @@ const _addMeetings = (rawMeetings) => {
   })
 }
 
-const MeetingStore = Object.assign({}, EventEmitter.prototype, {
-  emitChange() {
-    this.emit(CHANGE_EVENT)
-  }
-
-  , addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback)
-  }
-
-  , removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback)
-  }
-
-  , get(id) {
+const MeetingStore = Object.assign({}, PubSubStore, {
+  get(id) {
     return _meetings.get(id)
   }
 

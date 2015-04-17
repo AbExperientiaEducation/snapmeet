@@ -1,29 +1,16 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const SessionConstants = require('../constants/SessionConstants.es6')
 const Immutable = require('immutable')
-const EventEmitter = require('events').EventEmitter
+const PubSubStore = require('../utils/PubSubStore.es6')
 
-const CHANGE_EVENT = 'change'
 const ActionTypes = SessionConstants.ActionTypes
 var _session = null
 const _setSession = function(session) {
   _session = session
 }
 
-const SessionStore = Object.assign({}, EventEmitter.prototype, {
-  emitChange() {
-    this.emit(CHANGE_EVENT)
-  }
-
-  , addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback)
-  }
-
-  , removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback)
-  }
-
-  , currentUserSession() {
+const SessionStore = Object.assign({}, PubSubStore, {
+  currentUserSession() {
     return _session
   }
 })
