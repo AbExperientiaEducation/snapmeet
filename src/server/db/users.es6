@@ -32,7 +32,7 @@ module.exports.findById = function(id) {
 
 module.exports.register = function(email, password){
   // do something hashy with password
-  var hashedPassword = authSvc.generateHash(password)
+  const hashedPassword = authSvc.generateHash(password)
   return singleCypher({ query: 'MERGE (id:UniqueId{name:"User"}) ON CREATE SET id.count = 1 ON MATCH SET id.count = id.count + 1 WITH id.count AS uid CREATE (p:User{id:uid,email:{email},password:{password}}) RETURN p AS user',
                         params: {
                           email: email,

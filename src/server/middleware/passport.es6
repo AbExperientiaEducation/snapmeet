@@ -1,4 +1,4 @@
-var passport = require('passport')
+const passport = require('passport')
 const BasicStrategy = require('passport-http').BasicStrategy
 const LocalStrategy = require('passport-local').Strategy
 const co = require('co')
