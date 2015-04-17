@@ -4,7 +4,7 @@ const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
 
 const ActionTypes = SessionConstants.ActionTypes
-var _session = null
+let _session = null
 const _setSession = function(session) {
   _session = session
 }

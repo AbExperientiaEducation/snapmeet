@@ -1,6 +1,6 @@
 const SessionServerActions = require('../actions/SessionServerActionCreators.es6')
-var reqwest = require('reqwest')
-var co = require('co')
+const reqwest = require('reqwest')
+const co = require('co')
 
 module.exports = {
 

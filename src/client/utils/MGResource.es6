@@ -1,6 +1,6 @@
 const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
-var reqwest = require('reqwest')
-var co = require('co')
+const reqwest = require('reqwest')
+const co = require('co')
 
 class MGResource {
   constructor(opts) {
