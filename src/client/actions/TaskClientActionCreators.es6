@@ -1,6 +1,6 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const ActionTypes = ResourceConstants.Meeting.ActionTypes
+const ActionTypes = ResourceConstants.Task.ActionTypes
 
 module.exports = {
   createNewTask(meetingId) {

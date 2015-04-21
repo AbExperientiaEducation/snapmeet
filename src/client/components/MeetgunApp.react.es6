@@ -8,8 +8,8 @@ const Router = require('react-router')
 const RouteHandler = Router.RouteHandler
 const Link = Router.Link
 
-const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
-MeetingWebAPIUtils.getAll()
+const MeetingResource = require('../utils/MeetingResource.es6')
+MeetingResource.getAll()
 
 const MeetgunApp = React.createClass({
   mixins: [PureRenderMixin]

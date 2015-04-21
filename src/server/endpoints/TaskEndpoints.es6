@@ -1,22 +1,28 @@
 const co = require('co')
 const DBTasks = require('../db/tasks.es6')
-const TaskUtils = require('../../shared/utils/TaskUtils.es6')
+const socketIOServer = require('../utils/SocketIOUtils.es6')
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
+const RestActions = ResourceConstants.RestActions
 
-const register = function(app) {
-  app.get('/api/tasks', function(req, res) {
-    co(function* (){
-      const tasks = yield DBTasks.fetchAll() 
-      res.json(tasks)
-    })
-  })
+const createTask = function(data) {
+  const taskJson = data.resource
+  return DBTasks.create(taskJson)
+}
 
-  app.post('/api/tasks/create', function(req, res){
-    const taskJson = req.body
-    co(function* (){
-      const taskResponse = yield DBTasks.create(taskJson)
-      res.json(taskResponse[0])
-    })
-  })
+const getTasks = function(data) {
+  return DBTasks.fetchAll(data.meetingId)   
+}
+
+const register = function() {
+    const handler = function(data) {
+    switch(data.action) {
+      case RestActions.GET:
+        return getMeetings()
+      case RestActions.POST:
+        return createTask(data)
+    }
+  }
+  socketIOServer.registerResourceHandler(ResourceConstants.Task.LABEL, handler)
 }
 
 module.exports = {

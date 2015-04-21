@@ -1,6 +1,5 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const TaskUtils = require('../../shared/utils/TaskUtils.es6')
 const TaskResource = require('../utils/TaskResource.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
@@ -11,7 +10,7 @@ let _tasks = Immutable.Map()
 const _addTasks = (rawTasks) => {
   rawTasks.forEach( (task) => {
     // Always add to _tasks, or replace whatever was there.
-    _tasks = _tasks.set(task.properties.id, TaskUtils.convertRawTask(task))
+    _tasks = _tasks.set(task.properties.id, TaskResource.inflateRecord(task))
   })
 }
 
@@ -20,15 +19,15 @@ const TaskStore = Object.assign({}, PubSubStore, {
     return _tasks.get(id)
   }
 
-  , getAll() {
-    return _tasks
+  , getTasksForMeeting(meetingId) {
+    
   }
 })
 
 TaskStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE:
-      const task = TaskUtils.createNewTask(action.meetingId)
+      const task = TaskResource.newRecord({meetingId: action.meetingId})
       TaskResource.saveNew(task)
       _tasks[task.id] = task
       TaskStore.emitChange()

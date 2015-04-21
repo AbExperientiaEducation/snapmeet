@@ -1,7 +1,6 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const MeetingUtils = require('../../shared/utils/MeetingUtils.es6')
-const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
+const MeetingResource = require('../utils/MeetingResource.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
 const ResourceName = ResourceConstants.Meeting.LABEL
@@ -12,7 +11,7 @@ let _meetings = Immutable.Map()
 const _addMeetings = (rawMeetings) => {
   rawMeetings.forEach( (meeting) => {
     // Always add to _meetings, or replace whatever was there.
-    _meetings = _meetings.set(meeting.properties.id, MeetingUtils.convertRawMeeting(meeting))
+    _meetings = _meetings.set(meeting.properties.id, MeetingResource.inflateRecord(meeting))
   })
 }
 
@@ -29,8 +28,8 @@ const MeetingStore = Object.assign({}, PubSubStore, {
 MeetingStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE:
-      const meeting = MeetingUtils.createNewMeeting()
-      MeetingWebAPIUtils.saveNew(meeting)
+      const meeting = MeetingResource.newRecord({})
+      MeetingResource.saveNew(meeting)
       _addMeetings([{properties: meeting}])
       MeetingStore.emitChange()
       break;

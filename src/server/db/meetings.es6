@@ -13,9 +13,9 @@ module.exports.fetchAll = function(){
 }
 
 module.exports.create = function(meetingInfo){
-  const query = { query: 'CREATE (meeting:Meeting {timestamp:{timestamp}, id:{id}}) RETURN meeting',
+  const query = { query: 'CREATE (meeting:Meeting {createdTimestamp:{createdTimestamp}, id:{id}}) RETURN meeting',
                   params: {
-                    timestamp: meetingInfo.timestamp
+                    createdTimestamp: meetingInfo.createdTimestamp
                     , id: meetingInfo.id
                   }
                 }
