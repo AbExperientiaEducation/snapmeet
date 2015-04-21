@@ -40,6 +40,22 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 - Start node-inspector (it should attach to the running node process)
 `node-debug`
 
+### Sublime Text Setup
+* Add Package Control by following `https://sublime.wbond.net/installation`
+* Add packages via Package Control `cmd + shift + p`
+    - SublimeGit 
+    - Fix Mac Path
+    - Babel
+    - SCSS
+* Optional Packages
+    - BracketHiglighter
+    - GitGutter
+    - GotoRowCol
+
+* Add to sublime settings:
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true
+
 ### Dev Environment Additions
 #### Git hooks
 - Add a pre-commit hook for `shrinkwrap`
@@ -57,6 +73,7 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
         ```
 
 ## Helpful development stuff
+
 - Ignore node_modules and bundles in sublime text search
 `Sublime Text -> Preferences -> Settings - User`
 `"binary_file_patterns":
