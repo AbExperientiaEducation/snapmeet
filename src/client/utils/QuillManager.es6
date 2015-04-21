@@ -1,6 +1,6 @@
 const ColorUtils = require('./ColorUtils.es6')
 const Quill = require('quill')
-const SyncConnUtils = require('./SyncConnUtils.es6')
+const CursorTracking = require('./CursorTracking.es6')
 const Shortid = require('shortid')
 
 class QuillManager {
@@ -38,7 +38,7 @@ class QuillManager {
   }
 
   die() {
-    SyncConnUtils.removeCursorChangeListener(this.docId) 
+    CursorTracking.removeCursorChangeListener(this.docId) 
     this.quillBox.editor.destroy()
   }
 
@@ -49,11 +49,11 @@ class QuillManager {
 
     this.quillBox.on('selection-change', (range) => {
       const pos = range ? range.end : null
-      SyncConnUtils.broadcastCursor(this.docId, this.authorId, this.displayName, pos)
+      CursorTracking.broadcastCursor(this.docId, this.authorId, this.displayName, pos)
     })
 
     this.colorGenerator = ColorUtils.uniqueColorGenerator()
-    SyncConnUtils.addCursorChangeListener(this.docId, (userId, displayString, cursorPos) => {
+    CursorTracking.addCursorChangeListener(this.docId, (userId, displayString, cursorPos) => {
       if(userId !== this.authorId) {
         cursorModule.setCursor(userId, cursorPos, displayString, this.colorGenerator.colorForId(userId))  
       }

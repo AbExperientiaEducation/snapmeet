@@ -49,7 +49,6 @@ module.exports = {
       "immutable",
       "quill",
       "rich-text",
-      "sockjs-client",
       "share/lib/client/index.js",
       "react-router"
     ]

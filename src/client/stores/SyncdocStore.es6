@@ -1,11 +1,10 @@
 const ActionTypes = require('../constants/SocketConstants.es6').ActionTypes
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
-const SyncConnUtils = require('../utils/SyncConnUtils.es6')
+const SyncDocConn = require('../utils/SyncDocConn.es6')
 const Immutable = require('immutable')
 const EventEmitter = require('events').EventEmitter
 
 const CHANGE_EVENT = 'change'
-const _syncConn = SyncConnUtils.getSyncConn()
 let _documents = Immutable.Map()
 
 const _addDocument = (doc) => {
@@ -32,7 +31,7 @@ const SyncdocStore = Object.assign({}, EventEmitter.prototype, {
   , getDocument(docName) {
     const doc = _documents.get(docName)
     if(!doc) {
-      SyncConnUtils.fetchDocument(docName)
+      SyncDocConn.fetchDocument(docName)
     }
     return doc
   }
