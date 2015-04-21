@@ -3,6 +3,7 @@ const ResourceConstants = require('../../shared/constants/ResourceConstants.es6'
 const Actions = ResourceConstants.RestActions
 const Immutable = require('immutable')
 const Shortid = require('shortid')
+const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
 
 class MGResource {
   constructor(opts) {
@@ -24,26 +25,24 @@ class MGResource {
     this.socket.emit(ResourceConstants.REST_ACTION_EVENT, data)
   }
 
-  saveNew(resource) {
-    this.makeRestCall(Actions.POST, {
-      resource: resource
-    })
-  }
-
   getAll() {
     this.makeRestCall(Actions.GET)
   }
 
   inflateRecord(rawRecord) {
-    return new this.Record(rawRecord.properties)
+    return new this.Record(rawRecord)
   }
 
-  newRecord(properties) {
-    const properties = Object.assign(properties, {
+  createNewRecord(properties) {
+    const rawResource = Object.assign(properties, {
       id: Shortid.generate()
       , createdTimestamp: Date.now()
     })
-    return new this.Record(properties)
+
+    this.makeRestCall(Actions.POST, { resource: rawResource })
+    const resources = {}
+    resources[this.type] = [rawResource]
+    setTimeout(function(){ServerResourceActionCreators.receiveResources(resources)}, 0)    
   }
 }
 

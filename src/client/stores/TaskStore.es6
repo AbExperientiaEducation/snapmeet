@@ -10,7 +10,7 @@ let _tasks = Immutable.Map()
 const _addTasks = (rawTasks) => {
   rawTasks.forEach( (task) => {
     // Always add to _tasks, or replace whatever was there.
-    _tasks = _tasks.set(task.properties.id, TaskResource.inflateRecord(task))
+    _tasks = _tasks.set(task.id, TaskResource.inflateRecord(task))
   })
 }
 
@@ -27,7 +27,7 @@ const TaskStore = Object.assign({}, PubSubStore, {
 TaskStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE:
-      const task = TaskResource.newRecord({meetingId: action.meetingId})
+      const task = TaskResource.createNewRecord({meetingId: action.meetingId})
       TaskResource.saveNew(task)
       _tasks[task.id] = task
       TaskStore.emitChange()

@@ -13,7 +13,8 @@ const groupReturnedResources = function(resources) {
     resource.labels.forEach(function(label){
       label = label.toUpperCase()
       if(!response[label]) response[label] = []
-      response[label].push(resource)
+      // Our JSON attrs are nested in a 'properties' has by DB. Unwrap them.
+      response[label].push(resource.properties)
     })
     delete resource.labels
   })

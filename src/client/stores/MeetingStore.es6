@@ -11,7 +11,7 @@ let _meetings = Immutable.Map()
 const _addMeetings = (rawMeetings) => {
   rawMeetings.forEach( (meeting) => {
     // Always add to _meetings, or replace whatever was there.
-    _meetings = _meetings.set(meeting.properties.id, MeetingResource.inflateRecord(meeting))
+    _meetings = _meetings.set(meeting.id, MeetingResource.inflateRecord(meeting))
   })
 }
 
@@ -28,10 +28,7 @@ const MeetingStore = Object.assign({}, PubSubStore, {
 MeetingStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE:
-      const meeting = MeetingResource.newRecord({})
-      MeetingResource.saveNew(meeting)
-      _addMeetings([{properties: meeting}])
-      MeetingStore.emitChange()
+      MeetingResource.createNewRecord({})
       break;
 
     case ResourceConstants.RECEIVE_RAW_EVENT:
