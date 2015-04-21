@@ -1,10 +1,10 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
-const ResourceConstants = require('../constants/ResourceConstants.es6')
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const TaskUtils = require('../../shared/utils/TaskUtils.es6')
 const TaskResource = require('../utils/TaskResource.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
-const ActionTypes = ResourceConstants.ActionTypes.TASK
+const ActionTypes = ResourceConstants.Task.ActionTypes
 
 let _tasks = Immutable.Map()
 
@@ -34,7 +34,8 @@ TaskStore.dispatchToken = MeetgunDispatcher.register((action) => {
       TaskStore.emitChange()
       break;
 
-    case ActionTypes.RECEIVE_RAW:
+    case ResourceConstants.RECEIVE_RAW_EVENT:
+      if(!action.groupedRawResources[ResourceConstants.Task.LABEL]) return
       _addTasks(action.rawResources)
       TaskStore.emitChange()
       break;

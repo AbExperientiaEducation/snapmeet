@@ -7,7 +7,6 @@ const TaskRecord = Immutable.Record({
   , due: null
   , title: null
   , assignees: []
-  , persisted: null
 })
 
 module.exports = {
@@ -16,8 +15,7 @@ module.exports = {
     return new TaskRecord({
       id: Shortid.generate()
       , meetingId: meetingId
-      , created: new Date()
-      , persisted: false
+      , createdTimestamp: Date.now()
     })
   }
 
@@ -25,30 +23,11 @@ module.exports = {
   , convertRawTask(rawTask) {
     return new TaskRecord({
         id: rawTask.properties.id  
-        , meetingId: rawTask.meetingId
-        , created: new Date(rawTask.properties.createdTimestamp)
-        , due: rawTask.dueTimestamp ? new Date(rawTask.properties.dueTimestamp) : null
+        , meetingId: rawTask.properties.meetingId
+        , createdTimestamp: rawTask.properties.createdTimestamp
+        , dueTimestamp: rawTask.properties.dueTimestamp
         , title: rawTask.properties.title
         , assignees: rawTask.properties.assignees
-        , persisted: true
       })
   }
-
-  // convert a meeting record to db-friendly JSON
-  , jsonifyTask(task) {
-    return {
-      id: task.id
-      , meetingId: task.meetingId
-      , createdTimestamp: task.created.getTime()
-      , dueTimestamp: task.due && task.getTime() || null
-      , title: task.title
-      , assignees: task.assignees
-    }
-  }
-
-  , castTaskJson(taskJson) {
-    taskJson.createdTimestamp = parseInt(taskJson.createdTimestamp)
-    return taskJson
-  }
-
 }

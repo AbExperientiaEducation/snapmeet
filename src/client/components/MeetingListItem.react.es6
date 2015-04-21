@@ -16,7 +16,7 @@ const MeetingListItem = React.createClass({
         <div className="meeting-id"><Link to="meeting" params={ {id: meeting.id} }>{meeting.id}</Link></div>
         <div className="meeting-id">{meeting.name}</div>
         <div className="meeting-time">
-          {meeting.date.toLocaleTimeString()}
+          {new Date(meeting.timestamp).toLocaleTimeString()}
         </div>
       </li>
     )

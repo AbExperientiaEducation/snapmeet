@@ -1,5 +1,6 @@
 const MeetingSection = require('./MeetingSection.react.es6')
 const SyncBox = require('./SyncBox.react.es6')
+const SocketIOStore = require('../stores/SocketIOStore.es6')
 const SignInForm = require('./SignInForm.react.es6')
 const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin

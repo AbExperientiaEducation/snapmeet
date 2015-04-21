@@ -1,33 +1,31 @@
-const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
-const reqwest = require('reqwest')
-const co = require('co')
+const SocketIOStore = require('../stores/SocketIOStore.es6')
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
 class MGResource {
   constructor(opts) {
-    this.rootPath = '/api' + opts.resourcePath
-    this.serializer = opts.serializer
     this.type = opts.type
+    SocketIOStore.getSocket()
   }
 
   saveNew(resource) {
-    const serializedResource = this.serializer(resource)
-    const _this = this
-    co(function* (){
-      const rawResource = yield reqwest({
-        url: _this.rootPath + '/create'
-        , method: 'post'
-        , data: serializedResource
-      })
-      ServerResourceActionCreators.receiveCreated(_this.type, rawResource)
-    }) 
+    SocketIOStore.getSocket().emit(
+      ResourceConstants.REST_ACTION_EVENT
+      , {
+        type: this.type
+        , action: ResourceConstants.RestActions.POST
+        , resource: resource
+      }
+    )
   }
 
   getAll() {
-    const _this = this
-    co(function* (){
-      const rawResources = yield reqwest(_this.rootPath)
-      ServerResourceActionCreators.receiveAll(_this.type, rawResources)           
-    })
+    SocketIOStore.getSocket().emit(
+      ResourceConstants.REST_ACTION_EVENT
+      , {
+        type: this.type
+        , action: ResourceConstants.RestActions.GET
+      }
+    )
   }
 }
 

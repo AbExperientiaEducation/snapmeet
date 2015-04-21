@@ -11,7 +11,7 @@ const register = function(app) {
   })
 
   app.post('/api/tasks/create', function(req, res){
-    const taskJson = TaskUtils.castTaskJson(req.body)
+    const taskJson = req.body
     co(function* (){
       const taskResponse = yield DBTasks.create(taskJson)
       res.json(taskResponse[0])

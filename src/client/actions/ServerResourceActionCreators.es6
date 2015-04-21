@@ -1,18 +1,11 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
-const ResourceConstants = require('../constants/ResourceConstants.es6')
-const ActionTypes = ResourceConstants.ActionTypes
-module.exports = {
-  receiveAll(resourceType, rawResources) {
-    MeetgunDispatcher.dispatch({
-      type: ActionTypes[resourceType].RECEIVE_RAW
-      , rawResources: rawResources
-    })
-  }
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
-  , receiveCreated(resourceType, rawCreatedResource) {
+module.exports = {
+  receiveResources(groupedRawResources) {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes[resourceType].RECEIVE_RAW
-      , rawResources: [rawCreatedResource]
+      type: ResourceConstants.RECEIVE_RAW_EVENT
+      , groupedRawResources: groupedRawResources
     })
   }
 }

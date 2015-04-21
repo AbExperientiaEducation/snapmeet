@@ -1,10 +1,11 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
-const ResourceConstants = require('../constants/ResourceConstants.es6')
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const MeetingUtils = require('../../shared/utils/MeetingUtils.es6')
 const MeetingWebAPIUtils = require('../utils/MeetingWebAPIUtils.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
-const ActionTypes = ResourceConstants.ActionTypes.MEETING
+const ResourceName = ResourceConstants.Meeting.LABEL
+const ActionTypes = ResourceConstants.Meeting.ActionTypes
 
 let _meetings = Immutable.Map()
 
@@ -30,12 +31,13 @@ MeetingStore.dispatchToken = MeetgunDispatcher.register((action) => {
     case ActionTypes.CREATE:
       const meeting = MeetingUtils.createNewMeeting()
       MeetingWebAPIUtils.saveNew(meeting)
-      _meetings[meeting.id] = meeting
+      _addMeetings([{properties: meeting}])
       MeetingStore.emitChange()
       break;
 
-    case ActionTypes.RECEIVE_RAW:
-      _addMeetings(action.rawResources)
+    case ResourceConstants.RECEIVE_RAW_EVENT:
+      if(!action.groupedRawResources[ResourceName]) return
+      _addMeetings(action.groupedRawResources[ResourceName])
       MeetingStore.emitChange()
       break;
 

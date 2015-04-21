@@ -1,4 +1,3 @@
-const ResourceConstants = require('../constants/ResourceConstants.es6')
 const EventEmitter = require('events').EventEmitter
 
 const CHANGE_EVENT = 'store_contents_change'

@@ -2,13 +2,13 @@
 const express = require('express')
 const http = require('http')
 const url = require('url')
-const co = require('co')
 const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('./middleware/passport.es6')
 const bodyParser = require('body-parser')
-const socketUtils = require('./utils/socket_utils.es6')
+const socketUtils = require('./utils/SockJSUtils.es6')
+const socketIOUtils = require('./utils/SocketIOUtils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
 
@@ -41,6 +41,8 @@ server.listen(3000)
 const sockServer = socketUtils.createServer()
 sockServer.installHandlers(server, {prefix:'/democat'})
 
+const socketIOServer = socketIOUtils.createServer(server)
+
 app.set('views', __dirname + '/../../views')
 app.engine('html', require('ejs').renderFile)
 
@@ -70,7 +72,7 @@ app.get('/', function (req, res) {
   res.render('./index.html')
 })
 
-MeetingEndpoints.register(app)
+MeetingEndpoints.register(socketIOServer)
 TaskEndpoints.register(app)
 
 // Simple route middleware to ensure user is authenticated.
