@@ -4,7 +4,7 @@ const _cursorObservers = {}
 const _ioSocket = SocketIOStore.getSocket()
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
-_ioSocket.on('cursorData', function(data){
+_ioSocket.on(SocketEventConstants.CURSOR_DATA, function(data){
   if(data.docId && _cursorObservers[data.docId]) {
     _cursorObservers[data.docId](data.userId, data.displayString, data.cursorPos)
   }

@@ -35,7 +35,7 @@ module.exports.init = function(socketIOServer){
       })
 
       socket.on(SocketEventConstants.CURSOR_DATA, function(data) {
-        socketIOServer.to(data.docId).emit('cursorData', data)
+        socketIOServer.to(data.docId).emit(SocketEventConstants.CURSOR_DATA, data)
       })
 
       // Cursor subscribe/unsubscribe call through to join/leave. 
