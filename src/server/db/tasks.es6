@@ -1,12 +1,5 @@
 const neo4j = require('neo4j')
-const cypherClient = require('../utils/cypher_client.es6')
-
-const cypher = function(query) {
-  return cypherClient(query).then(function(data) { 
-    return data.map(function(x) { return x.target }) 
-  })
-}
-
+const multiCypher = require('../utils/cypher_client.es6').multiCypher
 
 module.exports.fetchAll = function(meetingId){  
   const query = { 
@@ -15,7 +8,7 @@ module.exports.fetchAll = function(meetingId){
         meetingId: meetingId
       }
   }
-  return cypher(query)
+  return multiCypher(query)
 }
 
 module.exports.create = function(taskInfo){
@@ -33,6 +26,6 @@ module.exports.create = function(taskInfo){
       , meetingId: taskInfo.meetingId
     }
   }
-  return cypher(createTaskQuery)
+  return multiCypher(createTaskQuery)
 }
 

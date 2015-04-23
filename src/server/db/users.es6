@@ -1,12 +1,6 @@
 const neo4j = require('neo4j')
-const cypherClient = require('../utils/cypher_client.es6')
+const singleCypher = require('../utils/cypher_client.es6').singleCypher
 const authSvc = require('../utils/auth_svc.es6')
-
-const singleCypher = function(query) {
-  return cypherClient(query).then(function(data) { 
-    return data.length > 0 ? data[0].user.properties : false
-  })
-}
 
 /* User Data Model
   id: int

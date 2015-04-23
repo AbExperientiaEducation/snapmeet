@@ -9,7 +9,6 @@ const registerResourceHandler = function(resourceType, callback) {
 
 const groupReturnedResources = function(resources) {
   const response = {}
-  console.log(resources)
   resources.forEach(function(resource){
     resource.labels.forEach(function(label){
       label = label.toUpperCase()
