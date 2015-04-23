@@ -7,6 +7,13 @@ const ResourceName = ResourceConstants.Meeting.LABEL
 const ActionTypes = ResourceConstants.Meeting.ActionTypes
 
 let _meetings = Immutable.Map()
+let _subscribedMeetings = Immutable.Map()
+
+const _subscribeToMeeting = (meetingId) => {
+  if(_subscribedMeetings.get(meetingId)) return
+  MeetingResource.subscribeToMeeting(meetingId)
+  _subscribedMeetings = _subscribedMeetings.set(meetingId, true)
+}
 
 const _addMeetings = (rawMeetings) => {
   rawMeetings.forEach( (meeting) => {
@@ -17,6 +24,7 @@ const _addMeetings = (rawMeetings) => {
 
 const MeetingStore = Object.assign({}, PubSubStore, {
   get(id) {
+    _subscribeToMeeting(id)
     return _meetings.get(id)
   }
 

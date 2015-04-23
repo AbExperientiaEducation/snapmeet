@@ -24,7 +24,7 @@ module.exports = {
   },
   nodemon: {
     script: 'src/server/server.es6',
-    watch: 'src/server/',
+    watch: ['src/server/', 'src/shared/'],
     execMap: {
       es6: 'babel-node'
     }

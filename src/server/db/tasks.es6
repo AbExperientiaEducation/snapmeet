@@ -3,29 +3,36 @@ const cypherClient = require('../utils/cypher_client.es6')
 
 const cypher = function(query) {
   return cypherClient(query).then(function(data) { 
-    return data.map(function(x) { return x.task }) 
+    return data.map(function(x) { return x.target }) 
   })
 }
 
 
 module.exports.fetchAll = function(meetingId){  
-  const query = { query: 'MATCH (task:Task {meetingId: {meetingId}}) RETURN task'
-                  , params: {
-                      meetingId: meetingId
-                    }
-                }
+  const query = { 
+    query: 'MATCH (target:Task {meetingId: {meetingId}}) RETURN target'
+    , params: {
+        meetingId: meetingId
+      }
+  }
   return cypher(query)
 }
 
 module.exports.create = function(taskInfo){
-  console.log("creating", taskInfo)
-  const query = { query: 'CREATE (task:Task {createdTimestamp:{createdTimestamp}, id:{id}, meetingId:{meetingId}}) RETURN task'
-                  , params: {
-                      createdTimestamp: taskInfo.createdTimestamp
-                      , id: taskInfo.id
-                      , meetingId: taskInfo.meetingId
-                    }
-                }
-  return cypher(query)
+  const createTaskQuery = { 
+    query: `MATCH (m:Meeting)
+            WHERE m.id = {meetingId}
+            CREATE (target:Task {taskProps})-[:MEETING_TASK]->(m)
+            RETURN target`
+    , params: {
+      taskProps: {
+        createdTimestamp: taskInfo.createdTimestamp
+        , id: taskInfo.id
+        , meetingId: taskInfo.meetingId        
+      }
+      , meetingId: taskInfo.meetingId
+    }
+  }
+  return cypher(createTaskQuery)
 }
 

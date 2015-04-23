@@ -5,17 +5,24 @@ const _resourceTypes = keyMirror({
   , Task: null
 })
 
-const exports = {
+const _eventTypes = keyMirror({
+  RECEIVE_RAW_EVENT: null
+  , REST_ACTION_EVENT: null
+  , REST_RESPONSE_EVENT: null
+})
+
+const exports = Object.assign(_eventTypes,{
   RECEIVE_RAW_EVENT: 'RECEIVE_RAW_EVENT'
   , REST_ACTION_EVENT: 'REST_ACTION_EVENT'
   , REST_RESPONSE_EVENT: 'REST_RESPONSE_EVENT'
-  , RestActions: {
-    GET: 'GET'
-    , POST: 'POST'
-    , DELETE: 'DELETE'
-    , PATCH: 'PATCH'
-  }
-}
+  , RestActions: keyMirror({
+    GET: null
+    , POST: null
+    , DELETE: null
+    , PATCH: null
+  })
+})
+
 Object.keys(_resourceTypes).forEach(function(type) {
   exports[type] = {
     LABEL: type.toUpperCase()

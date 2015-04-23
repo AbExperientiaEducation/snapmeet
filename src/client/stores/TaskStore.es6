@@ -20,22 +20,19 @@ const TaskStore = Object.assign({}, PubSubStore, {
   }
 
   , getTasksForMeeting(meetingId) {
-    
+    return _tasks.filter(t => t.meetingId === meetingId)
   }
 })
 
 TaskStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.CREATE:
-      const task = TaskResource.createNewRecord({meetingId: action.meetingId})
-      TaskResource.saveNew(task)
-      _tasks[task.id] = task
-      TaskStore.emitChange()
+      TaskResource.createNewRecord({meetingId: action.meetingId})
       break;
 
     case ResourceConstants.RECEIVE_RAW_EVENT:
       if(!action.groupedRawResources[ResourceConstants.Task.LABEL]) return
-      _addTasks(action.rawResources)
+      _addTasks(action.groupedRawResources[ResourceConstants.Task.LABEL])
       TaskStore.emitChange()
       break;
 

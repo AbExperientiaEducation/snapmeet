@@ -3,6 +3,7 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MeetingStore = require('../stores/MeetingStore.es6')
 const SyncBox = require('./SyncBox.react.es6')
 const NewTaskButton = require('./NewTaskButton.react.es6')
+const MeetingTaskList = require('./MeetingTaskList.react.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -33,6 +34,7 @@ const MeetingDetailPage = React.createClass({
           <h2>Page for { meetingId }</h2>
           <h3>Tasks</h3>
           <NewTaskButton meetingId={ meetingId }/>
+          <MeetingTaskList meetingId={ meetingId } />
           <h3>Notes</h3>
           <SyncBox id={ meetingId } /> 
         </div>

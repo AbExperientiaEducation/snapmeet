@@ -9,6 +9,7 @@ const registerResourceHandler = function(resourceType, callback) {
 
 const groupReturnedResources = function(resources) {
   const response = {}
+  console.log(resources)
   resources.forEach(function(resource){
     resource.labels.forEach(function(label){
       label = label.toUpperCase()
@@ -21,37 +22,46 @@ const groupReturnedResources = function(resources) {
   return response
 }
 
+const runHandlerForData = function(data, socket) {
+  try {
+    const handler = handlers[data.type]
+    if(handler) {
+      co(function* (){
+        const handlerResponse = yield handler(data)
+        const response = groupReturnedResources(handlerResponse)
+        switch(data.action) {
+          case ResourceConstants.RestActions.GET:
+            socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
+            break
+          case ResourceConstants.RestActions.POST:
+            // TODO: Broadcast is too broad here - need to post on all applicable rooms
+            socket.broadcast.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
+            socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
+            break
+        }
+
+        if(data.subscribe) {
+          // TODO: Add security to verify socket eligible to join resource
+          // TODO: Is there a race condition here? What if changes came in while we were fetching?
+          socket.join(data.resourceId)
+        }
+      })
+    } else {
+      throw('unhandled resource type: ' + data.type)
+    }        
+  }
+  catch(err) {
+    console.log('socket.io Error', err.name, err.stack)
+  }
+}
+
 const createServer = function(server){
   const ioServer = socketio(server)
   ioServer.on('connection', function(socket){
     console.log('a user connected')
 
     socket.on(ResourceConstants.REST_ACTION_EVENT, function(data) {
-      try {
-        const handler = handlers[data.type]
-        if(handler) {
-          co(function* (){
-            const handlerResponse = yield handler(data)
-            const response = groupReturnedResources(handlerResponse)
-            switch(data.action) {
-              case ResourceConstants.RestActions.GET:
-                socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-                break
-              case ResourceConstants.RestActions.POST:
-                // TODO: Broadcast is too broad here (only want to send to people on the slack team)
-                socket.broadcast.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-                socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-                break
-            }
-
-          })
-        } else {
-          throw('unhandled resource type: ' + data.type)
-        }        
-      }
-      catch(err) {
-        console.log('socket.io Error', err.name, err.stack)
-      }
+      runHandlerForData(data, socket) 
     })
   })
   return ioServer
