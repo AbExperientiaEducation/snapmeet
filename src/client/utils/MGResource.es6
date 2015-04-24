@@ -29,6 +29,10 @@ class MGResource {
     this.makeRestCall(Actions.GET)
   }
 
+  subscribeToResource(id) {
+    this.makeRestCall(Actions.GET, {subscribe: true, id: id})
+  }
+
   inflateRecord(rawRecord) {
     return new this.Record(rawRecord)
   }

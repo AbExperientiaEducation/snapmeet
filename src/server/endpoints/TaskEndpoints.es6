@@ -8,15 +8,15 @@ const createTask = function(data) {
   return DBTasks.create(taskJson)
 }
 
-const getTasks = function(data) {
-  return DBTasks.fetchAll(data.meetingId)   
+const getTask = function(data) {
+  return DBTasks.getWithRelations(data.id)
 }
 
 const register = function() {
     const handler = function(data) {
     switch(data.action) {
       case RestActions.GET:
-        return getMeetings()
+        return getTask(data)
       case RestActions.POST:
         return createTask(data)
     }

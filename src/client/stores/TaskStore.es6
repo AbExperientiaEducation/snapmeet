@@ -5,8 +5,17 @@ const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
 const ActionTypes = ResourceConstants.Task.ActionTypes
 const RelationStore = require('./RelationStore.es6')
+const _ = require('lodash')
 
 let _tasks = Immutable.Map()
+let _subscribedTasks = Immutable.Map()
+
+const _subscribeToTask = (taskId) => {
+  if(_subscribedTasks.get(taskId)) return
+  TaskResource.subscribeToResource(taskId)
+  _subscribedTasks = _subscribedTasks.set(taskId, true)
+}
+
 
 const _addTasks = (rawTasks) => {
   rawTasks.forEach( (task) => {
@@ -17,13 +26,22 @@ const _addTasks = (rawTasks) => {
 
 const TaskStore = Object.assign({}, PubSubStore, {
   get(id) {
-    return _tasks.get(id)
+    const task = _tasks.get(id)
+    if(!task) TaskResource.get(id)
+    return task
   }
 
   , getTasksForMeeting(meetingId) {
-    const meetingRels = RelationStore.getRelations(meetingId)
-    // TODO: get or trigger task fetching
-    return _tasks.filter(t => t.meetingId === meetingId)
+    const relations = RelationStore.getRelations(meetingId)
+    if(relations && relations.MEETING_TASK) {
+      const taskIds = relations.MEETING_TASK
+      taskIds.forEach(id => _subscribeToTask(id))  
+      return _tasks.filter(t => taskIds.indexOf(t.id) > -1)
+    } else {
+      return null
+    }
+    
+    
   }
 })
 

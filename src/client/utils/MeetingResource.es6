@@ -7,9 +7,4 @@ const MeetingResource = new MGResource({
   , recordProperties: {}
 })
 
-MeetingResource.subscribeToMeeting = function(meetingId) {
-  const data = {subscribe: true, id: meetingId}
-  this.makeRestCall(Actions.GET, data)
-}
-
 module.exports = MeetingResource

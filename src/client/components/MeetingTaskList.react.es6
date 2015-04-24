@@ -33,8 +33,8 @@ const MeetingTaskList = React.createClass({
   }
 
   , render() {
-    const taskListItems = this.state.tasks.map(getTaskListItem)
     if(this.state.tasks) {
+      const taskListItems = this.state.tasks.map(getTaskListItem)
       const meetingId = this.props.meetingId
       return (
         <div className="task-list">

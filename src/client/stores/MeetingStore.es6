@@ -11,7 +11,7 @@ let _subscribedMeetings = Immutable.Map()
 
 const _subscribeToMeeting = (meetingId) => {
   if(_subscribedMeetings.get(meetingId)) return
-  MeetingResource.subscribeToMeeting(meetingId)
+  MeetingResource.subscribeToResource(meetingId)
   _subscribedMeetings = _subscribedMeetings.set(meetingId, true)
 }
 
