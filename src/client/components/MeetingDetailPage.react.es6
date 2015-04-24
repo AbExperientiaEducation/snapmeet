@@ -36,7 +36,7 @@ const MeetingDetailPage = React.createClass({
           <NewTaskButton meetingId={ meetingId }/>
           <MeetingTaskList meetingId={ meetingId } />
           <h3>Notes</h3>
-          <SyncBox id={ meetingId } /> 
+          <SyncBox id={ meetingId + '_notes'} /> 
         </div>
       )      
     } else {

@@ -8,7 +8,7 @@ module.exports = {
     const createTaskQuery = { 
       query: `MATCH (m:Meeting)
               WHERE m.id = {meetingId}
-              CREATE (target:Task {taskProps})-[:MEETING_TASK]->(m)
+              CREATE (target:Task {taskProps})-[r:MEETING_TASK]->(m)
               RETURN target`
       , params: {
         taskProps: {

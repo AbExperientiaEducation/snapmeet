@@ -8,7 +8,7 @@ module.exports = {
   }
 
   , create(meetingInfo){
-    const query = { query: 'CREATE (target:Meeting {createdTimestamp:{createdTimestamp}, id:{id}}) RETURN target',
+    const query = { query: 'CREATE (target:Meeting {params}) RETURN target',
                     params: {
                       createdTimestamp: meetingInfo.createdTimestamp
                       , id: meetingInfo.id
