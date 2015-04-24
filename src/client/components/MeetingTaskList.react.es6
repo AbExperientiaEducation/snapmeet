@@ -5,7 +5,7 @@ const RelationStore = require('../stores/RelationStore.es6')
 
 const getStateFromStore = (props) => {
   return {
-    tasks: TaskStore.getTasksForMeeting(props.meetingId)
+    tasks: TaskStore.getResourcesFromRelation(props.meetingId, 'MEETING_TASK')
   }
 }
 
