@@ -1,4 +1,3 @@
-const co = require('co')
 const DBTasks = require('../db/tasks.es6')
 const socketIOServer = require('../utils/SocketIOUtils.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')

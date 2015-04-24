@@ -1,8 +1,9 @@
 const neo4j = require('neo4j')
-const multiCypher = require('../utils/cypher_client.es6').multiCypher
-
+const Cypher = require('../utils/cypher_client.es6')
+const multiCypher = Cypher.multiCypher
+const recordsWithRels = Cypher.recordsWithRels
 module.exports = {
-  fetchAll(){  
+  fetchAll(){
     return multiCypher({ query: 'MATCH (target:Meeting) RETURN target'})
   }
 
@@ -17,16 +18,7 @@ module.exports = {
   }
 
   , getWithRelations(meetingId) {
-    
-    const query = { 
-      query:`MATCH (target) 
-             WHERE target.id={meetingId}
-             OR (target)--({id:{meetingId} }) 
-             RETURN target`
-      , params: {meetingId: meetingId}
-    }
-    return multiCypher(query)
-
+    return recordsWithRels([meetingId])
   }
 
 }

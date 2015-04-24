@@ -1,6 +1,7 @@
 const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
+const RelationStore = require('../stores/RelationStore.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -23,10 +24,12 @@ const MeetingTaskList = React.createClass({
 
   , componentDidMount() {
     TaskStore.addChangeListener(this._onChange)
+    RelationStore.addChangeListener(this._onChange)
   }
 
   , componentWillUnmount() {
     TaskStore.removeChangeListener(this._onChange)
+    RelationStore.removeChangeListener(this._onChange)
   }
 
   , render() {

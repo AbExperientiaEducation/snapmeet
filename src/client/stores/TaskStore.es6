@@ -4,6 +4,7 @@ const TaskResource = require('../utils/TaskResource.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('../utils/PubSubStore.es6')
 const ActionTypes = ResourceConstants.Task.ActionTypes
+const RelationStore = require('./RelationStore.es6')
 
 let _tasks = Immutable.Map()
 
@@ -20,6 +21,8 @@ const TaskStore = Object.assign({}, PubSubStore, {
   }
 
   , getTasksForMeeting(meetingId) {
+    const meetingRels = RelationStore.getRelations(meetingId)
+    // TODO: get or trigger task fetching
     return _tasks.filter(t => t.meetingId === meetingId)
   }
 })
