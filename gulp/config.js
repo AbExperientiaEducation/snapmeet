@@ -38,6 +38,7 @@ module.exports = {
     dest: dest,
     srcs: [
       "reqwest",
+      "socket.io-client",
       "lodash",
       "keymirror",
       "flux",
