@@ -23,6 +23,18 @@ class MGResourceStore {
     this._subscribedResources = this._subscribedResources.set(resourceId, true)
   }
 
+  _subscribeToResources(resourceIds) {
+    const toFetch = resourceIds.filter(id => {
+      return !this._subscribedResources.has(id)
+    })
+    if(toFetch.length) {
+      this.ResourceAPI.subscribeToResources(toFetch)
+      this._subscribedResources = this._subscribedResources.withMutations(subs => {
+        toFetch.forEach(id => {subs.set(id, true)})
+      })
+    }
+  }
+
   _addResources(rawResources) {
     rawResources.forEach( (resource) => {
       // Always add to _tasks, or replace whatever was there.
@@ -45,7 +57,7 @@ class MGResourceStore {
     const relations = RelationStore.getRelations(relationId)
     if(relations && relations[relationshipName]) {
       const resourceIds = relations[relationshipName]
-      resourceIds.forEach(id => this._subscribeToResource(id))
+      this._subscribeToResources(resourceIds)
       return this._cachedResources.filter(r => resourceIds.indexOf(r.id) > -1)
     } else {
       return null

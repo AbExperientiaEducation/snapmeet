@@ -5,8 +5,8 @@ const multiCypher = Cypher.multiCypher
 const singleCypher = Cypher.singleCypher
 const recordsWithRels = Cypher.recordsWithRels
 
-const getWithRelations = function(taskId) {
-  return recordsWithRels([taskId])
+const getWithRelations = function(ids) {
+  return recordsWithRels(ids)
 }
 
 const create = function(meetingInfo){
@@ -27,7 +27,7 @@ const create = function(meetingInfo){
   return co(function* (){
     try {
       const created = yield singleCypher(query, 'target')
-      return yield getWithRelations(created.id)      
+      return yield getWithRelations([created.id])
     }
     catch(err) {
       console.log(err.stack)

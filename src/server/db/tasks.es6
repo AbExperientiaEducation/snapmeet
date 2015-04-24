@@ -3,8 +3,8 @@ const cypher = require('../utils/cypher_client.es6')
 const singleCypher = cypher.singleCypher
 const recordsWithRels = cypher.recordsWithRels
 
-const getWithRelations = function(taskId) {
-  return recordsWithRels([taskId])
+const getWithRelations = function(ids) {
+  return recordsWithRels(ids)
 }
 
 const create = function(taskInfo){
@@ -25,7 +25,7 @@ const create = function(taskInfo){
   return co(function* (){
     try {
       const created = yield singleCypher(query, 'target')
-      return yield getWithRelations(created.id)      
+      return yield getWithRelations([created.id])
     }
     catch(err) {
       console.log(err.stack)

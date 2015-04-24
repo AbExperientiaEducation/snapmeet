@@ -17,7 +17,7 @@ class MGResource {
     this.Record = Immutable.Record(recordProperties)
   }
 
-  makeRestCall(restAction, data){
+  makeRestCall(restAction, data) {
     data = Object.assign({
       type: this.type
       , action: restAction
@@ -27,6 +27,10 @@ class MGResource {
 
   subscribeToResource(id) {
     this.makeRestCall(Actions.GET, {subscribe: true, id: id})
+  }
+
+  subscribeToResources(ids) {
+    this.makeRestCall(Actions.GET_BATCH, {subscribe: true, ids: ids})
   }
 
   inflateRecord(rawRecord) {

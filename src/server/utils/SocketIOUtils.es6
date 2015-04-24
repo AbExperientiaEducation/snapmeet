@@ -14,7 +14,6 @@ const calculateResourceChannels = function(response, resourceType) {
   if(response.RELATIONS) {
     // We need to notify anyone that has any of the related items
     response.RELATIONS.forEach(rel => {
-      console.log(rel)
       channels.push(rel.Node1Id, rel.Node2Id)
     })
   }
@@ -25,14 +24,15 @@ const runHandlerForData = function(data, socket) {
   try {
     const handler = handlers[data.type]
     if(!handler) throw('unhandled resource type: ' + data.type)
-    
     co(function* (){
       try {
         const response = yield handler(data)
         switch(data.action) {
           case ResourceConstants.RestActions.GET:
+          case ResourceConstants.RestActions.GET_BATCH:
             socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
             break
+
           case ResourceConstants.RestActions.POST:
             const channels = calculateResourceChannels(response, data.type)
             channels.forEach(channel => {
@@ -46,7 +46,8 @@ const runHandlerForData = function(data, socket) {
         if(data.subscribe) {
           // TODO: Add security to verify socket eligible to join resource
           // TODO: Is there a race condition here? What if changes came in while we were fetching?
-          socket.join(data.id)
+          const ids = data.ids || [data.id]
+          ids.forEach(id => {socket.join(data.id)})
         }        
       }
       catch(err) {

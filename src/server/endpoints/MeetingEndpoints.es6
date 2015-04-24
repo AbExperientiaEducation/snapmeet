@@ -5,9 +5,8 @@ const RestActions = ResourceConstants.RestActions
 const OtherActions = ResourceConstants.OtherActions
 
 const getMeetings = function(data) {
-  if(data.id) {
-    return DBMeetings.getWithRelations(data.id)
-  }
+  const ids = data.ids || [data.id] 
+  return DBMeetings.getWithRelations(ids)
 }
 
 const createMeeting = function(data) {
@@ -19,6 +18,8 @@ const register = function() {
   const handler = function(data) {
     switch(data.action) {
       case RestActions.GET:
+        return getMeetings(data)
+      case RestActions.GET_BATCH:
         return getMeetings(data)
       case RestActions.POST:
         return createMeeting(data)

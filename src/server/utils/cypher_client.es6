@@ -5,6 +5,7 @@ const db = new neo4j.GraphDatabase({
   , auth: '***REMOVED***'
 })
 const co = require('co')
+const _ = require('lodash')
 
 const promiseCypher = denodeify(db.cypher.bind(db), function(err, stdout, stderr){
   if(err) console.log(err)
@@ -55,10 +56,13 @@ module.exports = {
     }
     return co(function* (){
       try {
-        const res = {}
-        const nodeData = (yield promiseCypher(nodeQuery))[0].n
+        const nodeData = (yield promiseCypher(nodeQuery))
         const relData = yield promiseCypher(relQuery)
-        res[nodeData.labels[0].toUpperCase()] = [nodeData.properties]
+        const nodes = nodeData.map(obj => {return obj.n})
+        const res = _.groupBy(nodes, n => { return n.labels[0].toUpperCase()})
+        Object.keys(res).forEach(key => {
+          res[key] = res[key].map( nobj => {return nobj.properties})
+        })
         res.RELATIONS = relData
         return res
       }

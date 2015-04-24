@@ -21,6 +21,7 @@ const exports = Object.assign(_eventTypes,{
     , POST: null
     , DELETE: null
     , PATCH: null
+    , BATCH_GET: null
   })
 })
 
