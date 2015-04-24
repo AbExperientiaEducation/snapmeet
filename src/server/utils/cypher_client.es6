@@ -26,9 +26,9 @@ const groupResources = function(resources) {
 }
 
 module.exports = {
-  singleCypher(query) {
+  singleCypher(query, key) {
     return promiseCypher(query).then(function(data) { 
-      return data.length > 0 ? data[0].user.properties : false
+      return data.length > 0 ? data[0][key].properties : false
     })
   }
 

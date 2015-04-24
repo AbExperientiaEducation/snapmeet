@@ -2,9 +2,23 @@ const socketio = require('socket.io')
 const co = require('co')
 const handlers = {}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
+const _ = require('lodash')
 
 const registerResourceHandler = function(resourceType, callback) {
   handlers[resourceType] = callback
+}
+
+const calculateResourceChannels = function(response, resourceType) {
+  const channels = _.pluck(response[resourceType], 'id')
+  
+  if(response.RELATIONS) {
+    // We need to notify anyone that has any of the related items
+    response.RELATIONS.forEach(rel => {
+      console.log(rel)
+      channels.push(rel.Node1Id, rel.Node2Id)
+    })
+  }
+  return _.uniq(channels)
 }
 
 const runHandlerForData = function(data, socket) {
@@ -13,22 +27,30 @@ const runHandlerForData = function(data, socket) {
     if(!handler) throw('unhandled resource type: ' + data.type)
     
     co(function* (){
-      const response = yield handler(data)
-      switch(data.action) {
-        case ResourceConstants.RestActions.GET:
-          socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-          break
-        case ResourceConstants.RestActions.POST:
-          // TODO: Broadcast is too broad here - need to post on all applicable rooms
-          socket.broadcast.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-          socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
-          break
-      }
+      try {
+        const response = yield handler(data)
+        switch(data.action) {
+          case ResourceConstants.RestActions.GET:
+            socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
+            break
+          case ResourceConstants.RestActions.POST:
+            const channels = calculateResourceChannels(response, data.type)
+            channels.forEach(channel => {
+              socket.broadcast.to(channel).emit(ResourceConstants.REST_RESPONSE_EVENT, response)  
+            })
+        
+            socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
+            break
+        }
 
-      if(data.subscribe) {
-        // TODO: Add security to verify socket eligible to join resource
-        // TODO: Is there a race condition here? What if changes came in while we were fetching?
-        socket.join(data.resourceId)
+        if(data.subscribe) {
+          // TODO: Add security to verify socket eligible to join resource
+          // TODO: Is there a race condition here? What if changes came in while we were fetching?
+          socket.join(data.id)
+        }        
+      }
+      catch(err) {
+        console.log(err.stack)
       }
     })
   }

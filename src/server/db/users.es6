@@ -13,7 +13,7 @@ module.exports.findOne = function(email){
                         params: {
                           email: email,
                         }
-                      })
+                      }, 'user')
 }
 
 module.exports.findById = function(id) {
@@ -21,7 +21,7 @@ module.exports.findById = function(id) {
                         params: {
                           id: id,
                         }
-                      })
+                      }, 'user')
 }
 
 module.exports.register = function(email, password){
@@ -32,7 +32,7 @@ module.exports.register = function(email, password){
                           email: email,
                           password: hashedPassword,
                         }
-                      })
+                      }, 'user')
 }
 
 module.exports.validPassword = function(user, password){
