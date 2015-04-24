@@ -1,25 +1,44 @@
+const co = require('co')
 const neo4j = require('neo4j')
 const Cypher = require('../utils/cypher_client.es6')
 const multiCypher = Cypher.multiCypher
+const singleCypher = Cypher.singleCypher
 const recordsWithRels = Cypher.recordsWithRels
-module.exports = {
-  fetchAll(){
-    return multiCypher({ query: 'MATCH (target:Meeting) RETURN target'})
-  }
 
-  , create(meetingInfo){
-    const query = { query: 'CREATE (target:Meeting {params}) RETURN target',
-                    params: {
-                      createdTimestamp: meetingInfo.createdTimestamp
-                      , id: meetingInfo.id
-                    }
-                  }
-    return multiCypher(query)
-  }
-
-  , getWithRelations(meetingId) {
-    return recordsWithRels([meetingId])
-  }
-
+const getWithRelations = function(taskId) {
+  return recordsWithRels([taskId])
 }
 
+const create = function(meetingInfo){
+  const query = { 
+    query: `MATCH (o:Org)
+            WHERE o.id = {orgId}
+            CREATE (target:Meeting {meetingProps})-[r:ORG_MEETING]->(o)
+            RETURN target`
+    , params: {
+      orgId: meetingInfo.orgId
+      , meetingProps: {
+        createdTimestamp: meetingInfo.createdTimestamp
+        , id: meetingInfo.id        
+      }
+    }
+  }
+
+  return co(function* (){
+    try {
+      const created = yield singleCypher(query, 'target')
+      return yield getWithRelations(created.id)      
+    }
+    catch(err) {
+      console.log(err.stack)
+    }
+  })    
+
+  return multiCypher(query)
+}
+
+
+module.exports = {
+  create: create
+  , getWithRelations: getWithRelations
+}

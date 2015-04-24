@@ -4,17 +4,46 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const Router = require('react-router')
 const RouteHandler = Router.RouteHandler
 const Link = Router.Link
+const OrgStore = require('../stores/OrgStore.es6')
+
+const getStateFromStore = () => {
+  return {
+    org: OrgStore.get("*TEST*")
+  }
+}
 
 const MeetgunApp = React.createClass({
   mixins: [PureRenderMixin]
+
+  , getInitialState() {
+    return getStateFromStore()
+  }
+
+  , _onChange() {
+    this.setState(getStateFromStore(this.props))
+  }
+
+  , componentDidMount() {
+    OrgStore.addChangeListener(this._onChange)
+  }
+
+  , componentWillUnmount() {
+    OrgStore.removeChangeListener(this._onChange)
+  }
+
   , render() {
-    return (
-      <div className="meetingapp">
-        <Link to="app"><img src="/img/logo.jpg"/></Link>
-        <SignInForm />
-        <RouteHandler {...this.props}/>
-      </div>
-    )
+    if(this.state.org) {
+      return (
+        <div className="meetingapp">
+          <Link to="app"><img src="/img/logo.jpg"/></Link>
+          <h2>{this.state.org.displayName}</h2>
+          <SignInForm />
+          <RouteHandler {...this.props}/>
+        </div>
+      )      
+    } else {
+      return (<div>Loading...</div>)
+    }
   }
 })
 

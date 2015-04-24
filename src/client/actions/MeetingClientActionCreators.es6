@@ -6,6 +6,7 @@ module.exports = {
   createNewMeeting() {
     MeetgunDispatcher.dispatch({
       type: ActionTypes.CREATE
+      , orgId: '*TEST*'
     })
   }
 

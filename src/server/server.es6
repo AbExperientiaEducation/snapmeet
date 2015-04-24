@@ -11,7 +11,7 @@ const syncDocHandling = require('./utils/SyncDocHandling.es6')
 const socketIOUtils = require('./utils/SocketIOUtils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
-
+const OrgEndpoints = require("./endpoints/OrgEndpoints.es6")
 
 require('stackup')
 
@@ -70,8 +70,9 @@ app.get('/', function (req, res) {
   res.render('./index.html')
 })
 
-MeetingEndpoints.register(socketIOServer)
-TaskEndpoints.register(app)
+MeetingEndpoints.register()
+TaskEndpoints.register()
+OrgEndpoints.register()
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

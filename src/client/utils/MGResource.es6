@@ -25,10 +25,6 @@ class MGResource {
     this.socket.emit(ResourceConstants.REST_ACTION_EVENT, data)
   }
 
-  getAll() {
-    this.makeRestCall(Actions.GET)
-  }
-
   subscribeToResource(id) {
     this.makeRestCall(Actions.GET, {subscribe: true, id: id})
   }

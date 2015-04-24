@@ -1,4 +1,5 @@
 const MeetingStore = require('../stores/MeetingStore.es6')
+const RelationStore = require('../stores/RelationStore.es6')
 const MeetingListItem = require('./MeetingListItem.react.es6')
 const NewMeetingButton = require('./NewMeetingButton.react.es6')
 const _ = require('lodash')
@@ -7,7 +8,7 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const getStateFromStore = () => {
   return {
-    meetings: MeetingStore.getAll().reverse()
+    meetings: MeetingStore.getResourcesFromRelation('*TEST*', 'ORG_MEETING')
   }
 }
 
@@ -28,7 +29,6 @@ const MeetingSection = React.createClass({
   }
 
   , componentDidMount() {
-    this._scrollToBottom()
     MeetingStore.addChangeListener(this._onChange)
   }
 
@@ -37,24 +37,19 @@ const MeetingSection = React.createClass({
   }
 
   , render() {
-    const meetingListItems = this.state.meetings.map(getMeetingListItem)
-    return (
-      <div className="meeting-section">
-        <NewMeetingButton />
-        <ul className="meeting-list" ref="meetingList">
-          {meetingListItems}
-        </ul>
-      </div>
-    )
-  }
-
-  , componentDidUpdate() {
-    this._scrollToBottom()
-  }
-
-  , _scrollToBottom() {
-    const ul = this.refs.meetingList.getDOMNode()
-    ul.scrollTop = ul.scrollHeight
+    if(this.state.meetings) {
+      const meetingListItems = this.state.meetings.map(getMeetingListItem)
+      return (
+        <div className="meeting-section">
+          <NewMeetingButton />
+          <ul className="meeting-list" ref="meetingList">
+            {meetingListItems}
+          </ul>
+        </div>
+      )
+    } else {
+      return(<NewMeetingButton />)
+    }
   }
 
   /**

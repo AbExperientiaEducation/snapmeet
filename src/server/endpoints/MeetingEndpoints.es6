@@ -7,8 +7,6 @@ const OtherActions = ResourceConstants.OtherActions
 const getMeetings = function(data) {
   if(data.id) {
     return DBMeetings.getWithRelations(data.id)
-  } else {
-    return DBMeetings.fetchAll()     
   }
 }
 

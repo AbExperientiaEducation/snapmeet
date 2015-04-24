@@ -1,14 +1,14 @@
 const co = require('co')
-const neo4j = require('neo4j')
 const cypher = require('../utils/cypher_client.es6')
 const singleCypher = cypher.singleCypher
 const recordsWithRels = cypher.recordsWithRels
+
 const getWithRelations = function(taskId) {
   return recordsWithRels([taskId])
 }
 
 const create = function(taskInfo){
-  const createTaskQuery = { 
+  const query = { 
     query: `MATCH (m:Meeting)
             WHERE m.id = {meetingId}
             CREATE (target:Task {taskProps})-[r:MEETING_TASK]->(m)
@@ -17,14 +17,14 @@ const create = function(taskInfo){
       taskProps: {
         createdTimestamp: taskInfo.createdTimestamp
         , id: taskInfo.id
-        , meetingId: taskInfo.meetingId        
       }
       , meetingId: taskInfo.meetingId
     }
   }
+  
   return co(function* (){
     try {
-      const created = yield singleCypher(createTaskQuery, 'target')
+      const created = yield singleCypher(query, 'target')
       return yield getWithRelations(created.id)      
     }
     catch(err) {

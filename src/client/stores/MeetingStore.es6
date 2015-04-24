@@ -6,7 +6,7 @@ const MeetingStore = new MGResourceStore({
   type: ResourceConstants.Meeting.LABEL
   , ResourceAPI: MeetingResource
   , createAction: ResourceConstants.Meeting.ActionTypes.CREATE
-  , createFn: (data) => MeetingResource.createNewRecord({})
+  , createFn: (data) => MeetingResource.createNewRecord({orgId: data.orgId})
 })
 
 module.exports = MeetingStore
