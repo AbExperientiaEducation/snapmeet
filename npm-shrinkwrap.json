@@ -5418,6 +5418,10 @@
         }
       }
     },
+    "ot-text": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/ot-text/-/ot-text-1.0.1.tgz"
+    },
     "passport": {
       "version": "0.2.1",
       "resolved": "https://registry.npmjs.org/passport/-/passport-0.2.1.tgz",
@@ -5561,8 +5565,8 @@
       }
     },
     "share": {
-      "version": "0.7.27",
-      "resolved": "https://registry.npmjs.org/share/-/share-0.7.27.tgz",
+      "version": "0.7.27-f",
+      "resolved": "git://github.com/igmcdowell/ShareJS#8ff3af3dfde929627653b037f51b49e026328832",
       "dependencies": {
         "async": {
           "version": "0.2.10",
@@ -5621,8 +5625,8 @@
                       "resolved": "https://registry.npmjs.org/compressible/-/compressible-2.0.2.tgz",
                       "dependencies": {
                         "mime-db": {
-                          "version": "1.8.0",
-                          "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.8.0.tgz"
+                          "version": "1.9.1",
+                          "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.9.1.tgz"
                         }
                       }
                     }
@@ -5731,8 +5735,8 @@
                   "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-0.3.4.tgz",
                   "dependencies": {
                     "on-finished": {
-                      "version": "2.2.0",
-                      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.0.tgz",
+                      "version": "2.2.1",
+                      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.1.tgz",
                       "dependencies": {
                         "ee-first": {
                           "version": "1.1.0",
@@ -5983,8 +5987,8 @@
                   "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.0.tgz"
                 },
                 "on-finished": {
-                  "version": "2.2.0",
-                  "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.0.tgz",
+                  "version": "2.2.1",
+                  "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.1.tgz",
                   "dependencies": {
                     "ee-first": {
                       "version": "1.1.0",
