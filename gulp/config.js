@@ -10,6 +10,11 @@ module.exports = {
       imagePath: 'images' // Used by the image-url helper
     }
   },
+  less: {
+    src: src + "/style/addons.less",
+    watch: src + "/style/**/*.less",
+    dest: "./public/css"
+  },
   browserify: {
     entries: [src + '/client/main.es6'],
     dest: dest,
@@ -53,7 +58,8 @@ module.exports = {
       "share/lib/client/index.js",
       "react-router",
       "share/lib/client/textarea.js",
-      "ot-text"
+      "ot-text",
+      "material-ui"
     ]
   }
 }

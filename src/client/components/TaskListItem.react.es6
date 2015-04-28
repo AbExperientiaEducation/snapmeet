@@ -2,6 +2,7 @@ const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
 const SyncField = require('./SyncField.react.es6')
+const MUI = require('material-ui')
 
 const getStateFromStore = (props) => {
   return {
@@ -28,6 +29,7 @@ const TaskListItem = React.createClass({
     if(this.state.task) {
       return (
         <li className="task-item">
+          <MUI.Checkbox />
           <SyncField id={ this.state.task.id + '_task_title' }/>
         </li>
       )      
