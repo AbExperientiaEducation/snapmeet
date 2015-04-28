@@ -27,7 +27,7 @@
 `tasks/harmony_migrate`
 
 ### Add Test Org (development only)
-`node-babel`
+`babel-node`
 `require('./src/server/db/orgs.es6').demoCreate()`
 
 ### Start build process/server
