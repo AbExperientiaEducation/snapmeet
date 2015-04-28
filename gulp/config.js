@@ -51,7 +51,9 @@ module.exports = {
       "quill",
       "rich-text",
       "share/lib/client/index.js",
-      "react-router"
+      "react-router",
+      "share/lib/client/textarea.js",
+      "ot-text"
     ]
   }
 }
