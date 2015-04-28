@@ -1,6 +1,8 @@
 const ActionTypes = require('../constants/SocketConstants.es6').ActionTypes
 const RichText = require('rich-text')
 const ShareJS = require('share/lib/client/index.js')
+ShareJS.Doc.prototype.attachTextarea = require('share/lib/client/textarea.js')
+const TextOTType = require('ot-text')
 const Immutable = require('immutable')
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const SocketIOStore = require('../stores/SocketIOStore.es6')
@@ -36,6 +38,7 @@ let _syncConn = null
 const _getSyncConn = function(){
   if(!_syncConn) {
     ShareJS.registerType(RichText.type)
+    ShareJS.registerType(TextOTType.type)
     const ioSocket = SocketIOStore.getSocket()
     const webSockAdapter = _makeWebSockAdapter(ioSocket)
     _registerListeners(ioSocket, webSockAdapter)
@@ -46,7 +49,7 @@ const _getSyncConn = function(){
 }
 
 module.exports = {
-  fetchDocument(docName) {
+  fetchDocument(docName, plainText = false) {
     if(_requestedDocuments.get(docName)) return
     _requestedDocuments = _requestedDocuments.set(docName, true)
     const syncConn = _getSyncConn()
@@ -55,7 +58,8 @@ module.exports = {
     doc.whenReady(function(){
       // If doc.type is not set, it is a new document.
       if (!doc.type) {
-        doc.create(RichText.type.name, '')
+        const type = plainText ? 'text' : RichText.type.name
+        doc.create(type, '')
       }
 
       setTimeout(function(){

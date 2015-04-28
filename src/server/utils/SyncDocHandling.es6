@@ -2,12 +2,14 @@ const livedb = require('livedb')
 const sharejs = require('share')
 const livedbMongo = require('livedb-mongo')
 const richText = require('rich-text')
+const TextType = require('ot-text')
 const Duplex = require('stream').Duplex
 const mongoUrl = 'mongodb://127.0.0.1:27017/test'
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
 module.exports.init = function(socketIOServer){
   livedb.ot.registerType(richText.type)
+  livedb.ot.registerType(TextType.type)
   const docStore = livedb.client(livedbMongo(mongoUrl + '?auto_reconnect', {
     safe: false
   }))

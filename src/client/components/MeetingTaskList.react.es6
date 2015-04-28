@@ -2,6 +2,7 @@ const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
 const RelationStore = require('../stores/RelationStore.es6')
+const TaskListItem = require('./TaskListItem.react.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -11,7 +12,7 @@ const getStateFromStore = (props) => {
 
 const getTaskListItem = (task) => {
   return (
-    <li>{ task.id }</li>
+    <TaskListItem id={ task.id } />
   )
 }
 

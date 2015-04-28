@@ -28,10 +28,10 @@ const SyncdocStore = Object.assign({}, EventEmitter.prototype, {
     return _socket.readyState === 1
   }
 
-  , getDocument(docName) {
+  , getDocument(docName, isPlainText) {
     const doc = _documents.get(docName)
     if(!doc) {
-      SyncDocConn.fetchDocument(docName)
+      SyncDocConn.fetchDocument(docName, isPlainText)
     }
     return doc
   }

@@ -3,7 +3,7 @@ const ResourceConstants = require('../../shared/constants/ResourceConstants.es6'
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const io = require('socket.io-client')()
 const EventEmitter = require('events').EventEmitter
-  const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
+const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
 const CHANGE_EVENT = 'change'
 const ActionTypes = SocketConstants.ActionTypes
 
