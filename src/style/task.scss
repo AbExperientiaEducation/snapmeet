@@ -1,0 +1,4 @@
+.task-item {
+  @include display(flex);
+  @include align-items(center);
+}

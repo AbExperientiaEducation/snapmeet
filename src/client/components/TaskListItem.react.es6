@@ -3,6 +3,7 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
 const SyncField = require('./SyncField.react.es6')
 const MUI = require('material-ui')
+const TaskActionCreators = require('../actions/TaskClientActionCreators.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -29,8 +30,11 @@ const TaskListItem = React.createClass({
     if(this.state.task) {
       return (
         <li className="task-item">
-          <MUI.Checkbox />
-          <SyncField id={ this.state.task.id + '_task_title' }/>
+          <MUI.Checkbox 
+            checked={this.state.task.completed}
+            onCheck={this.onCheck}
+          />
+          <SyncField id={ this.state.task.id + '_task_title' }></SyncField>
         </li>
       )      
     } else {
@@ -38,6 +42,10 @@ const TaskListItem = React.createClass({
         <div>Loading...</div>
       )
     }
+  }
+
+  , onCheck(e, isChecked) {
+    TaskActionCreators.setTaskCompletion(this.state.task, isChecked)
   }
 
   , _onChange() {

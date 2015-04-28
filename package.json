@@ -53,6 +53,7 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-util": "^3.0.4",
     "merge-stream": "^0.1.7",
+    "node-bourbon": "^4.2.1-beta1",
     "pretty-hrtime": "^1.0.0",
     "require-dir": "^0.1.0",
     "stackup": "^1.0.0",

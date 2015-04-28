@@ -13,10 +13,7 @@ const _eventTypes = keyMirror({
 })
 
 const exports = Object.assign(_eventTypes,{
-  RECEIVE_RAW_EVENT: 'RECEIVE_RAW_EVENT'
-  , REST_ACTION_EVENT: 'REST_ACTION_EVENT'
-  , REST_RESPONSE_EVENT: 'REST_RESPONSE_EVENT'
-  , RestActions: keyMirror({
+  RestActions: keyMirror({
     GET: null
     , POST: null
     , DELETE: null
@@ -30,6 +27,7 @@ Object.keys(_resourceTypes).forEach(function(type) {
     LABEL: type.toUpperCase()
     , ActionTypes: {
       CREATE: `CREATE_${type}`
+      , PATCH: `PATCH_${type}`
     }
   }
 })

@@ -7,7 +7,8 @@ module.exports = {
     watch: src + "/style/**/*.{sass,scss}",
     dest: "./public/css",
     settings: {
-      imagePath: 'images' // Used by the image-url helper
+      imagePath: 'images', // Used by the image-url helper
+      includePaths: require('node-bourbon').includePaths
     }
   },
   less: {

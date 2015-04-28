@@ -2,6 +2,7 @@ const React = require('react')
 const SyncdocStore = require('../stores/SyncdocStore.es6')
 const SessionStore = require('../stores/SessionStore.es6')
 const QuillManager = require('../utils/QuillManager.es6')
+const MUI = require('material-ui')
 
 const getStateFromStore = (props) => {
   const userSession = SessionStore.currentUserSession()
@@ -17,8 +18,7 @@ const getStateFromStore = (props) => {
 const SyncField = React.createClass({
   render() {
     return (
-      <textarea className="sync-field">
-      </textarea>
+      <MUI.TextField hintText="Task Title" ref="input"/>
     )
   }
 
@@ -46,7 +46,9 @@ const SyncField = React.createClass({
 
   , setupSyncFieldIfNecessary() {
     if(this.syncField || !this.state.doc) return
-    const domTarget = React.findDOMNode(this)
+    const domTarget = React.findDOMNode(this).getElementsByTagName('input')[0]
+    // Manually set value once. This will clear out hint text/prevent visual bug.
+    this.refs.input.setValue(this.state.doc.getSnapshot())
     this.syncField = this.state.doc.attachTextarea(domTarget)
   }
 })

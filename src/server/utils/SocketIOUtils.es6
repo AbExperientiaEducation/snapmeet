@@ -33,6 +33,7 @@ const runHandlerForData = function(data, socket) {
             socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
             break
 
+          case ResourceConstants.RestActions.PATCH:
           case ResourceConstants.RestActions.POST:
             const channels = calculateResourceChannels(response, data.type)
             channels.forEach(channel => {

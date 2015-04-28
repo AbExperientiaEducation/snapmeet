@@ -7,6 +7,18 @@ const getWithRelations = function(ids) {
   return recordsWithRels(ids)
 }
 
+const runQueryAndReturnNodeRelations = function(query) {
+  return co(function* (){
+    try {
+      const modified = yield singleCypher(query, 'target')
+      return yield getWithRelations([modified.id])
+    }
+    catch(err) {
+      console.log(err.stack)
+    }
+  })
+}
+
 const create = function(taskInfo){
   const query = { 
     query: `MATCH (m:Meeting)
@@ -21,20 +33,25 @@ const create = function(taskInfo){
       , meetingId: taskInfo.meetingId
     }
   }
-  
-  return co(function* (){
-    try {
-      const created = yield singleCypher(query, 'target')
-      return yield getWithRelations([created.id])
+  return runQueryAndReturnNodeRelations(query)
+}
+
+const update = function(taskInfo) {
+  const query = {
+    query: `MATCH (target:Task)
+            WHERE target.id = '${taskInfo.id}'
+            SET target = {taskProps}
+            RETURN target`
+    , params: {
+      taskProps: taskInfo
     }
-    catch(err) {
-      console.log(err.stack)
-    }
-  })    
+  }
+  return runQueryAndReturnNodeRelations(query)
 }
 
 
 module.exports = {
   create: create
+  , update: update
   , getWithRelations: getWithRelations
 }

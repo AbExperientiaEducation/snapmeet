@@ -48,6 +48,13 @@ class MGResource {
     resources[this.type] = [rawResource]
     setTimeout(function(){ServerResourceActionCreators.receiveResources(resources)}, 0)    
   }
+
+  updateRecord(record) {
+    this.makeRestCall(Actions.PATCH, { resource: record})
+    const resources = {}
+    resources[this.type] = [record]
+    setTimeout(function(){ServerResourceActionCreators.receiveResources(resources)}, 0)    
+  }
 }
 
 module.exports = MGResource

@@ -5,7 +5,7 @@ const MGResourceStore = require('../utils/MGResourceStore.es6')
 const OrgStore = new MGResourceStore({
   type: ResourceConstants.Org.LABEL
   , ResourceAPI: OrgResource
-  , createAction: ResourceConstants.Org.ActionTypes.CREATE
+  , restActions: ResourceConstants.Org.ActionTypes
   , createFn: (data) => OrgResource.createNewRecord({displayName: data.displayName})
 })
 

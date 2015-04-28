@@ -5918,6 +5918,16 @@
         }
       }
     },
+    "node-bourbon": {
+      "version": "4.2.1-beta1",
+      "resolved": "https://registry.npmjs.org/node-bourbon/-/node-bourbon-4.2.1-beta1.tgz",
+      "dependencies": {
+        "bourbon": {
+          "version": "4.2.1",
+          "resolved": "https://registry.npmjs.org/bourbon/-/bourbon-4.2.1.tgz"
+        }
+      }
+    },
     "ot-text": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/ot-text/-/ot-text-1.0.1.tgz"

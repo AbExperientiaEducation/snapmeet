@@ -4,8 +4,11 @@ const ResourceConstants = require('../../shared/constants/ResourceConstants.es6'
 const RestActions = ResourceConstants.RestActions
 
 const createTask = function(data) {
-  const taskJson = data.resource
-  return DBTasks.create(taskJson)
+  return DBTasks.create(data.resource)
+}
+
+const updateTask = function(data) {
+  return DBTasks.update(data.resource)
 }
 
 const getTasks = function(data) {
@@ -21,6 +24,8 @@ const register = function() {
         return getTasks(data)
       case RestActions.POST:
         return createTask(data)
+      case RestActions.PATCH:
+        return updateTask(data)
     }
   }
   socketIOServer.registerResourceHandler(ResourceConstants.Task.LABEL, handler)

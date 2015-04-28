@@ -5,7 +5,7 @@ const MGResourceStore = require('../utils/MGResourceStore.es6')
 const MeetingStore = new MGResourceStore({
   type: ResourceConstants.Meeting.LABEL
   , ResourceAPI: MeetingResource
-  , createAction: ResourceConstants.Meeting.ActionTypes.CREATE
+  , restActions: ResourceConstants.Meeting.ActionTypes
   , createFn: (data) => MeetingResource.createNewRecord({orgId: data.orgId})
 })
 

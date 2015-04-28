@@ -9,4 +9,13 @@ module.exports = {
       , meetingId: meetingId
     })
   }
+
+  , setTaskCompletion(task, isComplete) {
+    task = task.set('completed', isComplete)
+    MeetgunDispatcher.dispatch({
+      type: ActionTypes.PATCH
+      , record: task
+    })
+
+  }
 }

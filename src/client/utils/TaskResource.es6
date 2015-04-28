@@ -5,8 +5,8 @@ const TaskResource = new MGResource({
   type: ResourceConstants.Task.LABEL
   , recordProperties: {
       dueTimestamp: null
-      , title: null
       , assignees: []
+      , completed: false
     }
 })
 

@@ -8,7 +8,7 @@ const CHANGE_EVENT = 'store_contents_change'
 class MGResourceStore {
   constructor(opts) {
     Object.assign(this, PubSubStore)
-    this.createAction = opts.createAction
+    this.restActions = opts.restActions
     this.ResourceAPI = opts.ResourceAPI
     this.createFn = opts.createFn
     this.type = opts.type
@@ -76,18 +76,26 @@ class MGResourceStore {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
+  patch(updatedRecord) {
+    this.ResourceAPI.updateRecord(updatedRecord)
+  }
+
   registerForDispatch() {
     this.dispatchToken = MeetgunDispatcher.register((action) => {
       switch(action.type) {
-        case this.createAction:
+        case this.restActions.CREATE:
           this.createFn(action)
-          break;
+          break
+
+        case this.restActions.PATCH:
+          this.patch(action.record)
+          break
 
         case ResourceConstants.RECEIVE_RAW_EVENT:
           if(!action.groupedRawResources[this.type]) return
           this._addResources(action.groupedRawResources[this.type])
           this.emitChange()
-          break;
+          break
 
         default:
           // no op
