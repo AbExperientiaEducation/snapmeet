@@ -4,3 +4,4 @@ public/js/bundle.js
 public/lib/common.js
 public/css/app.css
 src/server/migrations/.migrate
+public/css/addons.css
