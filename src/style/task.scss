@@ -2,3 +2,7 @@
   @include display(flex);
   @include align-items(center);
 }
+
+.task-card {
+  @include display(flex);
+}

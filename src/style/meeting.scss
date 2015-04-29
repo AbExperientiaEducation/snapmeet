@@ -1,0 +1,9 @@
+@import '_constants';
+
+.meeting-components {
+  @include display(flex);
+
+  .card {
+    margin: $standard-spacing;
+  }
+}

@@ -32,6 +32,7 @@ const TaskListItem = React.createClass({
         <li className="task-item">
           <MUI.Checkbox 
             checked={this.state.task.completed}
+            defaultSwitched={this.state.task.completed}
             onCheck={this.onCheck}
           />
           <SyncField id={ this.state.task.id + '_task_title' }></SyncField>

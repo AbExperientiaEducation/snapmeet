@@ -3,6 +3,7 @@ const ReactPropTypes = React.PropTypes
 const TaskClientActions = require('../actions/TaskClientActionCreators.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
+const MUI = require('material-ui')
 
 const CreateTaskButton = React.createClass({
   mixins: [PureRenderMixin]
@@ -15,7 +16,11 @@ const CreateTaskButton = React.createClass({
   }
   , render() {
     return (
-      <button onClick={this.createTask}>New Task</button>
+      <MUI.RaisedButton 
+        onClick={this.createTask}
+        primary={true}
+        label="Create"
+      />
     )
   }
 })

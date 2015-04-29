@@ -36,9 +36,11 @@ const MeetgunApp = React.createClass({
       return (
         <div className="meetingapp">
           <Link to="app"><img src="/img/logo.jpg"/></Link>
-          <h2>{this.state.org.displayName}</h2>
-          <SignInForm />
-          <RouteHandler {...this.props}/>
+          <div className="main-content">
+            <h2>{this.state.org.displayName}</h2>
+            <SignInForm />
+            <RouteHandler {...this.props}/>
+          </div>
         </div>
       )      
     } else {

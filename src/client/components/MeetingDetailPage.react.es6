@@ -4,6 +4,7 @@ const MeetingStore = require('../stores/MeetingStore.es6')
 const SyncBox = require('./SyncBox.react.es6')
 const NewTaskButton = require('./NewTaskButton.react.es6')
 const MeetingTaskList = require('./MeetingTaskList.react.es6')
+const MUI = require('material-ui')
 
 const getStateFromStore = (props) => {
   return {
@@ -32,11 +33,16 @@ const MeetingDetailPage = React.createClass({
       return (
         <div className="meeting-detail">
           <h2>Page for { meetingId }</h2>
-          <h3>Tasks</h3>
-          <NewTaskButton meetingId={ meetingId }/>
-          <MeetingTaskList meetingId={ meetingId } />
-          <h3>Notes</h3>
-          <SyncBox id={ meetingId + '_notes'} /> 
+          <div className="meeting-components">
+            <MUI.Paper className="tasks-card card" zDepth={1}>
+              <h3>Tasks <NewTaskButton meetingId={ meetingId }/></h3>
+              <MeetingTaskList meetingId={ meetingId } />
+            </MUI.Paper>
+            <MUI.Paper className="notes-card card" zDepth={1}>
+              <h3>Notes</h3>
+              <SyncBox id={ meetingId + '_notes'} /> 
+            </MUI.Paper>
+          </div>
         </div>
       )      
     } else {

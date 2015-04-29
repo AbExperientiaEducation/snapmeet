@@ -41,7 +41,7 @@ const MeetingSection = React.createClass({
       const meetingListItems = this.state.meetings.map(getMeetingListItem)
       return (
         <div className="meeting-section">
-          <NewMeetingButton />
+          <h3>Meetings <NewMeetingButton /></h3>
           <ul className="meeting-list" ref="meetingList">
             {meetingListItems}
           </ul>

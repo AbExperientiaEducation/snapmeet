@@ -1,6 +1,7 @@
 const React = require('react')
 const MeetingClientActions = require('../actions/MeetingClientActionCreators.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
+const MUI = require('material-ui')
 
 const CreateMeetingButton = React.createClass({
   mixins: [PureRenderMixin]
@@ -10,7 +11,11 @@ const CreateMeetingButton = React.createClass({
   }
   , render() {
     return (
-      <button onClick={this.createMeeting}>New Meeting</button>
+      <MUI.RaisedButton 
+        onClick={this.createMeeting}
+        primary={true}
+        label="Create New"
+      />
     )
   }
 })
