@@ -6,9 +6,9 @@ const DBUsers = require('../db/users.es6')
 
 
 passport.deserializeUser(function(id, done) {
-  errorHandler = function(err){done(err)}
-  successHandler = function(result){done(null, result)}
-  user = DBUsers.findById(id)
+  const errorHandler = function(err){done(err)}
+  const successHandler = function(result){done(null, result)}
+  const user = DBUsers.findById(id)
   user.then(successHandler, errorHandler)
 })
 
