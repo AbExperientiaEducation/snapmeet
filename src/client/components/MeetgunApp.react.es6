@@ -37,10 +37,11 @@ const MeetgunApp = React.createClass({
         <div className="meetingapp">
           <div className="topbar">
             <h1><Link to="app"><span className="logo-start">Meet</span><span className="logo-end">gun</span></Link></h1>
+            <h2>{this.state.org.displayName}</h2>
             <SignInForm />
           </div>
           <div className="main-content">
-            <h2>{this.state.org.displayName}</h2>
+            
             <RouteHandler {...this.props}/>
           </div>
         </div>
