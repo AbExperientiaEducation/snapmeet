@@ -1,14 +1,54 @@
 @import 'bourbon';
+@import 'normalize';
 @import 'quillbox';
 @import 'material-overrides';
 @import 'task';
 @import 'meeting';
 @import '_constants';
+@import '_colors';
 
 a{
   text-decoration: none;
 }
 
-.main-content {
+html {
+  background-color: $accent-light-color;
+}
+
+.main-content, .topbar {
   padding: $standard-spacing;
+}
+
+.logo-start {
+  color: $primary-dark-color;
+}
+
+.logo-end {
+  color: $accent-color;
+}
+
+.meetingapp {
+  max-width: $max-page-width;
+  @include display(flex);
+  @include flex-direction(column);
+  position: relative;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+.topbar {
+  @include display(flex);
+  @include justify-content(space-between);
+  @include align-items(center);
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  background: white;
+  z-index: 1000000000;
+  max-width: $max-page-width;
+
+  h1 a {
+    @include user-select(none);
+    outline: 0;
+  }
 }

@@ -2,8 +2,20 @@
 
 .meeting-components {
   @include display(flex);
-
+  @include flex-wrap(wrap);
+  @include justify-content(space-around);
+  @include align-items(flex-start);
+  @include align-content(flex-start);
+  
   .card {
     margin: $standard-spacing;
   }
+}
+
+.notes-card {
+  width: 443px;
+}
+
+.tasks-card {
+  width: 370px;
 }

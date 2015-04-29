@@ -8,3 +8,8 @@
 .card > .mui-paper-container {
   padding: $standard-spacing;
 }
+
+.mui-paper > .mui-paper-container {
+  height: auto;
+  width: auto;
+}

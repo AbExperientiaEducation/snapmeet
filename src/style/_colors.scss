@@ -270,16 +270,16 @@ $black-12: #DADADA;
 }
 
 $primary-color:   $light-blue-500; 
-$secondary-color: $light-blue-200;
-$tertiary-color:  $light-blue-800;
+$primary-light-color: $light-blue-200;
+$primary-dark-color:  $light-blue-800;
 
 $accent-color:           $orange-a400;
-$accent-secondary-color: $orange-a100;
+$accent-light-color: $orange-a100;
 $accent-dark-color:      $orange-a700;
 
-$link-on-primary-color: $accent-secondary-color;
+$link-on-primary-color: $accent-light-color;
 $link-on-white-color: $primary-color;
-$link-on-white-hover-color: $secondary-color;
+$link-on-white-hover-color: $primary-light-color;
 
 $standard-text-color: $black-87;
 $secondary-text-color: $black-54;
