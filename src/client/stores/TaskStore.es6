@@ -3,9 +3,8 @@ const TaskResource = require('../utils/TaskResource.es6')
 const MGResourceStore = require('../utils/MGResourceStore.es6')
 
 const TaskStore = new MGResourceStore({
-  type: ResourceConstants.Task.LABEL
+  constants: ResourceConstants.Task
   , ResourceAPI: TaskResource
-  , restActions: ResourceConstants.Task.ActionTypes
   , createFn: (data) => TaskResource.createNewRecord({meetingId: data.meetingId})
 })
 

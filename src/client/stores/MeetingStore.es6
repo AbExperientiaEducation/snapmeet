@@ -3,9 +3,8 @@ const MeetingResource = require('../utils/MeetingResource.es6')
 const MGResourceStore = require('../utils/MGResourceStore.es6')
 
 const MeetingStore = new MGResourceStore({
-  type: ResourceConstants.Meeting.LABEL
+  constants: ResourceConstants.Meeting
   , ResourceAPI: MeetingResource
-  , restActions: ResourceConstants.Meeting.ActionTypes
   , createFn: (data) => MeetingResource.createNewRecord({orgId: data.orgId})
 })
 

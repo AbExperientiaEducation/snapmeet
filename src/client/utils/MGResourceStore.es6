@@ -8,10 +8,10 @@ const CHANGE_EVENT = 'store_contents_change'
 class MGResourceStore {
   constructor(opts) {
     Object.assign(this, PubSubStore)
-    this.restActions = opts.restActions
+    this.restActions = opts.constants.ActionTypes
+    this.type = opts.constants.LABEL
     this.ResourceAPI = opts.ResourceAPI
     this.createFn = opts.createFn
-    this.type = opts.type
     this._cachedResources = Immutable.Map()
     this._subscribedResources = Immutable.Map()
     this.registerForDispatch()
