@@ -8,7 +8,7 @@ const co = require('co')
 const _ = require('lodash')
 
 const promiseCypher = denodeify(db.cypher.bind(db), function(err, stdout, stderr){
-  if(err) console.log(err)
+  if(err) console.error(err)
   return [err, stdout, stderr]
 })
 
@@ -67,7 +67,7 @@ module.exports = {
         return res
       }
       catch (err) {
-        console.log(err)
+        console.error(err)
       }
     })
   }

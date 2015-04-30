@@ -14,7 +14,7 @@ const runQueryAndReturnNodeRelations = function(query) {
       return yield getWithRelations([modified.id])
     }
     catch(err) {
-      console.log(err.stack)
+      console.error(err.stack)
     }
   })
 }

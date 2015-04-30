@@ -52,13 +52,13 @@ const runHandlerForData = function(data, socket) {
         }        
       }
       catch(err) {
-        console.log(err.stack)
+        console.error(err.stack)
       }
     })
   }
   
   catch(err) {
-    console.log('socket.io Error', err.name, err.stack)
+    console.error('socket.io Error', err.name, err.stack)
   }
 }
 

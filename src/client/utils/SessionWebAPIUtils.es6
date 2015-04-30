@@ -17,7 +17,7 @@ module.exports = {
         SessionServerActions.signInSucceeded(session)
       }
       catch (error) {
-        console.log("Login failed: " + error.status + ' ' + error.response)
+        console.error("Login failed: " + error.status + ' ' + error.response)
         SessionServerActions.signInFailed()
       }
     })
@@ -36,7 +36,7 @@ module.exports = {
         SessionServerActions.signUpSucceeded(session)
       }
       catch (error) {
-        console.log("Registration failed: " + error.status + ' ' + error.response)
+        console.error("Registration failed: " + error.status + ' ' + error.response)
         SessionServerActions.signUpFailed()
       }
     })

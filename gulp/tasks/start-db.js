@@ -7,7 +7,7 @@ var child = exec('neo4j start',
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
-      console.log('exec error: ' + error);
+      console.error('exec error: ' + error);
     }
   });
 })

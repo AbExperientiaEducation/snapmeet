@@ -30,7 +30,7 @@ const create = function(meetingInfo){
       return yield getWithRelations([created.id])
     }
     catch(err) {
-      console.log(err.stack)
+      console.error(err.stack)
     }
   })    
 

@@ -30,7 +30,7 @@ passport.use(new LocalStrategy({
         return done(null, false, { message: 'Incorrect password.' })
       }
       return done(null, user)
-    }).catch(function(err){console.log("Error on co in passport: " + err)})
+    }).catch(function(err){console.error("Error on co in passport: " + err)})
   })
 )
 

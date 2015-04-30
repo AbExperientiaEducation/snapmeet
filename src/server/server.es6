@@ -61,7 +61,7 @@ app.post('/register', function(req, res) {
                   function(err){})
       res.status(200).json({user: req.user})
     } catch(error) {
-      console.log(error.stack)
+      console.error(error.stack)
       res.status(500).json(error)
     }
   })
