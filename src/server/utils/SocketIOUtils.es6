@@ -26,7 +26,7 @@ const runHandlerForData = function(data, socket) {
     if(!handler) throw('unhandled resource type: ' + data.type)
     co(function* (){
       try {
-        const response = yield handler(data)
+        const response = yield handler(data, socket.request.user.id)
         switch(data.action) {
           case ResourceConstants.RestActions.GET:
           case ResourceConstants.RestActions.GET_BATCH:

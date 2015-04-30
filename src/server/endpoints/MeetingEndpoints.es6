@@ -9,20 +9,21 @@ const getMeetings = function(data) {
   return DBMeetings.getWithRelations(ids)
 }
 
-const createMeeting = function(data) {
+const createMeeting = function(data, userId) {
   const meetingJson = data.resource
+  meetingJson.userId = userId
   return DBMeetings.create(meetingJson)
 }
 
 const register = function() {
-  const handler = function(data) {
+  const handler = function(data, userId) {
     switch(data.action) {
       case RestActions.GET:
         return getMeetings(data)
       case RestActions.GET_BATCH:
         return getMeetings(data)
       case RestActions.POST:
-        return createMeeting(data)
+        return createMeeting(data, userId)
       case OtherActions.SUBSCRIBE:
         return getRelations(data)
     }

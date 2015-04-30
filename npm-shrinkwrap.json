@@ -1870,6 +1870,20 @@
         }
       }
     },
+    "cookie-parser": {
+      "version": "1.3.4",
+      "resolved": "https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.3.4.tgz",
+      "dependencies": {
+        "cookie": {
+          "version": "0.1.2",
+          "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.2.tgz"
+        },
+        "cookie-signature": {
+          "version": "1.0.6",
+          "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
+        }
+      }
+    },
     "del": {
       "version": "1.1.1",
       "resolved": "https://registry.npmjs.org/del/-/del-1.1.1.tgz",
@@ -5973,6 +5987,16 @@
         "passport-strategy": {
           "version": "1.0.0",
           "resolved": "https://registry.npmjs.org/passport-strategy/-/passport-strategy-1.0.0.tgz"
+        }
+      }
+    },
+    "passport.socketio": {
+      "version": "3.5.1",
+      "resolved": "https://registry.npmjs.org/passport.socketio/-/passport.socketio-3.5.1.tgz",
+      "dependencies": {
+        "xtend": {
+          "version": "4.0.0",
+          "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.0.tgz"
         }
       }
     },

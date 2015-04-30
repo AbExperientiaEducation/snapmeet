@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('./middleware/passport.es6')
+const cookieParser = require('cookie-parser')
+const passportSocketIo = require("passport.socketio")
 const co = require('co')
 const bodyParser = require('body-parser')
 const syncDocHandling = require('./utils/SyncDocHandling.es6')
@@ -27,9 +29,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 
 const redisOptions = {host: '127.0.0.1', port: '6379'}
+
+const unsafeSecret = 'keyboard cat hall and oates remix'
+const sessionStore = new RedisStore(redisOptions)
 app.use(session({
-  secret: 'keyboard cat',
-  store: new RedisStore(redisOptions),
+  secret: unsafeSecret,
+  store: sessionStore,
   resave: false,
   saveUninitialized: true
 }))
@@ -40,6 +45,15 @@ const server = require('http').Server(app)
 server.listen(3000)
 
 const socketIOServer = socketIOUtils.createServer(server)
+socketIOServer.use(passportSocketIo.authorize({
+  cookieParser: cookieParser
+  , key: 'connect.sid'
+  , secret: unsafeSecret
+  , store: sessionStore
+  , success: function(data, accept){console.log('success'); accept()}
+  , fail: function(data, message, error, accept){console.log('socket session error', message, error.stack)}
+}))
+
 syncDocHandling.init(socketIOServer)
 
 app.set('views', __dirname + '/../../views')

@@ -11,12 +11,12 @@ const getWithRelations = function(ids) {
 
 const create = function(meetingInfo){
   const query = { 
-    query: `MATCH (o:Org)
-            WHERE o.id = {orgId}
-            CREATE (target:Meeting {meetingProps})-[r:ORG_MEETING]->(o)
+    query: `MATCH (o:User)
+            WHERE o.id = {userId}
+            CREATE (target:Meeting {meetingProps})-[r:USER_MEETING]->(o)
             RETURN target`
     , params: {
-      orgId: meetingInfo.orgId
+      userId: meetingInfo.userId
       , meetingProps: {
         createdTimestamp: meetingInfo.createdTimestamp
         , id: meetingInfo.id        
