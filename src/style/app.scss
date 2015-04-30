@@ -51,4 +51,11 @@ html {
     @include user-select(none);
     outline: 0;
   }
+
+  .sign-in {
+    width: 500px;
+    @include calc(left, '50% - 250px');
+  }
 }
+
+

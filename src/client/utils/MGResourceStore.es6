@@ -15,6 +15,7 @@ class MGResourceStore {
     this._cachedResources = Immutable.Map()
     this._subscribedResources = Immutable.Map()
     this.registerForDispatch()
+    this.setMaxListeners(100)
   }
 
   _subscribeToResource(resourceId) {
@@ -55,13 +56,17 @@ class MGResourceStore {
 
   getResourcesFromRelation(relationId, relationshipName) {
     const relations = RelationStore.getRelations(relationId)
+    let result
     if(relations && relations[relationshipName]) {
       const resourceIds = relations[relationshipName]
       this._subscribeToResources(resourceIds)
-      return this._cachedResources.filter(r => resourceIds.indexOf(r.id) > -1)
+      const loaded = this._cachedResources.filter(r => resourceIds.indexOf(r.id) > -1)
+      // Return null unless we have everything/are done loading
+      result = loaded.count() != resourceIds.length ? null : loaded
     } else {
-      return null
+      result = []
     }
+    return result
   }
 
   emitChange() {

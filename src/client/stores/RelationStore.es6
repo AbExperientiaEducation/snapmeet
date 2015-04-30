@@ -22,8 +22,8 @@ const _addRelations = (newRelations) => {
       if(!_relations[nodeId]) _relations[nodeId] = {}
       if(!_relations[nodeId][type]) _relations[nodeId][type] = []
     })
-    _relations[n1id][type].push(n2id)
-    _relations[n2id][type].push(n1id)
+    if(_relations[n1id][type].indexOf(n2id) == -1) _relations[n1id][type].push(n2id)
+    if(_relations[n2id][type].indexOf(n1id) == -1) _relations[n2id][type].push(n1id)
   })
 }
 

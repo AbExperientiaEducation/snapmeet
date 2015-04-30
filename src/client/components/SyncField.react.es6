@@ -17,8 +17,10 @@ const getStateFromStore = (props) => {
 
 const SyncField = React.createClass({
   render() {
-    return (
-      <MUI.TextField hintText="Task Title" ref="input"/>
+    return (      
+      <MUI.TextField 
+        ref="input"
+        />
     )
   }
 
@@ -50,6 +52,7 @@ const SyncField = React.createClass({
     // Manually set value once. This will clear out hint text/prevent visual bug.
     this.refs.input.setValue(this.state.doc.getSnapshot())
     this.syncField = this.state.doc.attachTextarea(domTarget)
+    this.refs.input.getDOMNode().querySelector('input').placeholder = "Task Title"
   }
 })
 

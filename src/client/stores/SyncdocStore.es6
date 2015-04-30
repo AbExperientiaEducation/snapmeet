@@ -37,6 +37,8 @@ const SyncdocStore = Object.assign({}, EventEmitter.prototype, {
   }
 })
 
+SyncdocStore.setMaxListeners(100)
+
 SyncdocStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.RECEIVE_DOCUMENT:

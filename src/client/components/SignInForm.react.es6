@@ -89,6 +89,7 @@ const SessionSignInForm = React.createClass({
           ref="dialog"
           title="Sign In To Meetgun"
           actions={modalActions}
+          className="sign-in"
         >
           <form>
             <MUI.TextField type="email" id="email" name="email" ref="email" hintText="Email"/>
