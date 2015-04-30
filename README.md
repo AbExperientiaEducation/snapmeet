@@ -88,3 +88,8 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
  ],`
 - Install react developer tools for chrome
 `https://github.com/facebook/react-devtools`
+
+## Running in Production
+### WIP
+- `gulp build`
+- `babel-node src/server/server.es6`
