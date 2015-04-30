@@ -68,7 +68,22 @@ app.post('/register', function(req, res) {
 })
 
 app.get('/', function (req, res) {
-  res.render('./index.html')
+  if(req.session.passport.user) {
+    res.render('./index.html')  
+  } else {
+    // Create an anonymous user that we can store in session
+    co(function* (){
+      try {
+        const user = yield DBUsers.registerAnonymous()  
+        req.login({id: user.id}, function(err){if(err)console.error(err.stack)})
+        res.render('./index.html')        
+      }
+      catch(err) {
+        console.error(err.stack)
+        res.status(500).json(error)
+      }
+    })    
+  }
 })
 
 MeetingEndpoints.register()

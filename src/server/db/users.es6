@@ -35,6 +35,12 @@ module.exports.register = function(email, password){
                       }, 'user')
 }
 
+module.exports.registerAnonymous = function(){
+  // do something hashy with password
+  return singleCypher({ query: 'MERGE (id:UniqueId{name:"User"}) ON CREATE SET id.count = 1 ON MATCH SET id.count = id.count + 1 WITH id.count AS uid CREATE (p:User{id:uid}) RETURN p AS user',
+                      }, 'user')
+}
+
 module.exports.validPassword = function(user, password){
   return authSvc.validPassword(password, user.password)
 }

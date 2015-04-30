@@ -26,7 +26,7 @@ passport.use(new LocalStrategy({
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' })
       }
-      if (!DBUsers.validPassword(user, password)) {
+      if (user.password && !DBUsers.validPassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' })
       }
       return done(null, user)
