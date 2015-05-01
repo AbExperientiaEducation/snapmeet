@@ -58,7 +58,7 @@ const runHandlerForData = function(data, socket) {
   }
   
   catch(err) {
-    console.error('socket.io Error', err.name, err.stack)
+    console.error('socket.io Error', data, err, err.stack)
   }
 }
 
