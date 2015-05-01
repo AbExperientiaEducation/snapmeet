@@ -52,7 +52,7 @@ html {
     outline: 0;
   }
 
-  .sign-in {
+  .sign-in.mui-is-shown {
     width: 500px;
     @include calc(left, '50% - 250px');
   }
