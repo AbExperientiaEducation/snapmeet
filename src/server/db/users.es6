@@ -1,6 +1,8 @@
 const neo4j = require('neo4j')
-const singleCypher = require('../utils/cypher_client.es6').singleCypher
+const Cypher = require('../utils/cypher_client.es6')
 const authSvc = require('../utils/auth_svc.es6')
+const singleCypher = Cypher.singleCypher
+const recordsWithRels = Cypher.recordsWithRels
 
 /* User Data Model
   id: int
@@ -43,4 +45,8 @@ module.exports.registerAnonymous = function(){
 
 module.exports.validPassword = function(user, password){
   return authSvc.validPassword(password, user.password)
+}
+
+module.exports.getWithRelations = function(ids) {
+  return recordsWithRels(ids)
 }

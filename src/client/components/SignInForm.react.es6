@@ -1,12 +1,12 @@
 const React = require('react')
 const SessionClientActions = require('../actions/SessionClientActionCreators.es6')
-const SessionStore = require('../stores/SessionStore.es6')
+const UserStore = require('../stores/UserStore.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MUI = require('material-ui')
 
 const getStateFromStore = () => {
   return {
-    session: SessionStore.currentUserSession()
+    user: UserStore.currentUser()
   }
 }
 
@@ -18,11 +18,11 @@ const SessionSignInForm = React.createClass({
   }
 
   , componentDidMount() {
-    SessionStore.addChangeListener(this._onChange)
+    UserStore.addChangeListener(this._onChange)
   }
 
   , componentWillUnmount() {
-    SessionStore.removeChangeListener(this._onChange)
+    UserStore.removeChangeListener(this._onChange)
   }
 
   , handleLoginSubmit(e, sessionFn) {
@@ -44,10 +44,10 @@ const SessionSignInForm = React.createClass({
   }
 
   , render() {
-    const session = this.state.session
+    const user = this.state.user
     let signInArea
-    if (session) {
-      signInArea = <div>Hello, {session.user.email}</div>
+    if (user && user.email) {
+      signInArea = <div>Hello, {user.email}</div>
     } else {
       signInArea = this.makeLoginComponents()
     }

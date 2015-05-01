@@ -3,7 +3,7 @@ const keyMirror = require('keymirror')
 const _resourceTypes = keyMirror({
   Meeting: null
   , Task: null
-  , Org: null
+  , User: null
 })
 
 const _eventTypes = keyMirror({

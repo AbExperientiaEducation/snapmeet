@@ -27,5 +27,4 @@ module.exports = {
       type: ActionTypes.SIGN_UP_FAILED
     })
   }
-
 }

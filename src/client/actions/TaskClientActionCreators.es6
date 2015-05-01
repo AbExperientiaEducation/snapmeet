@@ -16,6 +16,5 @@ module.exports = {
       type: ActionTypes.PATCH
       , record: task
     })
-
   }
 }

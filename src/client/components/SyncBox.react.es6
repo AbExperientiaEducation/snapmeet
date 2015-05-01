@@ -1,11 +1,10 @@
 const SyncdocStore = require('../stores/SyncdocStore.es6')
 const React = require('react')
-const SessionStore = require('../stores/SessionStore.es6')
+const UserStore = require('../stores/UserStore.es6')
 const QuillManager = require('../utils/QuillManager.es6')
 
 const getStateFromStore = (props) => {
-  const userSession = SessionStore.currentUserSession()
-  const user = userSession && userSession.user || null
+  const user = UserStore.currentUser()
   const state = {
     doc: SyncdocStore.getDocument(props.id)
   }

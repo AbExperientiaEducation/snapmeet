@@ -8,4 +8,8 @@ module.exports = {
       , groupedRawResources: groupedRawResources
     })
   }
+
+  , receiveBootstrapData() {
+    this.receiveResources(window.bootstrapData.resources)
+  }
 }

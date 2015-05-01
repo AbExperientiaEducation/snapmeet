@@ -14,7 +14,6 @@ const syncDocHandling = require('./utils/SyncDocHandling.es6')
 const socketIOUtils = require('./utils/SocketIOUtils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
-const OrgEndpoints = require("./endpoints/OrgEndpoints.es6")
 
 require('stackup')
 
@@ -82,27 +81,29 @@ app.post('/register', function(req, res) {
 })
 
 app.get('/', function (req, res) {
-  if(req.session.passport.user) {
-    res.render('./index.html')  
-  } else {
-    // Create an anonymous user that we can store in session
-    co(function* (){
-      try {
-        const user = yield DBUsers.registerAnonymous()  
-        req.login({id: user.id}, function(err){if(err)console.error(err.stack)})
-        res.render('./index.html')        
+  co(function* (){
+    try {
+      let userId
+      if(req.session.passport.user) {
+        userId = req.session.passport.user
+      } else {
+        // Create a new anonymous user
+        const user = yield DBUsers.registerAnonymous()
+        userId = user.id
       }
-      catch(err) {
-        console.error(err.stack)
-        res.status(500).json(error)
-      }
-    })    
-  }
+      const userWithRels = yield DBUsers.getWithRelations(userId)
+      req.login({id: userId}, function(err){if(err)console.error(err.stack)})
+      res.render('./index.html', {bootstrapData: {userId: userId, resources: userWithRels}})
+    }
+    catch(err) {
+      console.error(err.stack)
+      res.status(500).json(error)
+    }    
+  })
 })
 
 MeetingEndpoints.register()
 TaskEndpoints.register()
-OrgEndpoints.register()
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

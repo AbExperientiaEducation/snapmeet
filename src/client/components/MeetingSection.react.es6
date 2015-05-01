@@ -1,4 +1,5 @@
 const MeetingStore = require('../stores/MeetingStore.es6')
+const UserStore = require('../stores/UserStore.es6')
 const RelationStore = require('../stores/RelationStore.es6')
 const MeetingListItem = require('./MeetingListItem.react.es6')
 const NewMeetingButton = require('./NewMeetingButton.react.es6')
@@ -7,8 +8,10 @@ const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 
 const getStateFromStore = () => {
+  const user = UserStore.currentUser()
+  const userId = user ? user.id : null
   return {
-    meetings: MeetingStore.getResourcesFromRelation('*TEST*', 'ORG_MEETING')
+    meetings: MeetingStore.getResourcesFromRelation(userId, 'USER_MEETING')
   }
 }
 
@@ -30,10 +33,14 @@ const MeetingSection = React.createClass({
 
   , componentDidMount() {
     MeetingStore.addChangeListener(this._onChange)
+    RelationStore.addChangeListener(this._onChange)
+    UserStore.addChangeListener(this._onChange)
   }
 
   , componentWillUnmount() {
     MeetingStore.removeChangeListener(this._onChange)
+    RelationStore.removeChangeListener(this._onChange)
+    UserStore.removeChangeListener(this._onChange)
   }
 
   , render() {
