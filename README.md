@@ -2,6 +2,8 @@
 
 ### Install Global Dependencies
 - Install node through nvm. See https://github.com/creationix/nvm
+- Install babel
+`npm install --global babel`
 - Install gulp
 `npm install --global gulp`
 - install node-migrate from our harmony fork
