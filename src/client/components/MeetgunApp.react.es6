@@ -9,7 +9,7 @@ const ServerResourceActionCreators = require('../actions/ServerResourceActionCre
 const MeetgunApp = React.createClass({
   mixins: [PureRenderMixin]
 
-  , componentDidMount() {
+  , componentWillMount() {
     // Kick off bootstrapped data
     ServerResourceActionCreators.receiveBootstrapData()
   }

@@ -29,7 +29,7 @@ const _addRelations = (newRelations) => {
 
 const RelationStore = Object.assign({}, PubSubStore, {
   getRelations(id) {
-    return _relations[id]
+    return _relations[id] || {}
   }
 })
 

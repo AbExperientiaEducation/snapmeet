@@ -20,6 +20,9 @@ const exports = Object.assign(_eventTypes,{
     , PATCH: null
     , BATCH_GET: null
   })
+  , OtherActions: keyMirror({
+    ASSOCIATE_TO_USER: null
+  })
 })
 
 Object.keys(_resourceTypes).forEach(function(type) {

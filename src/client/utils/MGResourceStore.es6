@@ -10,6 +10,7 @@ class MGResourceStore {
     Object.assign(this, PubSubStore)
     this.restActions = opts.constants.ActionTypes
     this.type = opts.constants.LABEL
+    this.eventHandler = opts.eventHandler
     this.ResourceAPI = opts.ResourceAPI
     this.createFn = opts.createFn
     this._cachedResources = Immutable.Map()
@@ -87,6 +88,8 @@ class MGResourceStore {
 
   registerForDispatch() {
     this.dispatchToken = MeetgunDispatcher.register((action) => {
+      // Run any custom handler, and return early if handled.
+      if(this.eventHandler && this.eventHandler(action)) return 
       switch(action.type) {
         case this.restActions.CREATE:
           this.createFn(action)

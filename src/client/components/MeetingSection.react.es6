@@ -6,12 +6,11 @@ const NewMeetingButton = require('./NewMeetingButton.react.es6')
 const _ = require('lodash')
 const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
+const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 
 const getStateFromStore = () => {
-  const user = UserStore.currentUser()
-  const userId = user ? user.id : null
   return {
-    meetings: MeetingStore.getResourcesFromRelation(userId, 'USER_MEETING')
+    meetings: CurrentUserHelpers.userMeetings()
   }
 }
 

@@ -22,8 +22,8 @@ const calculateResourceChannels = function(response, resourceType) {
 
 const runHandlerForData = function(data, socket) {
   try {
-    const handler = handlers[data.type]
-    if(!handler) throw('unhandled resource type: ' + data.type)
+    const handler = handlers[data.resourceType]
+    if(!handler) throw('unhandled resource type: ' + data.resourceType)
     co(function* (){
       try {
         const response = yield handler(data, socket.request.user.id)
@@ -35,7 +35,8 @@ const runHandlerForData = function(data, socket) {
 
           case ResourceConstants.RestActions.PATCH:
           case ResourceConstants.RestActions.POST:
-            const channels = calculateResourceChannels(response, data.type)
+          case ResourceConstants.OtherActions.ASSOCIATE_TO_USER:
+            const channels = calculateResourceChannels(response, data.resourceType)
             channels.forEach(channel => {
               socket.broadcast.to(channel).emit(ResourceConstants.REST_RESPONSE_EVENT, response)  
             })

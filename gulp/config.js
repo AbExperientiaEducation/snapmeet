@@ -4,7 +4,7 @@ var src = './src'
 module.exports = {
   sass: {
     src: src + "/style/app.scss",
-    watch: src + "/style/**/*.{sass,scss}",
+    watch: src + "/style/**/*.scss",
     dest: "./public/css",
     settings: {
       imagePath: 'images', // Used by the image-url helper

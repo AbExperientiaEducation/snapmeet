@@ -5,6 +5,8 @@ const SyncBox = require('./SyncBox.react.es6')
 const NewTaskButton = require('./NewTaskButton.react.es6')
 const MeetingTaskList = require('./MeetingTaskList.react.es6')
 const MUI = require('material-ui')
+const MeetingClientActionCreators = require('../actions/MeetingClientActionCreators.es6')
+const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -16,7 +18,13 @@ const MeetingDetailPage = React.createClass({
   mixins: [PureRenderMixin]
 
   , getInitialState() {
-    return getStateFromStore(this.props)
+    const state = getStateFromStore(this.props)
+    const userMeetingIds = CurrentUserHelpers.userMeetingIds()
+    if(userMeetingIds.indexOf(this.props.params.id) === -1) {
+      MeetingClientActionCreators.addCurrentUserToMeeting(this.props.params.id)
+    }
+
+    return state
   }
 
   , componentDidMount() {

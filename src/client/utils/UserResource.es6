@@ -10,4 +10,8 @@ const UserResource = new MGResource({
   }
 })
 
+UserResource.associateToCurrentUser = function(data){
+  this.makeRestCall(ResourceConstants.OtherActions.ASSOCIATE_TO_USER, data)
+}
+
 module.exports = UserResource

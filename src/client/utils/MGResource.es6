@@ -19,7 +19,7 @@ class MGResource {
 
   makeRestCall(restAction, data) {
     data = Object.assign({
-      type: this.type
+      resourceType: this.type
       , action: restAction
     }, data)
     this.socket.emit(ResourceConstants.REST_ACTION_EVENT, data)

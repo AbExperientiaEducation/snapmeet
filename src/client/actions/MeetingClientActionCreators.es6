@@ -9,4 +9,12 @@ module.exports = {
       , orgId: '*TEST*'
     })
   }
+
+  , addCurrentUserToMeeting(meetingId) {
+    MeetgunDispatcher.dispatch({
+      type: ResourceConstants.OtherActions.ASSOCIATE_TO_USER
+      , id: meetingId
+      , associatedRecordType: ResourceConstants.Meeting.LABEL
+    })
+  }
 }
