@@ -52,8 +52,10 @@ html {
     outline: 0;
   }
 
-  .sign-in.mui-is-shown {
+  .mui-dialog-window {
     width: 500px;
-    @include calc(left, '50% - 250px');
+    &.mui-is-shown {
+      @include calc(left, '50% - 250px');  
+    }
   }
 }

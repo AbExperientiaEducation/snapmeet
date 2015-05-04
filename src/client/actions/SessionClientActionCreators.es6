@@ -12,5 +12,8 @@ module.exports = {
   , signUp(data) {
     SessionWebAPIUtils.signUp(data)
   }
+  , notifyMe(data) {
+    SessionWebAPIUtils.notifyMe(data)
+  }
 
 }

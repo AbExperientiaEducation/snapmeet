@@ -15,6 +15,7 @@ const socketIOUtils = require('./utils/SocketIOUtils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
 const UserEndpoints = require('./endpoints/UserEndpoints.es6')
+const InterestDB = require('./db/interest.es6')
 
 require('stackup')
 
@@ -79,6 +80,11 @@ app.post('/register', function(req, res) {
       res.status(500).json(error)
     }
   })
+})
+
+app.post('/interest', function(req, res) {
+  const registration = req.body
+  InterestDB.create(registration)    
 })
 
 app.get('/', function (req, res) {

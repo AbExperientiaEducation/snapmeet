@@ -41,4 +41,12 @@ module.exports = {
       }
     })
   }
+  , notifyMe(data) {
+    reqwest({
+      url: '/interest'
+      , method: 'post'
+      , data: {email: data.email, type: 'interest'}
+    })
+
+  }
 }
