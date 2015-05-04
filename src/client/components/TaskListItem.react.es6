@@ -35,7 +35,10 @@ const TaskListItem = React.createClass({
             defaultSwitched={this.state.task.completed}
             onCheck={this.onCheck}
           />
-          <SyncField id={ this.state.task.id + '_task_title' }></SyncField>
+          <SyncField 
+            id={ this.state.task.id + '_task_title' } 
+            placeholder="Task Title"
+          />
         </li>
       )      
     } else {

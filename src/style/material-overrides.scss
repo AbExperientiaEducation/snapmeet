@@ -17,3 +17,12 @@
 .mui-paper-container > .mui-enhanced-button {
   height: 100%;
 }
+
+.mui-text-field {
+  font-size: inherit;
+  width: 100%;
+}
+
+.no-underline .mui-text-field-underline {
+  display: none;
+}

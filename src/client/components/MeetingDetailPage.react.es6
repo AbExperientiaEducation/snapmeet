@@ -7,6 +7,7 @@ const MeetingTaskList = require('./MeetingTaskList.react.es6')
 const MUI = require('material-ui')
 const MeetingClientActionCreators = require('../actions/MeetingClientActionCreators.es6')
 const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
+const SyncField = require('./SyncField.react.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -40,7 +41,10 @@ const MeetingDetailPage = React.createClass({
       const meetingId = this.state.meeting.id
       return (
         <div className="meeting-detail">
-          <h2>Page for { meetingId }</h2>
+          <h2 className="no-underline"><SyncField 
+            id={ meetingId + '_meeting_title' } 
+            placeholder="Untitled Meeting"
+          /></h2>
           <div className="meeting-components">
             <MUI.Paper className="tasks-card card" zDepth={1}>
               <h3>Tasks <NewTaskButton meetingId={ meetingId }/></h3>
