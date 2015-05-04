@@ -1,17 +1,11 @@
 const React = require('react')
 const SyncdocStore = require('../stores/SyncdocStore.es6')
-const UserStore = require('../stores/UserStore.es6')
-const QuillManager = require('../utils/QuillManager.es6')
 const MUI = require('material-ui')
 
 const getStateFromStore = (props) => {
-  const user = UserStore.currentUser()
-  const state = {
+  return {
     doc: SyncdocStore.getDocument(props.id, true)
   }
-
-  if(user) state.user = user
-  return state
 }
 
 const SyncField = React.createClass({

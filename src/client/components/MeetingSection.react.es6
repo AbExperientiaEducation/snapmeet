@@ -9,8 +9,10 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 
 const getStateFromStore = () => {
+  const meetings = CurrentUserHelpers.userMeetings()
+  const sortedMeetings = meetings ? meetings.sortBy(m => {return m.createdTimestamp}) : null
   return {
-    meetings: CurrentUserHelpers.userMeetings()
+    meetings: sortedMeetings
   }
 }
 
