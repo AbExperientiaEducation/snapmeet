@@ -65,7 +65,7 @@ class MGResourceStore {
       // Return null unless we have everything/are done loading
       result = loaded.count() != resourceIds.length ? null : loaded
     } else {
-      result = []
+      result = Immutable.List()
     }
     return result
   }
