@@ -1,7 +1,7 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const Immutable = require('immutable')
-const PubSubStore = require('../utils/PubSubStore.es6')
+const PubSubStore = require('./PubSubStore.es6')
 
 /* structure:
  * {

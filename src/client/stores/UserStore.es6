@@ -1,7 +1,7 @@
 const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const UserResource = require('../resources/UserResource.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const MGResourceStore = require('../utils/MGResourceStore.es6')
+const MGResourceStore = require('./MGResourceStore.es6')
 
 const customEventHandler = function(action) {
   if(action.type === ResourceConstants.OtherActions.ASSOCIATE_TO_USER) {
