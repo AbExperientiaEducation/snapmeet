@@ -4,6 +4,7 @@ const _resourceTypes = keyMirror({
   Meeting: null
   , Task: null
   , User: null
+  , VCRoom: null
 })
 
 const _eventTypes = keyMirror({

@@ -4,20 +4,25 @@ const handlers = {}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const _ = require('lodash')
 
+let _ioServer
+
 const registerResourceHandler = function(resourceType, callback) {
   handlers[resourceType] = callback
 }
 
-const calculateResourceChannels = function(response, resourceType) {
-  const channels = _.pluck(response[resourceType], 'id')
-  
-  if(response.RELATIONS) {
+const broadcastChange = function(resourceType, groupedResources) {
+  const channels = _.pluck(groupedResources[resourceType], 'id')
+
+  if(groupedResources.RELATIONS) {
     // We need to notify anyone that has any of the related items
-    response.RELATIONS.forEach(rel => {
+    groupedResources.RELATIONS.forEach(rel => {
       channels.push(rel.Node1Id, rel.Node2Id)
     })
   }
-  return _.uniq(channels)
+
+  _.uniq(channels).forEach(channel => {
+    _ioServer.to(channel).emit(ResourceConstants.REST_RESPONSE_EVENT, groupedResources)  
+  })
 }
 
 const runHandlerForData = function(data, socket) {
@@ -36,11 +41,7 @@ const runHandlerForData = function(data, socket) {
           case ResourceConstants.RestActions.PATCH:
           case ResourceConstants.RestActions.POST:
           case ResourceConstants.OtherActions.ASSOCIATE_TO_USER:
-            const channels = calculateResourceChannels(response, data.resourceType)
-            channels.forEach(channel => {
-              socket.broadcast.to(channel).emit(ResourceConstants.REST_RESPONSE_EVENT, response)  
-            })
-        
+            broadcastChange(data.resourceType, response)
             socket.emit(ResourceConstants.REST_RESPONSE_EVENT, response)
             break
         }
@@ -64,19 +65,21 @@ const runHandlerForData = function(data, socket) {
 }
 
 const createServer = function(server){
-  const ioServer = socketio(server)
-  ioServer.on('connection', function(socket){
+  if(_ioServer) throw("Attempted to create duplicate server")
+  _ioServer = socketio(server)
+  _ioServer.on('connection', function(socket){
     console.log('a user connected')
 
     socket.on(ResourceConstants.REST_ACTION_EVENT, function(data) {
       runHandlerForData(data, socket) 
     })
   })
-  return ioServer
+  return _ioServer
 }
 
 module.exports = {
   createServer: createServer
   , registerResourceHandler: registerResourceHandler
+  , broadcastChange: broadcastChange
 }
 

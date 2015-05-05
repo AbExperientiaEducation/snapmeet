@@ -4,6 +4,8 @@ const Cypher = require('../utils/cypher_client.es6')
 const multiCypher = Cypher.multiCypher
 const singleCypher = Cypher.singleCypher
 const recordsWithRels = Cypher.recordsWithRels
+const VCRoomDB = require('./vcrooms.es6')
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
 const getWithRelations = function(ids) {
   return recordsWithRels(ids)
@@ -27,7 +29,10 @@ const create = function(meetingInfo){
   return co(function* (){
     try {
       const created = yield singleCypher(query, 'target')
-      return yield getWithRelations([created.id])
+      const vcRoom = yield VCRoomDB.create(created.id)
+      const result = yield getWithRelations([created.id])
+      result[ResourceConstants.VCRoom.LABEL] = [vcRoom]
+      return result
     }
     catch(err) {
       console.error(err.stack)
