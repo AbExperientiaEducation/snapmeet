@@ -1,5 +1,5 @@
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const MeetingResource = require('../utils/MeetingResource.es6')
+const MeetingResource = require('../resources/MeetingResource.es6')
 const MGResourceStore = require('../utils/MGResourceStore.es6')
 
 const MeetingStore = new MGResourceStore({

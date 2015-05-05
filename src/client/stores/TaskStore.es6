@@ -1,5 +1,5 @@
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const TaskResource = require('../utils/TaskResource.es6')
+const TaskResource = require('../resources/TaskResource.es6')
 const MGResourceStore = require('../utils/MGResourceStore.es6')
 
 const TaskStore = new MGResourceStore({
