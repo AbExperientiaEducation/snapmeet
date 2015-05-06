@@ -37,6 +37,13 @@ const VCBox = React.createClass({
   }
 
   , render() {
+    const rtcSupport = !!window.webkitRTCPeerConnection || !!window.mozRTCPeerConnection
+    if(!rtcSupport) {
+      return <div>
+        <h4>Videoconferencing not available for your browser</h4>
+        <p>Please use <a href="https://www.mozilla.org/en-US/firefox/new">Mozilla Firefox</a> or <a href="https://www.google.com/chrome/">Google Chrome</a> to use the video conference feature</p>
+      </div>
+    }
     if(!this.state.vcRoom) {
       return <div>Loading...</div>
     } else if (!this.state.startVC) {
