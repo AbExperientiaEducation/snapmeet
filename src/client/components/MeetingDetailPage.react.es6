@@ -2,6 +2,7 @@ const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MeetingStore = require('../stores/MeetingStore.es6')
 const SyncBox = require('./SyncBox.react.es6')
+const VCBox = require('./VCBox.react.es6')
 const NewTaskButton = require('./NewTaskButton.react.es6')
 const MeetingTaskList = require('./MeetingTaskList.react.es6')
 const MUI = require('material-ui')
@@ -54,6 +55,9 @@ const MeetingDetailPage = React.createClass({
               <h3>Notes</h3>
               <SyncBox id={ meetingId + '_notes'} /> 
             </MUI.Paper>
+            <VCBox 
+              meetingId={ meetingId }
+            />
           </div>
         </div>
       )      

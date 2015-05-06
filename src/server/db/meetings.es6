@@ -31,7 +31,6 @@ const create = function(meetingInfo){
       const created = yield singleCypher(query, 'target')
       const vcRoom = yield VCRoomDB.create(created.id)
       const result = yield getWithRelations([created.id])
-      result[ResourceConstants.VCRoom.LABEL] = [vcRoom]
       return result
     }
     catch(err) {

@@ -3,20 +3,15 @@ const cypher = require('../utils/cypher_client.es6')
 const singleCypher = cypher.singleCypher
 const recordsWithRels = cypher.recordsWithRels
 const Shortid = require('shortid')
+const XirSysClient = require('../utils/XirSysRestClient.es6')
 
-const getWithRelations = function(ids) {
-  return recordsWithRels(ids)
-}
-
-const runQueryAndReturnNodeRelations = function(query) {
+const getWithCredentials = function(id) {
   return co(function* (){
-    try {
-      const modified = yield singleCypher(query, 'target')
-      return yield getWithRelations([modified.id])
-    }
-    catch(err) {
-      console.error(err.stack)
-    }
+    const recordWithRels = yield recordsWithRels([id])
+    const credentials = yield XirSysClient.getServers(id)
+    const record = recordWithRels.VCROOM[0]
+    record.credentials = credentials
+    return recordWithRels
   })
 }
 
@@ -30,7 +25,6 @@ const create = function(meetingId){
       vcRoomProps: {
         createdTimestamp: Date.now()
         , id: Shortid.generate()
-        , ready: false
       }
       , meetingId: meetingId
     }
@@ -38,21 +32,7 @@ const create = function(meetingId){
   return singleCypher(query, 'target')
 }
 
-const update = function(vcRoomInfo) {
-  const query = {
-    query: `MATCH (target:VCRoom)
-            WHERE target.id = '${vcRoomInfo.id}'
-            SET target = {vcRoomProps}
-            RETURN target`
-    , params: {
-      vcRoomProps: vcRoomInfo
-    }
-  }
-  return runQueryAndReturnNodeRelations(query)
-}
-
-
 module.exports = {
   create: create
-  , update: update
+  , getWithCredentials: getWithCredentials
 }

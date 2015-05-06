@@ -15,6 +15,7 @@ const socketIOUtils = require('./utils/SocketIOUtils.es6')
 const MeetingEndpoints = require('./endpoints/MeetingEndpoints.es6')
 const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
 const UserEndpoints = require('./endpoints/UserEndpoints.es6')
+const VCRoomEndpoints = require('./endpoints/VCRoomEndpoints.es6')
 const InterestDB = require('./db/interest.es6')
 
 require('stackup')
@@ -112,6 +113,7 @@ app.get('/', function (req, res) {
 MeetingEndpoints.register()
 TaskEndpoints.register()
 UserEndpoints.register()
+VCRoomEndpoints.register()
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

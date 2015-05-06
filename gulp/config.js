@@ -60,7 +60,8 @@ module.exports = {
       "react-router",
       "share/lib/client/textarea.js",
       "ot-text",
-      "material-ui"
+      "material-ui",
+      "simplewebrtc"
     ]
   }
 }
