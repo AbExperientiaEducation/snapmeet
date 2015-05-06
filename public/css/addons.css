@@ -169,7 +169,6 @@ figure {
  * Address differences between Firefox and other browsers.
  */
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
 }
@@ -301,8 +300,6 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   /* 2 */
   box-sizing: content-box;
 }
@@ -808,8 +805,11 @@ hr {
 .mui-checkbox .mui-checkbox-icon .mui-checkbox-check {
   position: absolute;
   opacity: 0;
+  -webkit-transform: scale(0);
   transform: scale(0);
+  -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
+  transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, -webkit-transform 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms;
   transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms;
 }
 .mui-checkbox .mui-checkbox-icon .mui-checkbox-check * {
@@ -825,8 +825,11 @@ hr {
 .mui-checkbox.mui-is-switched .mui-checkbox-icon .mui-checkbox-check {
   transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   opacity: 1;
+  -webkit-transform: scale(1);
   transform: scale(1);
+  -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
+  transition: opacity 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, -webkit-transform 800ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: opacity 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 800ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-checkbox.mui-is-switched .mui-checkbox-icon .mui-checkbox-box {
@@ -1017,6 +1020,7 @@ hr {
   width: 32px;
   opacity: 0;
   border-radius: 50%;
+  -webkit-transform: scale(0);
   transform: scale(0);
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
@@ -1028,6 +1032,7 @@ hr {
 }
 .mui-date-picker-day-button.mui-is-selected .mui-date-picker-day-button-select {
   opacity: 1;
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
 .mui-date-picker-day-button.mui-is-disabled {
@@ -1071,6 +1076,7 @@ hr {
 .mui-dialog-window.mui-is-shown .mui-dialog-window-contents {
   opacity: 1;
   top: 0px;
+  -webkit-transform: translate3d(0, 64px, 0);
   transform: translate3d(0, 64px, 0);
 }
 .mui-dialog .mui-dialog-title {
@@ -1249,6 +1255,7 @@ hr {
   overflow: hidden;
 }
 .mui-enhanced-textarea .mui-enhanced-textarea-shadow {
+  -webkit-transform: scale(0);
   transform: scale(0);
   position: absolute;
 }
@@ -1262,6 +1269,9 @@ hr {
   text-transform: uppercase;
   font-weight: 500;
   border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   position: relative;
   overflow: hidden;
@@ -1271,6 +1281,7 @@ hr {
   min-width: 88px;
   padding: 0;
   margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-flat-button .mui-touch-ripple .mui-ripple-circle-inner {
@@ -1336,6 +1347,7 @@ hr {
   border-radius: 50%;
   text-align: center;
   vertical-align: bottom;
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-floating-action-button .mui-floating-action-button-container.mui-is-disabled {
@@ -1389,6 +1401,9 @@ hr {
   position: relative;
   font-size: 24px;
   display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .mui-icon-button {
@@ -1405,14 +1420,28 @@ hr {
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
   border: solid 6px rgba(0, 0, 0, 0);
   background-clip: padding-box;
+  -webkit-animation: icon-button-focus-ripple-pulsate 1.5s ease 0s infinite;
   animation: icon-button-focus-ripple-pulsate 1.5s ease 0s infinite;
+}
+@-webkit-keyframes icon-button-focus-ripple-pulsate {
+  0%,
+  100% {
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 @keyframes icon-button-focus-ripple-pulsate {
   0%,
   100% {
+    -webkit-transform: scale(0.75);
     transform: scale(0.75);
   }
   50% {
+    -webkit-transform: scale(1);
     transform: scale(1);
   }
 }
@@ -1666,6 +1695,7 @@ hr {
   color: rgba(0, 0, 0, 0.87);
 }
 .mui-left-nav.mui-closed .mui-left-nav-menu {
+  -webkit-transform: translate3d(-266px, 0, 0);
   transform: translate3d(-266px, 0, 0);
 }
 .mui-menu {
@@ -1714,6 +1744,9 @@ hr {
   background-color: rgba(0, 0, 0, 0);
 }
 .mui-menu-item * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .mui-menu-item:hover:not(.mui-is-disabled) {
@@ -1831,7 +1864,9 @@ hr {
 .mui-radio-button .mui-radio-button-icon .mui-radio-button-fill {
   position: absolute;
   opacity: 0;
+  -webkit-transform: scale(0);
   transform: scale(0);
+  -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
@@ -1842,6 +1877,7 @@ hr {
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   position: absolute;
   opacity: 1;
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
 .mui-radio-button .mui-radio-button-icon .mui-radio-button-target * {
@@ -1850,10 +1886,12 @@ hr {
 }
 .mui-radio-button.mui-is-switched .mui-radio-button-icon .mui-radio-button-fill {
   opacity: 1;
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
 .mui-radio-button.mui-is-switched .mui-radio-button-icon .mui-radio-button-target {
   opacity: 0;
+  -webkit-transform: scale(0);
   transform: scale(0);
 }
 .mui-radio-button.mui-is-switched .mui-radio-button-icon .mui-radio-button-target * {
@@ -1883,6 +1921,7 @@ hr {
   overflow: hidden;
   border-radius: 2px;
   background-color: #ffffff;
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-raised-button .mui-raised-button-container.mui-is-keyboard-focused {
@@ -1914,6 +1953,9 @@ hr {
   font-weight: 500;
   margin: 0;
   padding: 0 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   line-height: 36px;
   color: rgba(0, 0, 0, 0.87);
@@ -1964,6 +2006,7 @@ hr {
   top: 0;
   left: 0;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  -webkit-transform: scale(0);
   transform: scale(0);
   opacity: 0;
 }
@@ -1973,18 +2016,33 @@ hr {
   width: 100%;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.1);
+  -webkit-animation: focus-ripple-pulsate 1.5s ease 0s infinite;
   animation: focus-ripple-pulsate 1.5s ease 0s infinite;
+}
+@-webkit-keyframes focus-ripple-pulsate {
+  0%,
+  100% {
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
+  }
+  50% {
+    -webkit-transform: scale(0.85);
+    transform: scale(0.85);
+  }
 }
 @keyframes focus-ripple-pulsate {
   0%,
   100% {
+    -webkit-transform: scale(0.75);
     transform: scale(0.75);
   }
   50% {
+    -webkit-transform: scale(0.85);
     transform: scale(0.85);
   }
 }
 .mui-focus-ripple.mui-is-shown {
+  -webkit-transform: scale(1);
   transform: scale(1);
   opacity: 1;
 }
@@ -2001,14 +2059,17 @@ hr {
   height: 100%;
   width: 100%;
   border-radius: 50%;
+  -webkit-transform: scale(0);
   transform: scale(0);
   background-color: rgba(0, 0, 0, 0.2);
+  transition: -webkit-transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-ripple-circle.mui-is-started {
   opacity: 1;
 }
 .mui-ripple-circle.mui-is-started .mui-ripple-circle-inner {
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
 .mui-ripple-circle.mui-is-ending {
@@ -2022,6 +2083,9 @@ hr {
   left: 0;
 }
 .react-draggable-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .mui-slider {
@@ -2069,6 +2133,7 @@ hr {
   margin: 1px 0 0 0;
   background-clip: padding-box;
   border-radius: 50%;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   transition: border 450ms cubic-bezier(0.23, 1, 0.32, 1), width 450ms cubic-bezier(0.23, 1, 0.32, 1), height 450ms cubic-bezier(0.23, 1, 0.32, 1);
   width: 12px;
@@ -2153,7 +2218,9 @@ hr {
   margin-left: 24px;
   left: -10000px;
   opacity: 0;
+  -webkit-transform: translate3d(0, 20px, 0);
   transform: translate3d(0, 20px, 0);
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 400ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, -webkit-transform 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 400ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-snackbar .mui-snackbar-action {
@@ -2167,7 +2234,9 @@ hr {
 .mui-snackbar.mui-is-open {
   left: 0;
   opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, -webkit-transform 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-subheader {
@@ -2197,6 +2266,9 @@ hr {
   height: 24px;
   width: 24px;
   display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .mui-svg-icon * {
@@ -2312,11 +2384,13 @@ hr {
 .mui-text-field .mui-text-field-focus-underline {
   border-color: #00bcd4;
   border-bottom-width: 2px;
+  -webkit-transform: scaleX(0);
   transform: scaleX(0);
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-text-field.mui-has-error .mui-text-field-focus-underline {
   border-color: #f44336;
+  -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
 .mui-text-field.mui-has-value .mui-text-field-hint {
@@ -2337,6 +2411,7 @@ hr {
   color: rgba(0, 0, 0, 0.3);
 }
 .mui-text-field.mui-is-focused .mui-text-field-focus-underline {
+  -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
 .mui-text-field.mui-has-floating-labels {
@@ -2344,7 +2419,9 @@ hr {
 }
 .mui-text-field.mui-has-floating-labels .mui-text-field-floating-label {
   top: 24px;
+  -webkit-transform: scale(1) translate3d(0, 0, 0);
   transform: scale(1) translate3d(0, 0, 0);
+  -webkit-transform-origin: left top;
   transform-origin: left top;
 }
 .mui-text-field.mui-has-floating-labels .mui-text-field-hint {
@@ -2356,6 +2433,7 @@ hr {
 }
 .mui-text-field.mui-has-floating-labels.mui-has-value .mui-text-field-floating-label,
 .mui-text-field.mui-has-floating-labels.mui-is-focused .mui-text-field-floating-label {
+  -webkit-transform: scale(0.75) translate3d(0, -18px, 0);
   transform: scale(0.75) translate3d(0, -18px, 0);
 }
 .mui-text-field.mui-has-floating-labels.mui-has-value .mui-text-field-floating-label {
@@ -2368,6 +2446,7 @@ hr {
   opacity: 1;
 }
 .mui-text-field.mui-has-floating-labels.mui-is-focused .mui-text-field-floating-label {
+  -webkit-transform: scale(0.75) translate3d(0, -18px, 0);
   transform: scale(0.75) translate3d(0, -18px, 0);
   color: #00bcd4;
 }
@@ -2518,8 +2597,12 @@ hr {
   overflow: hidden;
   top: -10000px;
   border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   opacity: 0;
+  transition: top 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms, -webkit-transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: top 0ms cubic-bezier(0.23, 1, 0.32, 1) 450ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-tooltip .mui-tooltip-label {
@@ -2530,6 +2613,7 @@ hr {
   position: absolute;
   left: 50%;
   top: 0px;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background-color: transparent;
@@ -2538,7 +2622,9 @@ hr {
 .mui-tooltip.mui-is-shown {
   top: -16px;
   opacity: 1;
+  -webkit-transform: translate3d(0px, 16px, 0px);
   transform: translate3d(0px, 16px, 0px);
+  transition: top 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, -webkit-transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: top 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 .mui-tooltip.mui-is-shown .mui-tooltip-ripple {
@@ -2580,50 +2666,66 @@ hr {
   opacity: 0;
 }
 .mui-transition-slide-in.mui-is-left .mui-transition-slide-in-enter {
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 .mui-transition-slide-in.mui-is-left .mui-transition-slide-in-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-left .mui-transition-slide-in-leave {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-left .mui-transition-slide-in-leave-active {
+  -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
 .mui-transition-slide-in.mui-is-right .mui-transition-slide-in-enter {
+  -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
 .mui-transition-slide-in.mui-is-right .mui-transition-slide-in-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-right .mui-transition-slide-in-leave {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-right .mui-transition-slide-in-leave-active {
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 .mui-transition-slide-in.mui-is-up .mui-transition-slide-in-enter {
+  -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
 .mui-transition-slide-in.mui-is-up .mui-transition-slide-in-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-up .mui-transition-slide-in-leave {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-up .mui-transition-slide-in-leave-active {
+  -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-enter {
+  -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-enter-active {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-leave {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-leave-active {
+  -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
