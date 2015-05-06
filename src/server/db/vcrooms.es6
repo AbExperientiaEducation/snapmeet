@@ -9,6 +9,8 @@ const getWithCredentials = function(id) {
   return co(function* (){
     const recordWithRels = yield recordsWithRels([id])
     const credentials = yield XirSysClient.getServers(id)
+    const signalingToken = yield XirSysClient.getToken(id)
+    credentials.signalingToken = signalingToken
     const record = recordWithRels.VCROOM[0]
     record.credentials = credentials
     return recordWithRels

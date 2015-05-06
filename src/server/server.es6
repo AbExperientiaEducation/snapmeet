@@ -1,4 +1,5 @@
 // Require our dependencies
+require('dotenv').load()
 const express = require('express')
 const http = require('http')
 const url = require('url')

@@ -2,6 +2,7 @@ const React = require('react')
 const ReactPropTypes = React.PropTypes
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const VCRoomStore = require('../stores/VCRoomStore.es6')
+// const SimpleWebRTC = require('simplewebrtc')
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -11,8 +12,7 @@ const getStateFromStore = (props) => {
 }
 
 const VCBox = React.createClass({
-  mixins: [PureRenderMixin]
-  , propTypes: {
+  propTypes: {
     meetingId: ReactPropTypes.string
   }
 
@@ -32,12 +32,50 @@ const VCBox = React.createClass({
     this.setState(getStateFromStore(this.props))
   }
 
+  , shouldComponentUpdate() { 
+    return !this.state.webRtcComponent
+  }
+
   , render() {
-    const vcRoom = this.state.vcRoom
-    if(!vcRoom) return <div>Loading...</div>
-    return (
-      <div>{vcRoom.credentials}</div>
-    )
+    if(!this.state.vcRoom) {
+      return <div>Loading...</div>
+    } else if (!this.state.startVC) {
+      return <div><button onClick={this.onClick}>Join video chat</button></div>
+    } else {
+      return <div>
+        <div ref="others"></div>
+        <div ref="you"></div>
+      </div>      
+    }
+  }
+
+  , onClick() {
+    this.setState({startVC: true}, this.setupWebRtcIfNecessary)
+  }
+
+  , setupWebRtcIfNecessary() {
+    if(this.state.webRtcComponent || !this.state.startVC) return
+    // Create our WebRTC connection
+    const webrtc = new SimpleWebRTC({
+      // The DOM element that will hold "our" video
+      localVideoEl: React.findDOMNode(this.refs.you)
+      // The DOM element that will hold remote videos
+      , remoteVideosEl: React.findDOMNode(this.refs.others)
+      // Immediately ask for camera access
+      , autoRequestMedia: true
+      , debug: false
+      , detectSpeakingEvents: true
+      , autoAdjustMic: false
+      , peerConnectionConfig: this.state.vcRoom.credentials
+      // We're still using simplewebrtc signaling server. Should switch to XirSys
+      , url: 'https://signaling.simplewebrtc.com:443'
+      // , url: 'wss://api.xirsys.com:443'
+    })
+    webrtc.on('readyToCall', () => {
+      // you can name it anything
+      webrtc.joinRoom(this.state.vcRoom.id);
+    })
+    this.setState({webRtcComponent: webrtc})
   }
 })
 

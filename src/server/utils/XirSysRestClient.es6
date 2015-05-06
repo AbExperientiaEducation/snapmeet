@@ -4,10 +4,10 @@ let _restClient
 
 const getCredentials = function() {
   return {
-    ident: "abexed"
-    , secret: '***REMOVED***'
-    , domain: 'www.meetgun.com'
-    , application: 'meetgun'    
+    ident: process.env.XIR_IDENT
+    , secret: process.env.XIR_SECRET
+    , domain: process.env.XIR_DOMAIN
+    , application: process.env.XIR_APPLICATION
   }
 }
 
@@ -57,6 +57,28 @@ const getServers = function(roomName) {
   })
 }
 
+const getWsServers = function() {
+  const data = {}
+  return co(function* (){
+    const result = yield makeRequest('wsList', data)
+    return result
+  })
+}
+
+const getToken = function(roomName) {
+  const data = {
+    secure: 1
+    , room: roomName
+  }
+  return co(function* (){
+    const result = yield makeRequest('getToken', data)
+
+    return result.d.token
+  })
+}
+
 module.exports = {
   getServers: getServers
+  , getWsServers: getWsServers
+  , getToken: getToken
 }
