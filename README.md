@@ -7,7 +7,7 @@
 - Install gulp
 `npm install --global gulp`
 - install node-migrate from our harmony fork
-`npm install -g migrate`
+`npm install -g igmcdowell/node-migrate`
 - install npm-shrinkwrap
 `npm install -g npm-shrinkwrap`
 - install neo4j
@@ -24,7 +24,7 @@
 `npm install`
 
 ### Run Migrations
-`tasks/harmony_migrate`
+`migrate`
 
 ### Start build process/server
 `gulp`

@@ -95,4 +95,6 @@ module.exports = {
       return {RELATIONS: relations}
     })
   }
+
+  , promiseCypher: promiseCypher
 }

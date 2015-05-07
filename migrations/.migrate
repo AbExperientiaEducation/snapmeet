@@ -1,0 +1,1 @@
+{"migrations":[{"title":"1428337437803-AddUniqueConstraintToEmailOnUser.es6"},{"title":"1431035917291-add-unique-constraints.es6"}],"path":"migrations/.migrate","pos":2,"_events":{}}

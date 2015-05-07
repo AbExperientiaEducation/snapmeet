@@ -1,5 +1,5 @@
 const co = require('co')
-const cypherClient = require('../utils/cypher_client.es6')
+const cypherClient = require('../src/server/utils/cypher_client.es6')
 
 exports.up = function(next){
   co(function *(){
