@@ -12,7 +12,6 @@ const register = function() {
     switch(data.action) {
       case RestActions.GET_BATCH:
       case RestActions.GET:
-        console.log('received get')
         return getRoom(data)
     }
   }

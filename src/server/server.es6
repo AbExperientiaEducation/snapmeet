@@ -5,7 +5,7 @@ const http = require('http')
 const url = require('url')
 const morgan = require('morgan')
 const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
+const MongoStore = require('connect-mongo')(session);
 const passport = require('./middleware/passport.es6')
 const cookieParser = require('cookie-parser')
 const passportSocketIo = require("passport.socketio")
@@ -31,12 +31,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 
-const redisOptions = {host: '127.0.0.1', port: '6379'}
-
-const unsafeSecret = 'keyboard cat hall and oates remix'
-const sessionStore = new RedisStore(redisOptions)
+const sessionStore = new MongoStore({url:process.env.MONGO_URL})
 app.use(session({
-  secret: unsafeSecret,
+  secret: process.env.SESSION_SECRET,
   store: sessionStore,
   resave: false,
   saveUninitialized: true
@@ -51,7 +48,7 @@ const socketIOServer = socketIOUtils.createServer(server)
 socketIOServer.use(passportSocketIo.authorize({
   cookieParser: cookieParser
   , key: 'connect.sid'
-  , secret: unsafeSecret
+  , secret: process.env.SESSION_SECRET
   , store: sessionStore
   , success: function(data, accept){console.log('success'); accept()}
   , fail: function(data, message, error, accept){console.log('socket session error', message, error.stack)}
