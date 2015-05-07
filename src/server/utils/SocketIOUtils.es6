@@ -11,12 +11,12 @@ const registerResourceHandler = function(resourceType, callback) {
 }
 
 const broadcastChange = function(resourceType, groupedResources) {
-  const channels = _.pluck(groupedResources[resourceType], 'id')
+  const channels = _.map(groupedResources[resourceType], r => {return resourceType + r.id})
 
   if(groupedResources.RELATIONS) {
     // We need to notify anyone that has any of the related items
     groupedResources.RELATIONS.forEach(rel => {
-      channels.push(rel.Node1Id, rel.Node2Id)
+      channels.push(rel.Node1Type.toUpperCase() + rel.Node1Id, rel.Node2Type.toUpperCase() + rel.Node2Id)
     })
   }
 
@@ -50,7 +50,7 @@ const runHandlerForData = function(data, socket) {
           // TODO: Add security to verify socket eligible to join resource
           // TODO: Is there a race condition here? What if changes came in while we were fetching?
           const ids = data.ids || [data.id]
-          ids.forEach(id => {socket.join(data.id)})
+          ids.forEach(id => {socket.join(data.resourceType + data.id)})
         }        
       }
       catch(err) {

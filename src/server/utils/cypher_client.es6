@@ -59,7 +59,7 @@ module.exports = {
     const relQuery = {
       query: `MATCH (n)-[r]-(n2)
               WHERE n.id IN {recordIds} 
-              RETURN n.id AS Node1Id, n2.id AS Node2Id, type(r) AS RelationType`
+              RETURN n.id AS Node1Id, labels(n)[0] AS Node1Type, labels(n2)[0] AS Node2Type, n2.id AS Node2Id, type(r) AS RelationType`
       , params: {recordIds: recordIds}
     }
     return co(function* (){
