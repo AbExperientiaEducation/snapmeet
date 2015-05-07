@@ -11,6 +11,7 @@ module.exports = {
 
   , userMeetingIds() {
     const user = UserStore.currentUser()
+    if(!user) return null
     const userRelations = RelationStore.getRelations(user.id)
     return userRelations.USER_MEETING || []
   }

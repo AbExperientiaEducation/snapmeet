@@ -2,6 +2,7 @@ const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('./PubSubStore.es6')
+const SocketConstants = require('../constants/SocketConstants.es6')
 
 /* structure:
  * {
@@ -31,6 +32,10 @@ const RelationStore = Object.assign({}, PubSubStore, {
   getRelations(id) {
     return _relations[id] || {}
   }
+
+  , panic() {
+    _relations = {}
+  }
 })
 
 RelationStore.dispatchToken = MeetgunDispatcher.register((action) => {
@@ -40,7 +45,9 @@ RelationStore.dispatchToken = MeetgunDispatcher.register((action) => {
       _addRelations(action.groupedRawResources.RELATIONS)
       RelationStore.emitChange()
       break;
-
+    case SocketConstants.ActionTypes.SOCKETIO_DISCONNECT:
+      RelationStore.panic()
+      RelationStore.emitChange()
     default:
       // no op
     }

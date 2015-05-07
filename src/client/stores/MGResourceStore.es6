@@ -4,6 +4,7 @@ const Immutable = require('immutable')
 const RelationStore = require('../stores/RelationStore.es6')
 const PubSubStore = require('./PubSubStore.es6')
 const CHANGE_EVENT = 'store_contents_change'
+const SocketConstants = require('../constants/SocketConstants.es6')
 
 class MGResourceStore {
   constructor(opts) {
@@ -13,10 +14,14 @@ class MGResourceStore {
     this.eventHandler = opts.eventHandler
     this.ResourceAPI = opts.ResourceAPI
     this.createFn = opts.createFn
-    this._cachedResources = Immutable.Map()
-    this._subscribedResources = Immutable.Map()
+    this.initialize()
     this.registerForDispatch()
     this.setMaxListeners(100)
+  }
+
+  initialize() {
+    this._cachedResources = Immutable.Map()
+    this._subscribedResources = Immutable.Map()    
   }
 
   _subscribeToResource(resourceId) {
@@ -43,6 +48,11 @@ class MGResourceStore {
       const inflatedResource = this.ResourceAPI.inflateRecord(resource)
       this._cachedResources = this._cachedResources.set(resource.id, inflatedResource)
     })
+  }
+
+  panic() {
+    // Drop all our data. 
+    this.initialize()
   }
 
   get(id) {
@@ -102,6 +112,11 @@ class MGResourceStore {
         case ResourceConstants.RECEIVE_RAW_EVENT:
           if(!action.groupedRawResources[this.type]) return
           this._addResources(action.groupedRawResources[this.type])
+          this.emitChange()
+          break
+
+        case SocketConstants.ActionTypes.SOCKETIO_DISCONNECT:
+          this.panic()
           this.emitChange()
           break
 

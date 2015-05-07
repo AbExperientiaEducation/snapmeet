@@ -20,17 +20,17 @@ const MeetingDetailPage = React.createClass({
   mixins: [PureRenderMixin]
 
   , getInitialState() {
-    const state = getStateFromStore(this.props)
-    const userMeetingIds = CurrentUserHelpers.userMeetingIds()
-    if(userMeetingIds.indexOf(this.props.params.id) === -1) {
-      MeetingClientActionCreators.addCurrentUserToMeeting(this.props.params.id)
-    }
-
-    return state
+    return getStateFromStore(this.props)
   }
 
   , componentDidMount() {
     MeetingStore.addChangeListener(this._onChange)
+    const userMeetingIds = CurrentUserHelpers.userMeetingIds()
+    // userMeetingIds is null if we don't have a current user loaded.
+    // Typically from dropping the db.
+    if(userMeetingIds && userMeetingIds.indexOf(this.props.params.id) === -1) {
+      MeetingClientActionCreators.addCurrentUserToMeeting(this.props.params.id)
+    }
   }
 
   , componentWillUnmount() {
