@@ -50,8 +50,8 @@ socketIOServer.use(passportSocketIo.authorize({
   , key: 'connect.sid'
   , secret: process.env.SESSION_SECRET
   , store: sessionStore
-  , success: function(data, accept){console.log('success'); accept()}
-  , fail: function(data, message, error, accept){console.log('socket session error', message, error.stack)}
+  , success: function(data, accept){accept()}
+  , fail: function(data, message, error, accept){console.error('socket session error', message, error.stack)}
 }))
 
 syncDocHandling.init(socketIOServer)
@@ -67,7 +67,6 @@ app.post('/login', passport.authenticate('local'),
 const DBUsers = require('./db/users.es6')
 app.post('/register', function(req, res) {
   const registration = req.body
-  console.log("Attempting registration")
   co(function* (){
     try {
       const registrationResult = yield DBUsers.register(registration.username, registration.password)

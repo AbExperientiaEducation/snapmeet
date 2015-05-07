@@ -35,7 +35,7 @@ const makeRequest = function(endpoint, data) {
     }
 
     const errFn = function(err){
-      console.log('XirSys API Error', err.request.options)
+      console.error('XirSys API Error', err.request.options)
       reject('XirSys API Error')
     }
 
