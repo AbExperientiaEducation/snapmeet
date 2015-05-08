@@ -20,6 +20,10 @@ const VCBox = React.createClass({
     return getStateFromStore(this.props)
   }
 
+  , makeVideoComponent(video) {
+    return <video src={video.src} autoPlay />
+  }
+
   , componentDidMount() {
     VCRoomStore.addChangeListener(this._onChange)
   }
@@ -30,10 +34,6 @@ const VCBox = React.createClass({
 
   , _onChange() {
     this.setState(getStateFromStore(this.props))
-  }
-
-  , shouldComponentUpdate() { 
-    return !this.state.webRtcComponent
   }
 
   , render() {
@@ -49,9 +49,12 @@ const VCBox = React.createClass({
     } else if (!this.state.startVC) {
       return <div><button onClick={this.onClick}>Join video chat</button></div>
     } else {
+      const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
       return <div>
-        <div ref="others"></div>
-        <div ref="you"></div>
+        <div className="others-video" ref="others">
+          {videos}
+        </div>
+        <div className="you-video" ref="you"></div>
       </div>      
     }
   }
@@ -62,12 +65,13 @@ const VCBox = React.createClass({
 
   , setupWebRtcIfNecessary() {
     if(this.state.webRtcComponent || !this.state.startVC) return
+    this.setState({videos: []})
     // Create our WebRTC connection
     const webrtc = new SimpleWebRTC({
       // The DOM element that will hold "our" video
       localVideoEl: React.findDOMNode(this.refs.you)
       // The DOM element that will hold remote videos
-      , remoteVideosEl: React.findDOMNode(this.refs.others)
+      , remoteVideosEl: ''
       // Immediately ask for camera access
       , autoRequestMedia: true
       , debug: false
@@ -78,10 +82,17 @@ const VCBox = React.createClass({
       , url: 'https://signaling.simplewebrtc.com:443'
       // , url: 'wss://api.xirsys.com:443'
     })
+    
     webrtc.on('readyToCall', () => {
       // you can name it anything
       webrtc.joinRoom(this.state.vcRoom.id);
     })
+
+    webrtc.on('videoAdded', (video, peer) => {
+      video.oncontextmenu = function () { return false }
+      this.setState({videos: this.state.videos.concat([video])})
+    })
+
     this.setState({webRtcComponent: webrtc})
   }
 })

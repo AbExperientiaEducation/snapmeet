@@ -1,0 +1,16 @@
+.others-video {
+  @include display(flex);
+
+  video {
+    max-height: 300px;
+  }
+}
+
+.you-video {
+  max-width: 100px;
+  @include display(flex);
+
+  video {
+    height: 100px;
+  }
+}
