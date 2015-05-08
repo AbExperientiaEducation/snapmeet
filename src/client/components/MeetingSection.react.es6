@@ -7,6 +7,7 @@ const _ = require('lodash')
 const React = require('react')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const getStateFromStore = () => {
   const meetings = CurrentUserHelpers.userMeetings()
@@ -51,7 +52,9 @@ const MeetingSection = React.createClass({
         <div className="meeting-section">
           <h3>Meetings <NewMeetingButton /></h3>
           <ul className="meeting-list" ref="meetingList">
+          <ReactCSSTransitionGroup transitionName="slide">
             {meetingListItems}
+          </ReactCSSTransitionGroup>
           </ul>
         </div>
       )

@@ -55,10 +55,10 @@ const MeetingDetailPage = React.createClass({
               <h3>Notes</h3>
               <SyncBox id={ meetingId + '_notes'} /> 
             </MUI.Paper>
-            <VCBox 
-              meetingId={ meetingId }
-            />
           </div>
+          <VCBox 
+            meetingId={ meetingId }
+          />
         </div>
       )      
     } else {

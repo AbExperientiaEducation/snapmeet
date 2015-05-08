@@ -1,5 +1,5 @@
 const SignInSoon = require('./SignInSoon.react.es6')
-const React = require('react')
+const React = require('react/addons')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const Router = require('react-router')
 const RouteHandler = Router.RouteHandler
@@ -7,6 +7,8 @@ const Link = Router.Link
 const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
 const GlobalUIStore = require('../stores/GlobalUIStore.es6')
 const ConnectedStates = require('../constants/SocketConstants.es6').ConnectedStates
+const OverlaySpinner = require('./OverlaySpinner.react.es6')
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const getStateFromStore = () => {
   const globalState = GlobalUIStore.globalUIState()
@@ -17,6 +19,10 @@ const getStateFromStore = () => {
 
 const MeetgunApp = React.createClass({
   mixins: [PureRenderMixin]
+
+  , contextTypes: {
+    router: React.PropTypes.func.isRequired
+  }
 
   , getInitialState() {
     return getStateFromStore()
@@ -40,12 +46,14 @@ const MeetgunApp = React.createClass({
   }
 
   , render() {
+
     switch(this.state.connectStatus) {
       case ConnectedStates.CONNECTING:
-        return <div>Connecting to realtime server...</div>
+        return <OverlaySpinner label="Loading Meetgun"/>
       case ConnectedStates.RECONNECTING:
-        return <div>Disconnected from realtime server. Reconnecting...</div>
+        return <OverlaySpinner label="Can't reach server. Reconnecting."/>
       case ConnectedStates.CONNECTED:
+        var name = this.context.router.getCurrentPath();
         return (
           <div className="meetingapp">
             <div className="topbar">
@@ -53,8 +61,9 @@ const MeetgunApp = React.createClass({
               <SignInSoon />
             </div>
             <div className="main-content">
-              
-              <RouteHandler {...this.props}/>
+              <ReactCSSTransitionGroup component="div" transitionName="pop" transitionLeave={false}>
+                <RouteHandler key={name} {...this.props}/>
+              </ReactCSSTransitionGroup>
             </div>
           </div>
        )   

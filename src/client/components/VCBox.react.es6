@@ -45,7 +45,7 @@ const VCBox = React.createClass({
       </div>
     }
     if(!this.state.vcRoom) {
-      return <div>Loading...</div>
+      return <div><button disabled>Loading Videochat</button></div>
     } else if (!this.state.startVC) {
       return <div><button onClick={this.onClick}>Join video chat</button></div>
     } else {

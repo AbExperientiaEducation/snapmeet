@@ -1,12 +1,15 @@
-const React = require('react')
+const React = require('react/addons')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const TaskStore = require('../stores/TaskStore.es6')
 const RelationStore = require('../stores/RelationStore.es6')
 const TaskListItem = require('./TaskListItem.react.es6')
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const getStateFromStore = (props) => {
+  const tasks = TaskStore.getResourcesFromRelation(props.meetingId, 'MEETING_TASK')
+  const sorted = tasks ? tasks.sortBy(t => {return -1 * t.createdTimestamp}) : null
   return {
-    tasks: TaskStore.getResourcesFromRelation(props.meetingId, 'MEETING_TASK')
+    tasks: sorted
   }
 }
 
@@ -40,7 +43,9 @@ const MeetingTaskList = React.createClass({
       return (
         <div className="task-list">
           <ul>
-            {taskListItems}
+            <ReactCSSTransitionGroup transitionName="slide">
+              {taskListItems}
+            </ReactCSSTransitionGroup>
           </ul>
         </div>
       )      
