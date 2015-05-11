@@ -2,6 +2,7 @@ const React = require('react')
 const ReactPropTypes = React.PropTypes
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const VCRoomStore = require('../stores/VCRoomStore.es6')
+const _ = require('lodash')
 // const SimpleWebRTC = require('simplewebrtc')
 
 const getStateFromStore = (props) => {
@@ -96,6 +97,10 @@ const VCBox = React.createClass({
     webrtc.on('videoAdded', (video, peer) => {
       video.oncontextmenu = function () { return false }
       this.setState({videos: this.state.videos.concat([video])})
+    })
+
+    webrtc.on('videoRemoved', (video, peer) => {
+        this.setState({videos: _.without(this.state.videos, video)})
     })
 
     this.setState({webRtcComponent: webrtc})
