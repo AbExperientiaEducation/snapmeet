@@ -2,10 +2,13 @@
 
 .sync-box {
   max-width: 640px;
-  height: 400px;
   margin: auto;
   @include display(flex);
   @include flex-direction(column);
+
+  .ql-container {
+    height: 400px;
+  }
 }
 
 .ql-toolbar {
