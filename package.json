@@ -33,6 +33,7 @@
     "quill": "^0.19.1",
     "react": "~0.13.0",
     "react-router": "^0.13.2",
+    "react-spinkit": "^1.0.2",
     "react-tap-event-plugin": "^0.1.6",
     "reqwest": "^1.1.5",
     "restler": "^3.2.2",
