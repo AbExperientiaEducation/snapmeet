@@ -28,8 +28,9 @@ const TaskListItem = React.createClass({
 
   , render() {
     if(this.state.task) {
+      const className = this.state.task.completed ? "task-item-completed task-item" : "task-item"
       return (
-        <li className="task-item">
+        <li className={className}>
           <MUI.Checkbox 
             checked={this.state.task.completed}
             defaultSwitched={this.state.task.completed}

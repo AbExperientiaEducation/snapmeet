@@ -19,3 +19,8 @@
 .tasks-card {
   width: 370px;
 }
+
+.task-item-completed .mui-text-field-input {
+  text-decoration: line-through;
+  color: #777;
+}
