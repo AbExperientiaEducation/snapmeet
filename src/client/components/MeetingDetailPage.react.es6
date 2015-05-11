@@ -46,6 +46,9 @@ const MeetingDetailPage = React.createClass({
             id={ meetingId + '_meeting_title' } 
             placeholder="Untitled Meeting"
           /></h2>
+          <VCBox 
+            meetingId={ meetingId }
+          />
           <div className="meeting-components">
             <MUI.Paper className="tasks-card card" zDepth={1}>
               <h3>Tasks <NewTaskButton meetingId={ meetingId }/></h3>
@@ -56,9 +59,6 @@ const MeetingDetailPage = React.createClass({
               <SyncBox id={ meetingId + '_notes'} /> 
             </MUI.Paper>
           </div>
-          <VCBox 
-            meetingId={ meetingId }
-          />
         </div>
       )      
     } else {
