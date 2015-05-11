@@ -29,6 +29,11 @@ const VCBox = React.createClass({
   }
 
   , componentWillUnmount() {
+    if(this.state.webRtcComponent) {
+      this.state.webRtcComponent.stopLocalVideo()
+      this.state.webRtcComponent.leaveRoom()
+      this.state.webRtcComponent.disconnect()  
+    }
     VCRoomStore.removeChangeListener(this._onChange)
   }
 
