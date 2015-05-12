@@ -3,6 +3,7 @@ const co = require('co')
 const handlers = {}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const _ = require('lodash')
+const SignalMaster = require('./SignalMaster.es6')
 
 let _ioServer
 
@@ -69,6 +70,7 @@ const createServer = function(server){
   _ioServer = socketio(server)
   _ioServer.on('connection', function(socket){
     console.log('a user connected')
+    SignalMaster.setup(socket, _ioServer)
 
     socket.on(ResourceConstants.REST_ACTION_EVENT, function(data) {
       runHandlerForData(data, socket) 
@@ -82,4 +84,3 @@ module.exports = {
   , registerResourceHandler: registerResourceHandler
   , broadcastChange: broadcastChange
 }
-

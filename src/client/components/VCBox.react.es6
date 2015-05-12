@@ -3,7 +3,9 @@ const ReactPropTypes = React.PropTypes
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const VCRoomStore = require('../stores/VCRoomStore.es6')
 const _ = require('lodash')
-// const SimpleWebRTC = require('simplewebrtc')
+const SocketStore = require('../stores/SocketIOStore.es6')
+const SimpleWebRTC = require('simplewebrtc')
+const SimpleWebRTCConnection = require ('../utils/SimpleWebRTCSocketConnection.es6')
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -31,10 +33,14 @@ const VCBox = React.createClass({
 
   , componentWillUnmount() {
     if(this.state.webRtcComponent) {
-      this.state.webRtcComponent.stopLocalVideo()
-      this.state.webRtcComponent.leaveRoom()
-      this.state.webRtcComponent.disconnect()  
+      const webrtc = this.state.webRtcComponent
+      webrtc.stopLocalVideo()
+      webrtc.leaveRoom()
+      webrtc.off('videoAdded')
+      webrtc.off('videoRemoved')
+      webrtc.off('readyToCall')
     }
+    
     VCRoomStore.removeChangeListener(this._onChange)
   }
 
@@ -85,14 +91,11 @@ const VCBox = React.createClass({
       , autoAdjustMic: false
       , peerConnectionConfig: this.state.vcRoom.credentials
       // We're still using simplewebrtc signaling server. Should switch to XirSys
-      , url: 'https://signaling.simplewebrtc.com:443'
-      // , url: 'wss://api.xirsys.com:443'
+      , connection: SimpleWebRTCConnection(SocketStore.getSocket())
     })
-    
     webrtc.on('readyToCall', () => {
-      // you can name it anything
       webrtc.joinRoom(this.state.vcRoom.id);
-    })
+    })      
 
     webrtc.on('videoAdded', (video, peer) => {
       video.oncontextmenu = function () { return false }
@@ -100,11 +103,19 @@ const VCBox = React.createClass({
     })
 
     webrtc.on('videoRemoved', (video, peer) => {
-        this.setState({videos: _.without(this.state.videos, video)})
+      this.setState({videos: _.without(this.state.videos, video)})
     })
+
+    // If we've gotten this far, we already have a connection.
+    // These are the methods simplewebrtc uses to tell itself
+    // that it is connected
+    webrtc.emit('connectionReady', webrtc.connection.getSessionid())
+    webrtc.sessionReady = true
+    webrtc.testReadiness()
 
     this.setState({webRtcComponent: webrtc})
   }
 })
 
 module.exports = VCBox
+
