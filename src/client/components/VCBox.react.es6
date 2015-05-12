@@ -36,11 +36,9 @@ const VCBox = React.createClass({
       const webrtc = this.state.webRtcComponent
       webrtc.stopLocalVideo()
       webrtc.leaveRoom()
-      webrtc.off('videoAdded')
-      webrtc.off('videoRemoved')
-      webrtc.off('readyToCall')
+      webrtc.cleanup()
     }
-    
+
     VCRoomStore.removeChangeListener(this._onChange)
   }
 

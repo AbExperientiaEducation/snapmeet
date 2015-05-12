@@ -7345,7 +7345,7 @@
     },
     "simplewebrtc": {
       "version": "1.15.4",
-      "resolved": "https://registry.npmjs.org/simplewebrtc/-/simplewebrtc-1.15.4.tgz",
+      "resolved": "git://github.com/igmcdowell/SimpleWebRTC#8fb1422b389c892568e95382abc198a5bd640a25",
       "dependencies": {
         "attachmediastream": {
           "version": "1.0.1",
@@ -7403,7 +7403,7 @@
         },
         "webrtc": {
           "version": "1.14.1",
-          "resolved": "https://registry.npmjs.org/webrtc/-/webrtc-1.14.1.tgz",
+          "resolved": "git://github.com/igmcdowell/webrtc.js#d86db3f71b088b2bf8a4f48c8b476cb48827fe15",
           "dependencies": {
             "filetransfer": {
               "version": "2.0.0",
@@ -7478,8 +7478,8 @@
               }
             },
             "rtcpeerconnection": {
-              "version": "3.0.13",
-              "resolved": "https://registry.npmjs.org/rtcpeerconnection/-/rtcpeerconnection-3.0.13.tgz",
+              "version": "3.0.14",
+              "resolved": "https://registry.npmjs.org/rtcpeerconnection/-/rtcpeerconnection-3.0.14.tgz",
               "dependencies": {
                 "lodash.foreach": {
                   "version": "3.0.3",

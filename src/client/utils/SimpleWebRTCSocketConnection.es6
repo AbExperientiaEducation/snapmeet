@@ -18,6 +18,10 @@ SimpleWebRTCConnection.prototype.disconnect = function () {
   return this.connection.disconnect()
 }
 
+SimpleWebRTCConnection.prototype.removeListener = function(n, f) {
+  return this.connection.removeListener(n, f)
+}
+
 const wrapConnection = function(connection){
   return new SimpleWebRTCConnection(connection)
 }
