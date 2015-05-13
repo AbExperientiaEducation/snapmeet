@@ -78,8 +78,6 @@ const PeerVideo = React.createClass({
         return 'Connection closed.'
     }
   }
-
-
 })
 
 module.exports = PeerVideo

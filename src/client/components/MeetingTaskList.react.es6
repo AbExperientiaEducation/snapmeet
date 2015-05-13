@@ -15,7 +15,7 @@ const getStateFromStore = (props) => {
 
 const getTaskListItem = (task) => {
   return (
-    <TaskListItem id={ task.id } />
+    <TaskListItem id={ task.id } key={ task.id }/>
   )
 }
 
@@ -38,7 +38,7 @@ const MeetingTaskList = React.createClass({
 
   , render() {
     if(this.state.tasks) {
-      const taskListItems = this.state.tasks.map(getTaskListItem)
+      const taskListItems = this.state.tasks.map(getTaskListItem).toArray()
       const meetingId = this.props.meetingId
       return (
         <div className="task-list">

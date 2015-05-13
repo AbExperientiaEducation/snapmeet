@@ -47,7 +47,7 @@ const MeetingSection = React.createClass({
 
   , render() {
     if(this.state.meetings) {
-      const meetingListItems = this.state.meetings.map(getMeetingListItem)
+      const meetingListItems = this.state.meetings.map(getMeetingListItem).toArray()
       return (
         <div className="meeting-section">
           <h3>Meetings <NewMeetingButton /></h3>
