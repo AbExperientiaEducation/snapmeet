@@ -40,14 +40,18 @@ const VCBox = React.createClass({
   }
 
   , componentWillUnmount() {
+    this.cleanupVC()
+    VCRoomStore.removeChangeListener(this._onChange)
+  }
+
+  , cleanupVC() {
     if(this.state.webRtcComponent) {
       const webrtc = this.state.webRtcComponent
       webrtc.stopLocalVideo()
       webrtc.leaveRoom()
       webrtc.cleanup()
     }
-
-    VCRoomStore.removeChangeListener(this._onChange)
+    this.setState({localVideo: null, webRtcComponent: null})
   }
 
   , _onChange() {
@@ -65,12 +69,13 @@ const VCBox = React.createClass({
     if(!this.state.vcRoom) {
       return <div><button disabled>Loading Videochat</button></div>
     } else if (!this.state.localVideo) {
-      return <div><button onClick={this.onClick}>Join video chat</button></div>
+      return <div><button onClick={this.joinChat}>Join video chat</button></div>
     } else {
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
       const localVideo =this.state.localVideo.get('video')
       const localVideoVolume = this.state.localVideo.get('volume')
       return <div>
+        <div><button onClick={this.leaveChat}>Leave video chat</button></div>
         <div className="others-video">
           {videos}
         </div>
@@ -86,8 +91,12 @@ const VCBox = React.createClass({
     }
   }
 
-  , onClick() {
+  , joinChat() {
     this.setState({startVC: true}, this.setupWebRtcIfNecessary)
+  }
+
+  , leaveChat() {
+    this.cleanupVC()
   }
 
   , setupWebRtcIfNecessary() {
