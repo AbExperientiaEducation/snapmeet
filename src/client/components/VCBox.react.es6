@@ -7,6 +7,7 @@ const SocketStore = require('../stores/SocketIOStore.es6')
 const SimpleWebRTC = require('simplewebrtc')
 const SimpleWebRTCConnection = require ('../utils/SimpleWebRTCSocketConnection.es6')
 const PeerVideo = require('./PeerVideo.react.es6')
+const SelfVideo = require('./SelfVideo.react.es6')
 const Immutable = require('immutable')
 
 const getStateFromStore = (props) => {
@@ -80,7 +81,7 @@ const VCBox = React.createClass({
           {videos}
         </div>
         <div className="video-container you-video">
-          <PeerVideo
+          <SelfVideo
             video={localVideo}
             volume={localVideoVolume}
             isMute={true}
