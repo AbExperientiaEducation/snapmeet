@@ -33,4 +33,22 @@
     color: white;
     padding-top: 10px;
   }
+
+  .volume {
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    bottom: 0;
+    height: 5px;
+    
+    @include appearance(none);
+    &::-webkit-meter-bar {
+      height: 5px;
+    }
+
+    &::-webkit-meter-inner-element, &::-moz-meter-bar {
+      height: 5px;
+      @include transition(all .2s);
+    }
+  }
 }

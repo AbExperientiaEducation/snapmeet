@@ -71,7 +71,18 @@ const VCBox = React.createClass({
         <div className="others-video">
           {videos}
         </div>
-        <div className="you-video" ref="you"></div>
+        <div className="video-container">
+          <div className="you-video" ref="you"></div>
+          <meter 
+            className="volume"
+            value={this.state.volume}
+            min="-65"
+            max="-20"
+            low="-50"
+            high="-25"
+          ></meter>
+        </div>
+        
       </div>      
     }
   }
@@ -82,7 +93,7 @@ const VCBox = React.createClass({
 
   , setupWebRtcIfNecessary() {
     if(this.state.webRtcComponent || !this.state.startVC) return
-    this.setState({videos: Immutable.Map()})
+    this.setState({videos: Immutable.Map(), volume: -45})
     // Create our WebRTC connection
     const webrtc = new SimpleWebRTC({
       // The DOM element that will hold "our" video
@@ -121,6 +132,28 @@ const VCBox = React.createClass({
 
     webrtc.on('videoRemoved', (video, peer) => {
       this.setState({videos: this.state.videos.delete(video.id)})
+    })
+
+    const changeVolume = (volume) => {
+      const newVol = volume > -65 ? volume : -65
+      let meterVolume
+      if(newVol > this.state.volume) {
+        meterVolume = newVol
+      } else {
+        // Smooth out volume decay so it's not crazy jumpy
+        meterVolume = (this.state.volume + newVol / 3) * 3/4
+      }
+      
+      this.setState({volume: meterVolume})
+    }
+    const throttledVolumeChange = _.throttle(changeVolume, 200, true)
+    webrtc.on('volumeChange', (volume, treshold) => {
+      if(volume > this.state.volume) {
+        // We want to always pick up increases in volume
+        changeVolume(volume)
+      } else {
+        throttledVolumeChange(volume)  
+      }
     })
 
     // If we've gotten this far, we already have a connection.
