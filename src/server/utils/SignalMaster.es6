@@ -5,8 +5,8 @@ const crypto = require('crypto')
 const _ = require('lodash')
 
 const safeCb = (cb) => {
-  const cb = cb instanceof Function ? cb : () => {}
-  return cb
+  const safeCb = cb instanceof Function ? cb : () => {}
+  return safeCb
 }
 
 const config = {
