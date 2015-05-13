@@ -9,6 +9,7 @@ const PeerVideo = React.createClass({
     video: ReactPropTypes.object
     , connectionState: ReactPropTypes.string
     , volume: ReactPropTypes.number
+    , isMute: ReactPropTypes.bool
   }
 
   , updateVolume(volume) {
@@ -46,7 +47,10 @@ const PeerVideo = React.createClass({
     const src = this.props.video && this.props.video.src
     if(!src) return <div className="video-container"></div>
     return <div className="video-container">
-      <video src={src} autoPlay />
+      <video 
+        src={src} 
+        autoPlay 
+        muted={this.props.isMute}/>
       <div className="connection-state">{this.getConnectionText()}</div>
       <meter 
         className="volume"

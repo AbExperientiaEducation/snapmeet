@@ -78,6 +78,7 @@ const VCBox = React.createClass({
           <PeerVideo
             video={localVideo}
             volume={localVideoVolume}
+            isMute={true}
           />
         </div>
         
