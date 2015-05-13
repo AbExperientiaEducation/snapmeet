@@ -6,6 +6,8 @@ const _ = require('lodash')
 const SocketStore = require('../stores/SocketIOStore.es6')
 const SimpleWebRTC = require('simplewebrtc')
 const SimpleWebRTCConnection = require ('../utils/SimpleWebRTCSocketConnection.es6')
+const PeerVideo = require('./PeerVideo.react.es6')
+const Immutable = require('immutable')
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -15,7 +17,9 @@ const getStateFromStore = (props) => {
 }
 
 const VCBox = React.createClass({
-  propTypes: {
+  mixins: [PureRenderMixin]
+
+  , propTypes: {
     meetingId: ReactPropTypes.string
   }
 
@@ -23,8 +27,11 @@ const VCBox = React.createClass({
     return getStateFromStore(this.props)
   }
 
-  , makeVideoComponent(video) {
-    return <video src={video.src} autoPlay />
+  , makeVideoComponent(videoObj) {
+    return <PeerVideo 
+      video={videoObj.get('video')}
+      connectionState={videoObj.get('connectionState')}
+    />
   }
 
   , componentDidMount() {
@@ -61,7 +68,7 @@ const VCBox = React.createClass({
     } else {
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
       return <div>
-        <div className="others-video" ref="others">
+        <div className="others-video">
           {videos}
         </div>
         <div className="you-video" ref="you"></div>
@@ -75,7 +82,7 @@ const VCBox = React.createClass({
 
   , setupWebRtcIfNecessary() {
     if(this.state.webRtcComponent || !this.state.startVC) return
-    this.setState({videos: []})
+    this.setState({videos: Immutable.Map()})
     // Create our WebRTC connection
     const webrtc = new SimpleWebRTC({
       // The DOM element that will hold "our" video
@@ -90,18 +97,30 @@ const VCBox = React.createClass({
       , peerConnectionConfig: this.state.vcRoom.credentials
       // We're still using simplewebrtc signaling server. Should switch to XirSys
       , connection: SimpleWebRTCConnection(SocketStore.getSocket())
+      , logger: function(){}
     })
     webrtc.on('readyToCall', () => {
-      webrtc.joinRoom(this.state.vcRoom.id);
+      webrtc.joinRoom(this.state.vcRoom.id)
     })      
 
     webrtc.on('videoAdded', (video, peer) => {
       video.oncontextmenu = function () { return false }
-      this.setState({videos: this.state.videos.concat([video])})
+      const videoObj = Immutable.Map({ video: video })
+      this.setState({videos: this.state.videos.set(video.id, videoObj)})
+
+      if (peer && peer.pc) {
+        // Want to add a child to the video container <div class=connectionstate></div>
+        peer.pc.on('iceConnectionStateChange', (event) => {
+          const targetVideo = this.state.videos.get(video.id)
+          if(!targetVideo) return
+          const updatedVideo = targetVideo.set('connectionState', peer.pc.iceConnectionState)
+          this.setState({videos: this.state.videos.set(video.id, updatedVideo)})
+        })
+      }
     })
 
     webrtc.on('videoRemoved', (video, peer) => {
-      this.setState({videos: _.without(this.state.videos, video)})
+      this.setState({videos: this.state.videos.delete(video.id)})
     })
 
     // If we've gotten this far, we already have a connection.
@@ -116,4 +135,3 @@ const VCBox = React.createClass({
 })
 
 module.exports = VCBox
-
