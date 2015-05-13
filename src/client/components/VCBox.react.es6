@@ -106,7 +106,6 @@ const VCBox = React.createClass({
       , peerConnectionConfig: this.state.vcRoom.credentials
       // We're still using simplewebrtc signaling server. Should switch to XirSys
       , connection: SimpleWebRTCConnection(SocketStore.getSocket())
-      , logger: function(){}
     })
     webrtc.on('readyToCall', () => {
       webrtc.joinRoom(this.state.vcRoom.id)

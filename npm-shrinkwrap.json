@@ -7344,8 +7344,8 @@
       "resolved": "https://registry.npmjs.org/shortid/-/shortid-2.2.2.tgz"
     },
     "simplewebrtc": {
-      "version": "1.15.6",
-      "resolved": "git://github.com/igmcdowell/SimpleWebRTC#df926908f8752968be6cd286ed5952a254ce737a",
+      "version": "1.15.7",
+      "resolved": "git://github.com/igmcdowell/SimpleWebRTC#a42e9a743b7deb34e7d1a4188bb9d8580ce41cb2",
       "dependencies": {
         "attachmediastream": {
           "version": "1.0.1",
@@ -7354,52 +7354,6 @@
         "mockconsole": {
           "version": "0.0.1",
           "resolved": "https://registry.npmjs.org/mockconsole/-/mockconsole-0.0.1.tgz"
-        },
-        "socket.io-client": {
-          "version": "0.9.16",
-          "resolved": "https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz",
-          "dependencies": {
-            "active-x-obfuscator": {
-              "version": "0.0.1",
-              "resolved": "https://registry.npmjs.org/active-x-obfuscator/-/active-x-obfuscator-0.0.1.tgz",
-              "dependencies": {
-                "zeparser": {
-                  "version": "0.0.5",
-                  "resolved": "https://registry.npmjs.org/zeparser/-/zeparser-0.0.5.tgz"
-                }
-              }
-            },
-            "uglify-js": {
-              "version": "1.2.5",
-              "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-1.2.5.tgz"
-            },
-            "ws": {
-              "version": "0.4.32",
-              "resolved": "https://registry.npmjs.org/ws/-/ws-0.4.32.tgz",
-              "dependencies": {
-                "commander": {
-                  "version": "2.1.0",
-                  "resolved": "https://registry.npmjs.org/commander/-/commander-2.1.0.tgz"
-                },
-                "nan": {
-                  "version": "1.0.0",
-                  "resolved": "https://registry.npmjs.org/nan/-/nan-1.0.0.tgz"
-                },
-                "options": {
-                  "version": "0.0.6",
-                  "resolved": "https://registry.npmjs.org/options/-/options-0.0.6.tgz"
-                },
-                "tinycolor": {
-                  "version": "0.0.1",
-                  "resolved": "https://registry.npmjs.org/tinycolor/-/tinycolor-0.0.1.tgz"
-                }
-              }
-            },
-            "xmlhttprequest": {
-              "version": "1.4.2",
-              "resolved": "https://registry.npmjs.org/xmlhttprequest/-/xmlhttprequest-1.4.2.tgz"
-            }
-          }
         },
         "webrtc": {
           "version": "1.14.1",
