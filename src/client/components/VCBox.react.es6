@@ -31,6 +31,7 @@ const VCBox = React.createClass({
     return <PeerVideo 
       video={videoObj.get('video')}
       connectionState={videoObj.get('connectionState')}
+      volume={videoObj.get('volume')}
     />
   }
 
@@ -63,24 +64,21 @@ const VCBox = React.createClass({
     }
     if(!this.state.vcRoom) {
       return <div><button disabled>Loading Videochat</button></div>
-    } else if (!this.state.startVC) {
+    } else if (!this.state.localVideo) {
       return <div><button onClick={this.onClick}>Join video chat</button></div>
     } else {
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
+      const localVideo =this.state.localVideo.get('video')
+      const localVideoVolume = this.state.localVideo.get('volume')
       return <div>
         <div className="others-video">
           {videos}
         </div>
-        <div className="video-container">
-          <div className="you-video" ref="you"></div>
-          <meter 
-            className="volume"
-            value={this.state.volume}
-            min="-65"
-            max="-20"
-            low="-50"
-            high="-25"
-          ></meter>
+        <div className="video-container you-video">
+          <PeerVideo
+            video={localVideo}
+            volume={localVideoVolume}
+          />
         </div>
         
       </div>      
@@ -93,11 +91,11 @@ const VCBox = React.createClass({
 
   , setupWebRtcIfNecessary() {
     if(this.state.webRtcComponent || !this.state.startVC) return
-    this.setState({videos: Immutable.Map(), volume: -45})
+    this.setState({videos: Immutable.Map(), localVideo: Immutable.Map({volume: -65})})
     // Create our WebRTC connection
     const webrtc = new SimpleWebRTC({
       // The DOM element that will hold "our" video
-      localVideoEl: React.findDOMNode(this.refs.you)
+      localVideoEl: ''
       // The DOM element that will hold remote videos
       , remoteVideosEl: ''
       // Immediately ask for camera access
@@ -114,46 +112,36 @@ const VCBox = React.createClass({
       webrtc.joinRoom(this.state.vcRoom.id)
     })      
 
+    webrtc.on('localVideoAdded', (video) => {
+      this.setState({localVideo: this.state.localVideo.set('video', video)})
+    })
+
     webrtc.on('videoAdded', (video, peer) => {
       video.oncontextmenu = function () { return false }
       const videoObj = Immutable.Map({ video: video })
-      this.setState({videos: this.state.videos.set(video.id, videoObj)})
+      this.setState({videos: this.state.videos.set(peer.id, videoObj)})
 
       if (peer && peer.pc) {
         // Want to add a child to the video container <div class=connectionstate></div>
         peer.pc.on('iceConnectionStateChange', (event) => {
-          const targetVideo = this.state.videos.get(video.id)
+          const targetVideo = this.state.videos.get(peer.id)
           if(!targetVideo) return
           const updatedVideo = targetVideo.set('connectionState', peer.pc.iceConnectionState)
-          this.setState({videos: this.state.videos.set(video.id, updatedVideo)})
+          this.setState({videos: this.state.videos.set(peer.id, updatedVideo)})
         })
       }
     })
 
     webrtc.on('videoRemoved', (video, peer) => {
-      this.setState({videos: this.state.videos.delete(video.id)})
+      this.setState({videos: this.state.videos.delete(peer.id)})
     })
 
-    const changeVolume = (volume) => {
-      const newVol = volume > -65 ? volume : -65
-      let meterVolume
-      if(newVol > this.state.volume) {
-        meterVolume = newVol
-      } else {
-        // Smooth out volume decay so it's not crazy jumpy
-        meterVolume = (this.state.volume + newVol / 3) * 3/4
-      }
-      
-      this.setState({volume: meterVolume})
-    }
-    const throttledVolumeChange = _.throttle(changeVolume, 200, true)
     webrtc.on('volumeChange', (volume, treshold) => {
-      if(volume > this.state.volume) {
-        // We want to always pick up increases in volume
-        changeVolume(volume)
-      } else {
-        throttledVolumeChange(volume)  
-      }
+      this.setState({localVideo: this.state.localVideo.set('volume', volume)})
+    })
+
+    webrtc.on('remoteVolumeChange', (peer, volume) => {
+      this.setState({videos: this.state.videos.setIn([ peer.id, 'volume'], volume)})
     })
 
     // If we've gotten this far, we already have a connection.
