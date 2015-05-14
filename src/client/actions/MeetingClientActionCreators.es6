@@ -5,8 +5,7 @@ const ActionTypes = ResourceConstants.Meeting.ActionTypes
 module.exports = {
   createNewMeeting() {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.CREATE
-      , orgId: '*TEST*'
+      type: ActionTypes.CLIENT_CREATE
     })
   }
 

@@ -3,8 +3,11 @@ const PubSubStore = require('./PubSubStore.es6')
 const SocketConstants = require('../constants/SocketConstants.es6');
 const ActionTypes = SocketConstants.ActionTypes
 const ConnectedStates = SocketConstants.ConnectedStates
-
+const MeetgunRouter = require('../components/MeetgunRouter.react.es6')
 const _globalUIState = {connectStatus: ConnectedStates.CONNECTING}
+const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
+
+let _pendingMeeting = null
 
 const GlobalUIStore = Object.assign({}, PubSubStore, {
   globalUIState() {
@@ -13,6 +16,7 @@ const GlobalUIStore = Object.assign({}, PubSubStore, {
 })
 
 GlobalUIStore.dispatchToken = MeetgunDispatcher.register((action) => {
+  const MEETING_LABEL = ResourceConstants.Meeting.LABEL
   switch(action.type) {
 
     case ActionTypes.SOCKETIO_DISCONNECT:
@@ -25,6 +29,25 @@ GlobalUIStore.dispatchToken = MeetgunDispatcher.register((action) => {
       GlobalUIStore.emitChange()
       break
     
+    case ResourceConstants.Meeting.ActionTypes.LOCAL_RESOURCE_CREATED:
+      // TODO: This is a terrible hack. I'm having trouble thinking
+      // of clean architecture to accomplish this.
+      _pendingMeeting = action.id
+      break
+    case ResourceConstants.RECEIVE_RAW_EVENT:
+      if(!_pendingMeeting || !action.groupedRawResources[MEETING_LABEL]) return
+        let match = null
+        !action.groupedRawResources[MEETING_LABEL].forEach(m => {
+          if(m.id === _pendingMeeting) {
+            match = true
+          }
+        })
+        if(match) {
+          const router = MeetgunRouter.getRouter()
+          router.transitionTo('meeting', {id: _pendingMeeting})
+          _pendingMeeting = null
+        }
+
     default:
       // no op
     }

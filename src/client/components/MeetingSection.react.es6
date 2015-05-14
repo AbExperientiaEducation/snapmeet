@@ -48,11 +48,18 @@ const MeetingSection = React.createClass({
   , render() {
     if(this.state.meetings) {
       const meetingListItems = this.state.meetings.map(getMeetingListItem).toArray()
+      const empty = meetingListItems.length === 0
       return (
         <div className="meeting-section">
+          { empty ? 
+            <h2>Create a meeting to get started</h2> 
+            : null}
           <h3>Meetings <NewMeetingButton /></h3>
           <ul className="meeting-list" ref="meetingList">
           <ReactCSSTransitionGroup transitionName="slide">
+            { empty ? 
+              <p>Meetgun lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
+              : null }
             {meetingListItems}
           </ReactCSSTransitionGroup>
           </ul>

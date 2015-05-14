@@ -9,7 +9,7 @@ const SocketConstants = require('../constants/SocketConstants.es6')
 class MGResourceStore {
   constructor(opts) {
     Object.assign(this, PubSubStore)
-    this.restActions = opts.constants.ActionTypes
+    this.clientActions = opts.constants.ActionTypes
     this.type = opts.constants.LABEL
     this.eventHandler = opts.eventHandler
     this.ResourceAPI = opts.ResourceAPI
@@ -101,11 +101,11 @@ class MGResourceStore {
       // Run any custom handler, and return early if handled.
       if(this.eventHandler && this.eventHandler(action)) return 
       switch(action.type) {
-        case this.restActions.CREATE:
+        case this.clientActions.CLIENT_CREATE:
           this.createFn(action)
           break
 
-        case this.restActions.PATCH:
+        case this.clientActions.CLIENT_PATCH:
           this.patch(action.record)
           break
 

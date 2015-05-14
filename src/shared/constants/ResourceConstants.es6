@@ -30,8 +30,9 @@ Object.keys(_resourceTypes).forEach(function(type) {
   exports[type] = {
     LABEL: type.toUpperCase()
     , ActionTypes: {
-      CREATE: `CREATE_${type}`
-      , PATCH: `PATCH_${type}`
+      CLIENT_CREATE: `CREATE_${type}`
+      , CLIENT_PATCH: `PATCH_${type}`
+      , LOCAL_RESOURCE_CREATED: `LOCAL_RESOURCE_CREATED_${type}`
     }
   }
 })

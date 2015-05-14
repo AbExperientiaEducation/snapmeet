@@ -5,7 +5,7 @@ const ActionTypes = ResourceConstants.Task.ActionTypes
 module.exports = {
   createNewTask(meetingId) {
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.CREATE
+      type: ActionTypes.CLIENT_CREATE
       , meetingId: meetingId
     })
   }
@@ -13,7 +13,7 @@ module.exports = {
   , setTaskCompletion(task, isComplete) {
     task = task.set('completed', isComplete)
     MeetgunDispatcher.dispatch({
-      type: ActionTypes.PATCH
+      type: ActionTypes.CLIENT_PATCH
       , record: task
     })
   }

@@ -46,7 +46,8 @@ class MGResource {
     this.makeRestCall(Actions.POST, { resource: rawResource })
     const resources = {}
     resources[this.type] = [rawResource]
-    setTimeout(function(){ServerResourceActionCreators.receiveResources(resources)}, 0)    
+    setTimeout(function(){ServerResourceActionCreators.receiveResources(resources)}, 0)
+    return rawResource
   }
 
   updateRecord(record) {
