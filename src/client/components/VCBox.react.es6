@@ -9,6 +9,8 @@ const SimpleWebRTCConnection = require ('../utils/SimpleWebRTCSocketConnection.e
 const PeerVideo = require('./PeerVideo.react.es6')
 const SelfVideo = require('./SelfVideo.react.es6')
 const Immutable = require('immutable')
+const MediaInputSelector = require('./MediaInputSelector.react.es6')
+
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -34,6 +36,19 @@ const VCBox = React.createClass({
       connectionState={videoObj.get('connectionState')}
       volume={videoObj.get('volume')}
     />
+  }
+
+  , makeSelfVideoComponent() {
+    const localVideo =this.state.localVideo.get('video')
+    const localVideoVolume = this.state.localVideo.get('volume')
+    if(localVideo && localVideoVolume) {
+      return <SelfVideo
+            video={localVideo}
+            volume={localVideoVolume}
+          />
+    } else {
+      return <div></div>
+    }
   }
 
   , componentDidMount() {
@@ -73,21 +88,16 @@ const VCBox = React.createClass({
       return <div><button onClick={this.joinChat}>Join video chat</button></div>
     } else {
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
-      const localVideo =this.state.localVideo.get('video')
-      const localVideoVolume = this.state.localVideo.get('volume')
+      const localVideo = this.makeSelfVideoComponent()
       return <div>
         <div><button onClick={this.leaveChat}>Leave video chat</button></div>
+        <MediaInputSelector webrtc={this.state.webRtcComponent} />
         <div className="others-video">
           {videos}
         </div>
         <div className="video-container you-video">
-          <SelfVideo
-            video={localVideo}
-            volume={localVideoVolume}
-            isMute={true}
-          />
+          {localVideo}
         </div>
-        
       </div>      
     }
   }
