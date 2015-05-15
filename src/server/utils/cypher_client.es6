@@ -41,6 +41,26 @@ const getRecords = function(recordIds) {
   }) 
 }
 
+const recordsWithRels = function(recordIds) {
+  const relQuery = {
+    query: `MATCH (n)-[r]-(n2)
+            WHERE n.id IN {recordIds} 
+            RETURN n.id AS Node1Id, labels(n)[0] AS Node1Type, labels(n2)[0] AS Node2Type, n2.id AS Node2Id, type(r) AS RelationType`
+    , params: {recordIds: recordIds}
+  }
+  return co(function* (){
+    try {
+      const relData = yield promiseCypher(relQuery)
+      const res = yield getRecords(recordIds)
+      res.RELATIONS = relData
+      return res
+    }
+    catch (err) {
+      console.error(err, err.stack)
+    }
+  })
+}
+
 module.exports = {
   singleCypher(query, key) {
     return promiseCypher(query).then(function(data) { 
@@ -55,25 +75,7 @@ module.exports = {
     })
   }
 
-  , recordsWithRels(recordIds) {
-    const relQuery = {
-      query: `MATCH (n)-[r]-(n2)
-              WHERE n.id IN {recordIds} 
-              RETURN n.id AS Node1Id, labels(n)[0] AS Node1Type, labels(n2)[0] AS Node2Type, n2.id AS Node2Id, type(r) AS RelationType`
-      , params: {recordIds: recordIds}
-    }
-    return co(function* (){
-      try {
-        const relData = yield promiseCypher(relQuery)
-        const res = yield getRecords(recordIds)
-        res.RELATIONS = relData
-        return res
-      }
-      catch (err) {
-        console.error(err, err.stack)
-      }
-    })
-  }
+  , recordsWithRels: recordsWithRels
 
   , records(recordIds) {
     return getRecords(recordIds)
@@ -82,8 +84,7 @@ module.exports = {
   , relateRecords(n1Id, n2Id, relName) {
     const relQuery = {
       query: `MATCH (n1 {id:{n1Id} }), (n2 {id:{n2Id}})
-              MERGE (n1)-[r:${relName}]->(n2)
-              RETURN n1.id AS Node1Id, n2.id AS Node2Id, type(r) AS RelationType`
+              MERGE (n1)-[r:${relName}]->(n2)`
       , params: {
         n1Id: n1Id
         , n2Id: n2Id
@@ -91,8 +92,12 @@ module.exports = {
       }
     }
     return co(function* (){
-      const relations = yield promiseCypher(relQuery)
-      return {RELATIONS: relations}
+      // TODO: Currently writing relation in one query, then retrieving in another. 
+      // Adding RETURN n1.id AS Node1Id, n2.id AS Node2Id, type(r) AS RelationType
+      // gives the outdated set of relations (prior to merge)
+      yield promiseCypher(relQuery)
+      const updatedResult = yield recordsWithRels(n1Id)
+      return {RELATIONS: updatedResult.RELATIONS}
     })
   }
 
