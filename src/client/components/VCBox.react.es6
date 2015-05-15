@@ -132,8 +132,13 @@ const VCBox = React.createClass({
       , connection: SimpleWebRTCConnection(SocketStore.getSocket())
     })
     webrtc.on('readyToCall', () => {
-      webrtc.joinRoom(this.state.vcRoom.id)
-    })      
+      webrtc.joinRoom(this.state.vcRoom.id, (err, roomInfo) => {
+        if(err && err == 'full') {
+          alert('Sorry, video Chat is full. Only 5 participants are allowed.')
+          this.cleanupVC()
+        }
+      })
+    })
 
     webrtc.on('localVideoAdded', (video) => {
       this.setState({localVideo: this.state.localVideo.set('video', video)})

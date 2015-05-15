@@ -11,17 +11,14 @@ const safeCb = (cb) => {
 
 const config = {
   "rooms": {
-    "maxClients": 0 /* maximum number of clients per room. 0 = no limit */
+    "maxClients": 5 /* maximum number of clients per room. 0 = no limit */
   }
 }
 
 const setup = (client, _ioServer) => {
 
   const describeRoom = (name) => {
-    const roomClients = _ioServer.sockets.adapter.rooms[name] || [] 
-    const clients = Object.keys(roomClients).map(cid => {
-      return _ioServer.sockets.connected[cid]
-    })
+    const clients = clientsInRoom(name)
     const result = { clients: {} }
     clients.forEach(function (client) {
       result.clients[client.id] = client.resources
@@ -30,7 +27,11 @@ const setup = (client, _ioServer) => {
   }
 
   const clientsInRoom = (name) => {
-    return _ioServer.sockets.clients(name).length
+    const roomClients = _ioServer.sockets.adapter.rooms[name] || [] 
+    const clients = Object.keys(roomClients).map(cid => {
+      return _ioServer.sockets.connected[cid]
+    })
+    return clients
   }
 
   const removeFeed = (type) => {
@@ -51,7 +52,7 @@ const setup = (client, _ioServer) => {
     if (typeof name !== 'string') return
     // check if maximum number of clients reached
     if (config.rooms && config.rooms.maxClients > 0 && 
-      clientsInRoom(name) >= config.rooms.maxClients) {
+      clientsInRoom(name).length >= config.rooms.maxClients) {
         safeCb(cb)('full')
         return
     }
