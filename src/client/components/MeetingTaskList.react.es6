@@ -38,7 +38,10 @@ const MeetingTaskList = React.createClass({
 
   , render() {
     if(this.state.tasks) {
-      const taskListItems = this.state.tasks.map(getTaskListItem).toArray()
+      let taskListItems = this.state.tasks.map(getTaskListItem).toArray()
+      if(taskListItems.length === 0) {
+        taskListItems = (<p>Create a task to collaborate on. Everyone sees changes in real time.</p>)
+      }
       const meetingId = this.props.meetingId
       return (
         <div className="task-list">
