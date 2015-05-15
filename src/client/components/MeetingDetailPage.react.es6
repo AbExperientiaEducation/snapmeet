@@ -9,6 +9,7 @@ const MUI = require('material-ui')
 const MeetingClientActionCreators = require('../actions/MeetingClientActionCreators.es6')
 const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 const SyncField = require('./SyncField.react.es6')
+const ShareWidget = require('./ShareWidget.react.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -42,10 +43,11 @@ const MeetingDetailPage = React.createClass({
       const meetingId = this.state.meeting.id
       return (
         <div className="meeting-detail">
-          <h2 className="no-underline"><SyncField 
+          <h2 className="no-underline meeting-title"><SyncField 
             id={ meetingId + '_meeting_title' } 
             placeholder="Untitled Meeting"
-          /></h2>
+            autoResize={true}
+          /><ShareWidget /></h2>
           <VCBox 
             meetingId={ meetingId }
           />

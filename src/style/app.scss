@@ -52,7 +52,6 @@ html {
   border-bottom: 1px solid #ccc;
   width: 100%;
   background: white;
-  z-index: 1000000000;
   max-width: $max-page-width;
 
   h1 a {
@@ -77,3 +76,12 @@ html {
   }
 }
 
+.hidden-span{
+    position:absolute;
+    top:0px;
+    left:0px;
+    visibility:hidden;
+    width:1px;
+    white-space:nowrap;
+    overflow:hidden;
+}
