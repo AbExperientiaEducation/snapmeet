@@ -1,4 +1,6 @@
 @import 'bourbon';
+@import '_constants';
+@import '_colors';
 @import 'normalize';
 @import 'quillbox';
 @import 'material-overrides';
@@ -9,6 +11,7 @@
 @import 'components';
 @import 'animation';
 @import 'video-chat';
+@import 'pro';
 
 a{
   text-decoration: none;
@@ -60,9 +63,9 @@ html {
   }
 
   .mui-dialog-window {
-    width: 500px;
+    width: 700px;
     &.mui-is-shown {
-      @include calc(left, '50% - 250px');  
+      @include calc(left, '50% - 350px');
     }
   }
 }

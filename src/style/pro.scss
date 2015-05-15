@@ -1,0 +1,50 @@
+
+.pro-options {
+  list-style: none;
+  @include display(flex);
+  @include flex-direction(row);
+  @include justify-content(space-around);
+
+  li {
+    display: inline-block;
+  }
+}
+
+.price-box {
+  @include materialShadow(2);
+  padding: 10px;
+  width: 105px;
+  height: 101px;
+
+  h3 {
+    line-height: 1em;
+    margin-bottom: 5px;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+    font-size: .9em;
+    line-height: 1.2em;
+  }
+
+  .price {
+    font-size: 2em;
+    margin-left: -7px;
+  }
+
+  .dollar {
+    font-size: .5em;
+    vertical-align: super;
+  }
+
+  .price-details {
+    font-size: .4em;
+    color: $secondary-text-color;
+  }
+
+  .user-limit {
+    font-size: 1em;
+    text-align: center;
+  }
+}

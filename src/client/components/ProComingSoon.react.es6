@@ -2,6 +2,7 @@ const React = require('react')
 const SessionClientActions = require('../actions/SessionClientActionCreators.es6')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MUI = require('material-ui')
+const PriceBox = require('./PriceBox.react.es6')
 
 const modalStates = ['upsell', 'interested', 'submitted']
 
@@ -66,6 +67,35 @@ const ProComingSoon = React.createClass({
             <li><strong>Company Sharing:</strong> Quickly add your colleagues, or make meetings visible to anyone in your company.</li>
             <li><strong>Quick Reference:</strong> Easily refer back to the last meeting notes and action items.</li>
             <li><strong>Stored Identity:</strong> See who made a change in the notes.</li>
+          </ul>
+
+          <ul className="pro-options">
+            <li>
+              <PriceBox 
+                label="Hobby"
+                price={8}
+                maxUsers={2}
+              />
+            </li>
+            <li>
+              <PriceBox
+                label="Team"
+                price="45"
+                maxUsers={10}
+              />
+            </li>
+            <li>
+              <PriceBox 
+                label="Division"
+                price="199"
+                maxUsers={50}
+              />
+            </li>
+            <li>
+              <PriceBox
+                label="Enterprise"
+              />
+            </li>
           </ul>
         </div>
         break
