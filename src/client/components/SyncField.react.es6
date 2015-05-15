@@ -11,7 +11,8 @@ const getStateFromStore = (props) => {
 const SyncField = React.createClass({
   render() {
     return (      
-      <MUI.TextField 
+      <MUI.TextField
+        disabled={!this.state.doc}
         ref="input"
         />
     )
@@ -21,9 +22,6 @@ const SyncField = React.createClass({
     return getStateFromStore(this.props)
   }
 
-  //  Never re-render. Ensures we don't break our sharejs binding
-  , shouldComponentUpdate() { return false }
-
   , componentDidMount() {
     SyncdocStore.addChangeListener(this._onChange)
     this.setupSyncFieldIfNecessary()
@@ -31,7 +29,7 @@ const SyncField = React.createClass({
 
   , componentWillUnmount() {
     SyncdocStore.removeChangeListener(this._onChange)
-    if(this.syncField) this.syncField.destroy();
+    if(this.state.syncField) this.state.syncField.destroy();
   }
 
   , _onChange() {
@@ -40,11 +38,15 @@ const SyncField = React.createClass({
   }
 
   , setupSyncFieldIfNecessary() {
-    if(this.syncField || !this.state.doc) return
+    if(this.state.syncField && !this.state.doc) {
+      this.state.syncField.destroy()
+      this.setState({doc: null})
+    }
+    if(this.state.syncField || !this.state.doc) return
     const domTarget = React.findDOMNode(this).getElementsByTagName('input')[0]
     // Manually set value once. This will clear out hint text/prevent visual bug.
     this.refs.input.setValue(this.state.doc.getSnapshot())
-    this.syncField = this.state.doc.attachTextarea(domTarget)
+    this.setState({syncField: this.state.doc.attachTextarea(domTarget)})
     this.refs.input.getDOMNode().querySelector('input').placeholder = this.props.placeholder
   }
 })

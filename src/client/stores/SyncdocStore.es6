@@ -24,16 +24,17 @@ const SyncdocStore = Object.assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
-  , isConnected() {
-    return _socket.readyState === 1
-  }
-
   , getDocument(docName, isPlainText) {
     const doc = _documents.get(docName)
     if(!doc) {
       SyncDocConn.fetchDocument(docName, isPlainText)
     }
     return doc
+  }
+
+  , panic() {
+    // reinitialize
+    _documents = Immutable.Map()
   }
 })
 
@@ -43,6 +44,11 @@ SyncdocStore.dispatchToken = MeetgunDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.RECEIVE_DOCUMENT:
       _addDocument(action.document)
+      SyncdocStore.emitChange()
+      break
+
+    case ActionTypes.SOCKETIO_DISCONNECT:
+      SyncdocStore.panic()
       SyncdocStore.emitChange()
       break
 

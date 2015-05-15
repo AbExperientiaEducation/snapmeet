@@ -20,21 +20,27 @@ const _makeWebSockAdapter = function(ioSocket){
       ioSocket.emit(SocketEventConstants.SHARE_JS_DATA, msg)
     }
     , close() {
-      raise("ShareJS attempted to close socket")
+      
     }
   }
 }
+
+let _syncConn = null
 
 const _registerListeners = function(ioSocket, webSockAdapter){
   // ShareJS expects these events to be called on the webSocket object
   // onmessage should be called when there is data for ShareJS
   // onopen, onclose, and onerror map to connect, disconnect, and error events
   ioSocket.on('connect', function(){webSockAdapter.onopen()})
-  ioSocket.on('disconnect', function(){webSockAdapter.onclose()})
+  ioSocket.on('disconnect', function(){
+    _syncConn = null
+    _requestedDocuments = Immutable.Map()
+    webSockAdapter.onclose()
+  })
   ioSocket.on('error', function(error){webSockAdapter.onerror(error)})
-  ioSocket.on(SocketEventConstants.SHARE_JS_DATA, function(data){ webSockAdapter.onmessage(data)})}
+  ioSocket.on(SocketEventConstants.SHARE_JS_DATA, function(data){ webSockAdapter.onmessage(data)})
+}
 
-let _syncConn = null
 const _getSyncConn = function(){
   if(!_syncConn) {
     ShareJS.registerType(RichText.type)
