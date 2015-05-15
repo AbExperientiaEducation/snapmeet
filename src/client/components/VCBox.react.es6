@@ -10,7 +10,7 @@ const PeerVideo = require('./PeerVideo.react.es6')
 const SelfVideo = require('./SelfVideo.react.es6')
 const Immutable = require('immutable')
 const MediaInputSelector = require('./MediaInputSelector.react.es6')
-
+const MUI = require('material-ui')
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -83,14 +83,17 @@ const VCBox = React.createClass({
       </div>
     }
     if(!this.state.vcRoom) {
-      return <div><button disabled>Loading Videochat</button></div>
+      return <div className="meeting-join-widget"><MUI.RaisedButton disabled={true} label="Loading Video chat"></MUI.RaisedButton></div>
     } else if (!this.state.localVideo) {
-      return <div><button onClick={this.joinChat}>Join video chat</button></div>
+      return <div className="meeting-join-widget">
+        <MUI.RaisedButton onClick={this.joinChat} primary={true} label="Join video chat"></MUI.RaisedButton>
+        <MUI.IconButton iconClassName="fa fa-info-circle" tooltip="Chat with up to 4 other people in this meeting"/>
+      </div>
     } else {
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
       const localVideo = this.makeSelfVideoComponent()
-      return <div>
-        <div><button onClick={this.leaveChat}>Leave video chat</button></div>
+      return <div className="meeting-join-widget">
+        <div><MUI.RaisedButton secondary={true} onClick={this.leaveChat} label="Leave video chat"></MUI.RaisedButton></div>
         <MediaInputSelector webrtc={this.state.webRtcComponent} />
         <div className="others-video">
           {videos}

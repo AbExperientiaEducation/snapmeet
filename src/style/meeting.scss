@@ -25,3 +25,25 @@
   text-decoration: line-through;
   color: #777;
 }
+
+.meeting-join-widget {
+  position: relative;
+  z-index: 1;
+
+  .mui-icon-button {
+    width: auto;
+    height: 24px;
+    padding: 0;
+    margin-left: 10px;
+  }
+
+  .mui-icon-button .mui-icon-button-tooltip {
+    margin-top: 36px;
+  }
+
+  .fa {
+    font-size: 20px;
+  }
+
+}
+
