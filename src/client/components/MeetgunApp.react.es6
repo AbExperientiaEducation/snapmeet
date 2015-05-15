@@ -1,4 +1,4 @@
-const SignInSoon = require('./SignInSoon.react.es6')
+const ProComingSoon = require('./ProComingSoon.react.es6')
 const React = require('react/addons')
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const Router = require('react-router')
@@ -58,7 +58,7 @@ const MeetgunApp = React.createClass({
           <div className="meetingapp">
             <div className="topbar">
               <h1><Link to="app"><span className="logo-start">Meet</span><span className="logo-end">gun</span></Link></h1>
-              <SignInSoon />
+              <ProComingSoon />
             </div>
             <div className="main-content">
               <ReactCSSTransitionGroup component="div" transitionName="pop" transitionLeave={false}>
