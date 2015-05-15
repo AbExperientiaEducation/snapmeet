@@ -85,7 +85,7 @@ app.post('/interest', function(req, res) {
   InterestDB.create(registration)    
 })
 
-app.get('/', function (req, res) {
+const mainAppRoute = function (req, res) {
   co(function* (){
     try {
       let userId
@@ -105,7 +105,10 @@ app.get('/', function (req, res) {
       res.status(500).json(error)
     }    
   })
-})
+}
+
+app.get('/', mainAppRoute)
+app.get('/meetings/*', mainAppRoute)
 
 MeetingEndpoints.register()
 TaskEndpoints.register()
