@@ -83,12 +83,18 @@ To restart server: `service neo4j-service [start, stop, restart]`
 Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04
 
 1. `sudo apt-get install nginx`
-2. `sudo vi /etc/nginx/sites-available/default`
+2. `sudo mkdir /etc/nginx/ssl`
+3. `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt`
+  - Fill out the prompts appropriately. The most important line is the one that requests the Common Name (e.g. server FQDN or YOUR name). You need to enter the domain name that you want to be associated with your server. You can enter the public IP address instead if you do not have a domain name.
+4. `sudo vi /etc/nginx/sites-available/default`
 ```
 server {
     listen 80;
+    listen 443 ssl;
 
     server_name www.meetgun.com;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
 
     location / {
         proxy_pass http://localhost:3000;
