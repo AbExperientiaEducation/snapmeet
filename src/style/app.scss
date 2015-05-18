@@ -48,6 +48,12 @@ html {
   border: 1px solid #ccc;
 }
 
+.topbar, .topbar .right-content {
+  @include display(flex);
+  @include justify-content(space-between);
+  @include align-items(center); 
+}
+
 .topbar {
   @include display(flex);
   @include justify-content(space-between);
@@ -60,6 +66,10 @@ html {
   h1 a {
     @include user-select(none);
     outline: 0;
+  }
+
+  .contact {
+    margin-right: 10px;
   }
 
   .mui-dialog-window {
