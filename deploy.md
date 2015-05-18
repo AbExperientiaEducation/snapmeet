@@ -28,6 +28,9 @@ All commands are on remote machine unless specified
 
 # Pre-server setup
 Locally: Create ssh config using the `pem` provided by ben/ian
+1. Get the aws pem file from Ben or Ian (to be improved)
+2. Now you can ssh in to the server: `ssh -A -i meetgun.pem ubuntu@ec2-52-24-226-103.us-west-2.compute.amazonaws.com`
+3. Alternative method: add the following to `~/.ssh/config` and then you can connect to server via `ssh meetgun`
 ```
 Host meetgun
   HostName ec2-52-24-226-103.us-west-2.compute.amazonaws.com
