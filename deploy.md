@@ -124,7 +124,7 @@ start on startup
 stop on shutdown
 
 # Run as our user
-setuid vagrant
+setuid ubuntu
 
 # Respan up to 10 times within 5 seconds
 respawn
