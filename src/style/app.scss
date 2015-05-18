@@ -1,4 +1,6 @@
 @import 'bourbon';
+@import '_constants';
+@import '_colors';
 @import 'normalize';
 @import 'quillbox';
 @import 'material-overrides';
@@ -9,6 +11,7 @@
 @import 'components';
 @import 'animation';
 @import 'video-chat';
+@import 'pro';
 
 a{
   text-decoration: none;
@@ -52,7 +55,6 @@ html {
   border-bottom: 1px solid #ccc;
   width: 100%;
   background: white;
-  z-index: 1000000000;
   max-width: $max-page-width;
 
   h1 a {
@@ -61,9 +63,9 @@ html {
   }
 
   .mui-dialog-window {
-    width: 500px;
+    width: 700px;
     &.mui-is-shown {
-      @include calc(left, '50% - 250px');  
+      @include calc(left, '50% - 350px');
     }
   }
 }
@@ -77,3 +79,12 @@ html {
   }
 }
 
+.hidden-span{
+    position:absolute;
+    top:0px;
+    left:0px;
+    visibility:hidden;
+    width:1px;
+    white-space:nowrap;
+    overflow:hidden;
+}

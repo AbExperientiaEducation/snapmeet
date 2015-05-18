@@ -10,12 +10,23 @@ const getStateFromStore = (props) => {
 
 const SyncField = React.createClass({
   render() {
-    return (      
+    return (
       <MUI.TextField
         disabled={!this.state.doc}
         ref="input"
-        />
+        onChange={this.onTextChange}
+      />
     )
+  }
+
+  , onTextChange() {
+    if(!this.props.autoResize) return
+    const actualInput = this.refs["input"].getDOMNode()
+    const maxWidth = parseInt(actualInput.style.maxWidth.slice(0, -2))
+    const scrollWidth = actualInput.children[0].scrollWidth
+    if(maxWidth != scrollWidth) {
+      actualInput.style.maxWidth = `${scrollWidth}px`
+    }
   }
 
   , getInitialState() {
@@ -29,7 +40,10 @@ const SyncField = React.createClass({
 
   , componentWillUnmount() {
     SyncdocStore.removeChangeListener(this._onChange)
-    if(this.state.syncField) this.state.syncField.destroy();
+    if(this.state.syncField) {
+      this.state.syncField._doc.removeListener('after op', this.onTextChange)
+      this.state.syncField.destroy()
+    }
   }
 
   , _onChange() {
@@ -46,7 +60,10 @@ const SyncField = React.createClass({
     const domTarget = React.findDOMNode(this).getElementsByTagName('input')[0]
     // Manually set value once. This will clear out hint text/prevent visual bug.
     this.refs.input.setValue(this.state.doc.getSnapshot())
-    this.setState({syncField: this.state.doc.attachTextarea(domTarget)})
+    const syncField = this.state.doc.attachTextarea(domTarget)
+    this.setState({syncField: syncField})
+    syncField._doc.on('after op', this.onTextChange)
+    this.onTextChange()
     this.refs.input.getDOMNode().querySelector('input').placeholder = this.props.placeholder
   }
 })
