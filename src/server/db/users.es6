@@ -2,8 +2,9 @@ const neo4j = require('neo4j')
 const Cypher = require('../utils/cypher_client.es6')
 const authSvc = require('../utils/auth_svc.es6')
 const singleCypher = Cypher.singleCypher
+const shortid = require('shortid')
 /* User Data Model
-  id: int
+  id: string
   email: string
   password: string
 */
@@ -33,15 +34,13 @@ module.exports = {
     // do something hashy with password
     const hashedPassword = authSvc.generateHash(password)
     const query = { 
-      query: `MERGE (id:UniqueId{name:"User"}) 
-                ON CREATE SET id.count = 1 
-                ON MATCH SET id.count = id.count + 1 
-                WITH id.count AS uid 
-                CREATE (p:User{id:uid,email:{email},password:{password}}) 
-                RETURN p AS user`,
-      params: {
-        email: email,
-        password: hashedPassword,
+      query: `CREATE (user:User{id:{uid},email:{email},password:{password}}) 
+              RETURN user`
+      , params: {
+        email: email
+        , password: hashedPassword
+        , uid: shortid.generate()
+
       }
     }
     return singleCypher(query, 'user')
@@ -49,12 +48,9 @@ module.exports = {
 
   , registerAnonymous(){
     const query = { 
-      query: `MERGE (id:UniqueId{name:"User"}) 
-                ON CREATE SET id.count = 1 
-                ON MATCH SET id.count = id.count + 1 
-                WITH id.count AS uid 
-                CREATE (p:User{id:uid}) 
-                RETURN p AS user`,
+      query: `CREATE (user:User{id:{uid}}) 
+              RETURN user`
+      , params: {uid: shortid.generate()}
     }
     return singleCypher(query, 'user')
   }
