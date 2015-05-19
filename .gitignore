@@ -6,3 +6,4 @@ public/lib/common.js
 public/css/app.css
 src/server/migrations/.migrate
 public/css/addons.css
+newrelic_agent.log

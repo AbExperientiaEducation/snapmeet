@@ -26,6 +26,7 @@
     "material-ui": "^0.7.5",
     "morgan": "^1.5.2",
     "neo4j": "2.0.0-RC1",
+    "newrelic": "^1.19.1",
     "ot-text": "^1.0.1",
     "passport": "^0.2.1",
     "passport-http": "^0.2.2",

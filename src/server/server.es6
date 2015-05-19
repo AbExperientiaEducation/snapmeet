@@ -1,5 +1,6 @@
 // Require our dependencies
 require('dotenv').load()
+require('newrelic')
 const express = require('express')
 const http = require('http')
 const url = require('url')
