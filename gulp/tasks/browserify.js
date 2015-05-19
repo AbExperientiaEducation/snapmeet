@@ -27,8 +27,7 @@ var browserifyTask = function(callback, devMode) {
   
   var bundle = function() {
     // Log when bundling starts
-    bundleLogger.start(bundleConfig.outputName)
-
+    bundleLogger.start(bundleConfig.outputName)    
     return b
       .external(libsConfig.srcs)
       .bundle()
@@ -65,12 +64,7 @@ var browserifyTask = function(callback, devMode) {
   return bundle()
 }
 
-gulp.task('browserify-build', browserifyTask)
-
-gulp.task('browserify', ['browserify-build'], function(callback, devMode){
-  gulp.run('rev-replace')
-})
-
+gulp.task('browserify', browserifyTask)
 
 // Exporting the task so we can call it directly in our watch task, with the 'devMode' option
 module.exports = browserifyTask

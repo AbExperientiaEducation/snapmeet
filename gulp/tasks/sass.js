@@ -7,7 +7,7 @@ var path = require('path')
 var rev = require('gulp-rev');
 var del = require('del')
 
-gulp.task('sass-assets', function () {
+gulp.task('sass', function () {
   del([config.dest + '/style/app*'])
   return gulp.src(config.src, {base: path.join(process.cwd(), 'src')})
     .pipe(sourcemaps.init())
@@ -18,8 +18,4 @@ gulp.task('sass-assets', function () {
     .pipe(gulp.dest(config.dest))
     .pipe(rev.manifest(config.dest + '/manifest.json', {base: config.dest, merge: true}))
     .pipe(gulp.dest(config.dest))
-})
-
-gulp.task('sass', ['sass-assets'], function () {
-  gulp.run('rev-replace')
 })

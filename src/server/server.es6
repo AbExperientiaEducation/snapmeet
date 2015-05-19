@@ -27,7 +27,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // Setup middleware
-app.use(express.static(__dirname + '/../../public'))
+app.use(express.static(__dirname + '/../../public', {maxAge: '1y'}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))

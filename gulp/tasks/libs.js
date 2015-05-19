@@ -12,7 +12,7 @@ var rev = require('gulp-rev')
 var buffer = require('gulp-buffer');
 var del = require('del')
 
-gulp.task("build-common-lib", function() {
+gulp.task("common-js", function() {
   del(config.dest + '/js/common*')
 
   return browserify(require.resolve('babelify/polyfill'))
@@ -29,9 +29,3 @@ gulp.task("build-common-lib", function() {
   }))
   .pipe(gulp.dest(config.dest));
 });
-
-// Make sure our tasks build the assets first, then 
-// replace the file refs to them.
-gulp.task('common-js', ['build-common-lib'], function(){
-  gulp.run('rev-replace')
-})

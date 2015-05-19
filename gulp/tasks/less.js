@@ -6,7 +6,7 @@ var gulp     = require('gulp')
 var autoprefixer = require('gulp-autoprefixer');
 var del = require('del')
 
-gulp.task('less-assets', function () {
+gulp.task('less', function () {
   del([config.dest + '/style/addons*'])
   return gulp.src(config.src, {base: path.join(process.cwd(), 'src')})
     .pipe(less({
@@ -25,7 +25,3 @@ gulp.task('less-assets', function () {
     .pipe(gulp.dest(config.dest))
     ;
 });
-
-gulp.task('less', ['less-assets'], function() {
-  gulp.run('rev-replace')
-})
