@@ -7,7 +7,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var del = require('del')
 
 gulp.task('less-assets', function () {
-  del([config.dest + '/addons*'])
+  del([config.dest + '/style/addons*'])
   return gulp.src(config.src, {base: path.join(process.cwd(), 'src')})
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]

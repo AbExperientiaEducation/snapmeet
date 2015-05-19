@@ -63,8 +63,6 @@ var browserifyTask = function(callback, devMode) {
   b.transform(babelify.configure({only: /.*\.es6/}))
 
   return bundle()
-
-
 }
 
 gulp.task('browserify-build', browserifyTask)

@@ -8,7 +8,7 @@ var rev = require('gulp-rev');
 var del = require('del')
 
 gulp.task('sass-assets', function () {
-  del([config.dest + '/app*'])
+  del([config.dest + '/style/app*'])
   return gulp.src(config.src, {base: path.join(process.cwd(), 'src')})
     .pipe(sourcemaps.init())
     .pipe(sass(config.settings))
