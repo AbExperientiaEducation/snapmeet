@@ -45,6 +45,14 @@ Host meetgun
 Todo
 - Security group
 
+## Server Monitoring
+Source: NewRelic
+1. `echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee /etc/apt/sources.list.d/newrelic.list`
+2. `wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -`
+3. `sudo apt-get update`
+4. `sudo apt-get install newrelic-sysmond`
+5. !!!SPECIAL License Key is per server...: `sudo nrsysmond-config --set license_key=***REMOVED***`
+6. `sudo /etc/init.d/newrelic-sysmond start`
 
 ## Node
 Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server
@@ -169,3 +177,11 @@ end script
 2. `npm install`
 3. `gulp build`
 4. `sudo restart meetgun`
+
+## Monitoring
+### App Monitoring
+We use newrelic. It is disabled by default in the config, but enabled by the env variable `NEW_RELIC_ENABLED` in our `upstart` script.
+The url https://rpm.newrelic.com/accounts/704410/applications/6049400 and the account credentials are stored in LastPass.
+
+### Server Monitoring
+We use newrelic. Install instructions are above. To view monitoring, visit https://rpm.newrelic.com/accounts/704410/servers with the account credentials stored in LastPass. 
