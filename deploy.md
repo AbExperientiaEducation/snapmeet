@@ -92,6 +92,7 @@ To restart server: `service neo4j-service [start, stop, restart]`
 
 ## Nginx
 Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04
+Alt Source: http://blog.argteam.com/coding/hardening-node-js-for-production-part-2-using-nginx-to-avoid-node-js-load/
 
 1. `sudo apt-get install nginx`
 2. `sudo mkdir /etc/nginx/ssl`
@@ -106,6 +107,12 @@ server {
     server_name www.meetgun.com;
     ssl_certificate /etc/nginx/ssl/nginx.crt;
     ssl_certificate_key /etc/nginx/ssl/nginx.key;
+    
+    location ~ ^/(js/|css/|lib/|img/) {
+      root /home/ubuntu/meetgun/public;
+      access_log off;
+      expires max;
+    }
 
     location / {
         proxy_pass http://localhost:3000;
@@ -116,6 +123,134 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+```
+5. `sudo vi /etc/nginx/nginx.conf`
+```
+user www-data;
+worker_processes 4;
+pid /run/nginx.pid;
+
+events {
+	worker_connections 768;
+	# multi_accept on;
+}
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+	gzip_disable "msie6";
+
+	gzip_vary on;
+	gzip_proxied any;
+	gzip_comp_level 5;
+	gzip_min_length 256;
+	gzip_types
+	    application/atom+xml
+	    application/javascript
+	    application/json
+	    application/ld+json
+	    application/manifest+json
+	    application/rdf+xml
+	    application/rss+xml
+	    application/schema+json
+	    application/vnd.geo+json
+	    application/vnd.ms-fontobject
+	    application/x-font-ttf
+	    application/x-javascript
+	    application/x-web-app-manifest+json
+	    application/xhtml+xml
+	    application/xml
+	    font/eot
+	    font/opentype
+	    image/bmp
+	    image/svg+xml
+	    image/vnd.microsoft.icon
+	    image/x-icon
+	    text/cache-manifest
+	    text/css
+	    text/javascript
+	    text/plain
+	    text/vcard
+	    text/vnd.rim.location.xloc
+	    text/vtt
+	    text/x-component
+	    text/x-cross-domain-policy
+	    text/xml;
+
+	##
+	# nginx-naxsi config
+	##
+	# Uncomment it if you installed nginx-naxsi
+	##
+
+	#include /etc/nginx/naxsi_core.rules;
+
+	##
+	# nginx-passenger config
+	##
+	# Uncomment it if you installed nginx-passenger
+	##
+
+	#passenger_root /usr;
+	#passenger_ruby /usr/bin/ruby;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#	# See sample authentication script at:
+#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#	# auth_http localhost/auth.php;
+#	# pop3_capabilities "TOP" "USER";
+#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#	server {
+#		listen     localhost:110;
+#		protocol   pop3;
+#		proxy      on;
+#	}
+#
+#	server {
+#		listen     localhost:143;
+#		protocol   imap;
+#		proxy      on;
+#	}
+#}
 ```
 
 To restart server: `sudo service nginx [start, restart, stop, status]`
