@@ -99,7 +99,7 @@ const mainAppRoute = function (req, res) {
       }
       const userWithRels = yield DBUsers.getWithRelations(userId)
       req.login({id: userId}, function(err){if(err)console.error(err.stack)})
-      res.render('./index.html', {bootstrapData: {userId: userId, resources: userWithRels}})
+      res.render('./built/index.html', {bootstrapData: {userId: userId, resources: userWithRels}})
     }
     catch(err) {
       console.error(err.stack)

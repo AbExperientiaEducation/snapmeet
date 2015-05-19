@@ -1,9 +1,10 @@
 .DS_STORE
 .env
 node_modules
-public/js/bundle.js
-public/lib/common.js
-public/css/app.css
+public/js/**
+public/style/**
+public/manifest.json
+views/built/index.html
 src/server/migrations/.migrate
 public/css/addons.css
 newrelic_agent.log

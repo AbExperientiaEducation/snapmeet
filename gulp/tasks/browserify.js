@@ -12,6 +12,9 @@ var mergeStream  = require('merge-stream')
 var bundleLogger = require('../util/bundleLogger')
 var gulp         = require('gulp')
 var babelify     = require('babelify')
+var buffer = require('gulp-buffer')
+var rev = require('gulp-rev')
+var del = require('del')
 var handleErrors = require('../util/handleErrors')
 var source       = require('vinyl-source-stream')
 var configs      = require('../config')
@@ -19,6 +22,7 @@ var bundleConfig = configs.browserify
 var libsConfig    = configs.libs
 
 var browserifyTask = function(callback, devMode) {  
+  del(bundleConfig.dest + '/js/bundle*')
   var b = browserify(bundleConfig)
   
   var bundle = function() {
@@ -35,6 +39,13 @@ var browserifyTask = function(callback, devMode) {
       // desired output filename here.
       .pipe(source(bundleConfig.outputName))
       // Specify the output destination
+      .pipe(buffer())
+      .pipe(rev())
+      .pipe(gulp.dest(bundleConfig.dest))
+      .pipe(rev.manifest(bundleConfig.dest + '/manifest.json', {
+        base: bundleConfig.dest
+        , merge: true
+      }))
       .pipe(gulp.dest(bundleConfig.dest))
   }
 
@@ -53,9 +64,15 @@ var browserifyTask = function(callback, devMode) {
 
   return bundle()
 
+
 }
 
-gulp.task('browserify', browserifyTask)
+gulp.task('browserify-build', browserifyTask)
+
+gulp.task('browserify', ['browserify-build'], function(callback, devMode){
+  gulp.run('rev-replace')
+})
+
 
 // Exporting the task so we can call it directly in our watch task, with the 'devMode' option
 module.exports = browserifyTask

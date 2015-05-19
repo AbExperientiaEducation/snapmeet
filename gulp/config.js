@@ -1,11 +1,11 @@
-var dest = "./public/js"
+var dest = "./public"
 var src = './src'
 
 module.exports = {
   sass: {
     src: src + "/style/app.scss"
     , watch: src + "/style/**/*.scss"
-    , dest: "./public/css"
+    , dest: "./public"
     , settings: {
       imagePath: 'images' // Used by the image-url helper
       , includePaths: require('node-bourbon').includePaths
@@ -14,12 +14,12 @@ module.exports = {
   , less: {
     src: src + "/style/addons.less"
     , watch: src + "/style/**/*.less"
-    , dest: "./public/css"
+    , dest: "./public"
   }
   , browserify: {
     entries: [src + '/client/main.es6']
     , dest: dest
-    , outputName: 'bundle.js'
+    , outputName: 'js/bundle.js'
     , detectGlobals: true
     , fast: true
     , noBundleExternal: true
@@ -27,6 +27,11 @@ module.exports = {
     , cache: {} 
     , packageCache: {} 
     , fullPaths: true
+  }
+  , revReplace: {
+    manifestFile: './public/manifest.json'
+    , indexPath: './views/'
+    , indexName: 'index.html'
   }
   , nodemon: {
     script: 'src/server/server.es6'

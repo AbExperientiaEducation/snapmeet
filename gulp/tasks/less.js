@@ -1,11 +1,14 @@
 var less = require('gulp-less');
+var rev = require('gulp-rev');
 var path = require('path');
 var config  = require('../config').less
 var gulp     = require('gulp')
 var autoprefixer = require('gulp-autoprefixer');
+var del = require('del')
 
-gulp.task('less', function () {
-  return gulp.src(config.src)
+gulp.task('less-assets', function () {
+  del([config.dest + '/addons*'])
+  return gulp.src(config.src, {base: path.join(process.cwd(), 'src')})
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
@@ -13,5 +16,16 @@ gulp.task('less', function () {
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(gulp.dest(config.dest));
+    .pipe(rev())
+    .pipe(gulp.dest(config.dest))
+    .pipe(rev.manifest(config.dest + '/manifest.json', {
+      base: config.dest
+      , merge: true
+    }))
+    .pipe(gulp.dest(config.dest))
+    ;
 });
+
+gulp.task('less', ['less-assets'], function() {
+  gulp.run('rev-replace')
+})
