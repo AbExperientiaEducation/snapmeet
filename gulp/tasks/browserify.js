@@ -22,10 +22,10 @@ var bundleConfig = configs.browserify
 var libsConfig    = configs.libs
 
 var browserifyTask = function(callback, devMode) {  
-  del(bundleConfig.dest + '/js/bundle*')
   var b = browserify(bundleConfig)
   
   var bundle = function() {
+    del(bundleConfig.dest + '/js/bundle*')
     // Log when bundling starts
     bundleLogger.start(bundleConfig.outputName)    
     return b
