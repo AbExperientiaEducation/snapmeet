@@ -9,7 +9,12 @@ const labelSources = function(label, sources) {
   let inputNum = 0
   // Sources are some weird native that are immutable. 
   sources = sources.map(source => {
-    const pojoSource = Object.assign({}, source)
+    const pojoSource = {
+      id: source.id
+      , label: source.label
+      , kind: source.kind
+      , facing: source.facing
+    }
     if(pojoSource.label.length === 0) {
       inputNum++
       pojoSource.label = `${label} ${inputNum}`
