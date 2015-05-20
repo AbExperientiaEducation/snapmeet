@@ -54,7 +54,7 @@ const MeetingSection = React.createClass({
           { empty ? 
             <h2>Create a meeting to get started</h2> 
             : null}
-          <h3>Meetings <NewMeetingButton /></h3>
+          <h2>Meetings <NewMeetingButton /></h2>
           <ul className="meeting-list" ref="meetingList">
           <ReactCSSTransitionGroup transitionName="slide">
             { empty ? 

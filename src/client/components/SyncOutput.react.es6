@@ -14,7 +14,7 @@ const SyncOutput = React.createClass({
     }
     const title = this.state.doc.getSnapshot() || "Untitled Meeting"
     return (      
-      <div>{title}</div>
+      <div className={this.props.className}>{title}</div>
     )
   }
 
