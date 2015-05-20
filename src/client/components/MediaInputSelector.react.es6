@@ -3,6 +3,7 @@ const ReactPropTypes = React.PropTypes
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const AudioIndicator = require('./AudioIndicator.react.es6')
 const _ = require('lodash')
+const MUI = require('material-ui')
 
 const labelSources = function(label, sources) {
   let inputNum = 0
@@ -26,32 +27,30 @@ const InputSelector = React.createClass({
 
   , getInitialState() {return {}}
 
-  , makePicker(title, sources, selectedId, callback) {
-    const options = sources.map(s => {return <option  value={s.id}>{s.label}</option>})
+  , makePicker(icon, sources, selectedId, callback) {
+    // const options = sources.map(s => {return <option  value={s.id}>{s.label}</option>})
+    const options = sources.map(s => {return {text: s.label, payload: s.id}})
     return <div>
-      <span>{title}</span>
-      <select value={selectedId} onChange={callback}>
-        {options}
-      </select>
+      <MUI.DropDownIcon iconClassName={icon} menuItems={options} onChange={callback} />
     </div>
   }
 
-  , changeAudio(event) {
+  , changeAudio(event, index, selectedSource) {
     this.props.webrtc.stopLocalVideo()
     this.props.webrtc.config.media.audio = {
-      mandatory: {sourceId: event.target.value}
+      mandatory: {sourceId: selectedSource.payload}
     }
     this.props.webrtc.startLocalVideo()
-    this.setState({activeAudio: event.target.value})
+    this.setState({activeAudio: selectedSource.payload})
   }
 
-  , changeVideo(event) {
+  , changeVideo(event, index, selectedSource) {
     this.props.webrtc.stopLocalVideo()
     this.props.webrtc.config.media.video = {
-      mandatory: {sourceId: event.target.value}
+      mandatory: {sourceId: selectedSource.payload}
     }
     this.props.webrtc.startLocalVideo()
-    this.setState({activeVideo: event.target.value})
+    this.setState({activeVideo: selectedSource.payload})
   }
 
   , componentDidMount() {
@@ -71,7 +70,6 @@ const InputSelector = React.createClass({
       })
     } else {
       this.setState({ready: true, noCustomize:true})
-      
     }
   }
 
@@ -82,9 +80,11 @@ const InputSelector = React.createClass({
       // Firefox only allows selecting sources at the browser level
       return <span></span>
     } else {
-      const audioOptions = this.makePicker('Audio: ', this.state.audioDevices, this.state.activeAudio.id, this.changeAudio)
-      const videoOptions = this.makePicker('Video: ', this.state.videoDevices, this.state.activeVideo.id, this.changeVideo)
-      return <div>
+
+    
+      const audioOptions = this.makePicker('fa fa-microphone', this.state.audioDevices, this.state.activeAudio.id, this.changeAudio)
+      const videoOptions = this.makePicker('fa fa-video-camera', this.state.videoDevices, this.state.activeVideo.id, this.changeVideo)
+      return <div className="input-options">
         {audioOptions}
         {videoOptions}
       </div>

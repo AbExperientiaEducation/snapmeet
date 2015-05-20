@@ -93,15 +93,15 @@ const VCBox = React.createClass({
       const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
       const localVideo = this.makeSelfVideoComponent()
       return <div className="meeting-join-widget">
-        <div><MUI.RaisedButton secondary={true} onClick={this.leaveChat} label="Leave video chat"></MUI.RaisedButton></div>
-        <MediaInputSelector webrtc={this.state.webRtcComponent} />
-        <div className="others-video">
+        <div className="video-controls">
+          <MUI.RaisedButton secondary={true} onClick={this.leaveChat} label="Leave video chat" />
+          <MediaInputSelector webrtc={this.state.webRtcComponent} />
+        </div>    
+        <div className="videos">
+          {localVideo}
           {videos}
         </div>
-        <div className="video-container you-video">
-          {localVideo}
-        </div>
-      </div>      
+      </div>
     }
   }
 

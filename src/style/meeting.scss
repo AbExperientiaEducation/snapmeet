@@ -1,3 +1,7 @@
+.meeting-list {
+  list-style: none;
+}
+
 .meeting-components {
   @include display(flex);
   @include flex-wrap(wrap);
@@ -50,3 +54,20 @@
   min-width: 200px;
 }
 
+.video-controls {
+  @include display(flex);
+
+  .mui-raised-button {
+    margin-right: 10px;
+  }
+}
+
+.input-options {
+  @include display(flex);
+  @include align-items(center);
+
+  .mui-drop-down-icon {
+    height: 22px;
+    width: 25px !important;
+  }
+}

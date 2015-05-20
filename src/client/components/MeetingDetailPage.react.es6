@@ -52,14 +52,14 @@ const MeetingDetailPage = React.createClass({
             meetingId={ meetingId }
           />
           <div className="meeting-components">
-            <MUI.Paper className="tasks-card card" zDepth={1}>
+            <div className="tasks-card card" zDepth={1}>
               <h3>Tasks <NewTaskButton meetingId={ meetingId }/></h3>
               <MeetingTaskList meetingId={ meetingId } />
-            </MUI.Paper>
-            <MUI.Paper className="notes-card card" zDepth={1}>
+            </div>
+            <div className="notes-card card" zDepth={1}>
               <h3>Notes</h3>
               <SyncBox id={ meetingId + '_notes'} /> 
-            </MUI.Paper>
+            </div>
           </div>
         </div>
       )      
