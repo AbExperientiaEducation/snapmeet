@@ -59,10 +59,10 @@ const ProComingSoon = React.createClass({
       case modalStates[0]:
         title = "Meetgun Pro Required"
         doneLabel = "Go Pro"
-        contents = <div>
+        contents = <div className="pro-box">
           <p>Sign in is a Meetgun Pro feature. Upgrade to MeetGun Pro for:</p>
           <ul>
-            <li><strong>Login by email:</strong> Never worry about losing a meeting.</li>
+            <li><strong>Login by Email:</strong> Never worry about losing a meeting.</li>
             <li><strong>Enhanced Security:</strong> Restrict meeting access to authorized users.</li>
             <li><strong>Company Sharing:</strong> Quickly add your colleagues, or make meetings visible to anyone in your company.</li>
             <li><strong>Quick Reference:</strong> Easily refer back to the last meeting notes and action items.</li>
@@ -100,7 +100,7 @@ const ProComingSoon = React.createClass({
         </div>
         break
       case modalStates[1]:
-        title = "Meetgun Pro Coming Soon"
+        title = "Pro Is Coming Soon"
         doneLabel = "Notify Me"
         contents = (
           <div>

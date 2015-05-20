@@ -21,6 +21,22 @@
   display: none;
 }
 
-.mui-dialog .mui-dialog-content {
-  padding: 0 24px;
+.mui-dialog {
+  .mui-dialog-title {
+    font-weight: bold;
+    font-size: 2.5em;
+  }
+
+  .mui-dialog-content {
+    padding: 0 24px;
+    font-size: 14px;
+  }
+
+  .mui-paper-container {
+    height: auto;
+  }
+}
+
+.mui-dialog-window .mui-dialog-window-contents {
+  width: 85%;
 }

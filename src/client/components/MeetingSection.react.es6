@@ -55,11 +55,12 @@ const MeetingSection = React.createClass({
             <h2>Create a meeting to get started</h2> 
             : null}
           <h2>Meetings <NewMeetingButton /></h2>
+          { empty ? 
+            <p>Meetgun lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
+            : null }
+
           <ul className="meeting-list" ref="meetingList">
           <ReactCSSTransitionGroup transitionName="slide">
-            { empty ? 
-              <p>Meetgun lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
-              : null }
             {meetingListItems}
           </ReactCSSTransitionGroup>
           </ul>

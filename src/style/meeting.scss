@@ -11,9 +11,8 @@
 }
 
 .meeting-list {
-  list-style: none;
+  margin-top: 10px;
   @include materialShadow(1);
-  padding: 0;
 }
 
 .meeting-list-item {

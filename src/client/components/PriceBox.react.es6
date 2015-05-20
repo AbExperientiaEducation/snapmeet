@@ -11,7 +11,7 @@ const PriceBox = React.createClass({
   , render() {
     let contents
     if(this.props.price) {
-      contents = <div>
+      contents = <div className="price-contents">
         <p className="user-limit">Up to {this.props.maxUsers}
           <br />
           users
@@ -21,8 +21,8 @@ const PriceBox = React.createClass({
         </p>
       </div>
     } else {
-      contents = <div>
-        <p className="user-limit">Contact Us For Pricing</p>
+      contents = <div className="price-contents">
+        <p className="user-limit">Contact For Pricing</p>
       </div>
     }
     return <div className="price-box">
