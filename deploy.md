@@ -108,7 +108,7 @@ server {
     ssl_certificate /etc/nginx/ssl/nginx.crt;
     ssl_certificate_key /etc/nginx/ssl/nginx.key;
     
-    location ~ ^/(js/|css/|lib/|img/) {
+    location ~ ^/(js/|css/|lib/|img/|style/) {
       root /home/ubuntu/meetgun/public;
       access_log off;
       expires max;
