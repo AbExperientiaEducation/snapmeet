@@ -20,6 +20,25 @@
 `sudo mkdir /data/db`
 `sudo chown `whoami` /data/db`
 
+### Configure DBs
+- For `mongo`
+  - Start the mongo server
+  `mongod --auth`
+  - Run the mongo client on command line
+  `mongo`
+  - Then create our admin user
+  `use admin`
+  `db.createUser({user:'admin', pwd:'longpassword', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
+  - Then `exit` from the mongo shell
+  - Then start a new mongo shell as our admin
+  `mongo -u admin -p longpassword --authenticationDatabase admin`
+  - Then create our working user
+  `use test`
+  `db.createUser({user:'meetgun', pwd:'goodpassword', roles: [{role:"readWrite", db: "test"}]})`
+
+- For neo4j
+  - Copy the neo4j auth file from somewhere... Ian and Ben have it.
+
 ### Install Project Dependencies
 `npm install`
 
@@ -28,7 +47,7 @@
 
 ### Start build process/server
 `gulp`
-`mongod`
+`mongod --auth`
 
 ### Server-side Debugging
 Node-inspector looks/works a lot like the chrome inspector, and makes it significantly easier to debug node.
@@ -86,6 +105,4 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 `https://github.com/facebook/react-devtools`
 
 ## Running in Production
-### WIP
-- `gulp build`
-- `babel-node src/server/server.es6`
+See `deploy.md`
