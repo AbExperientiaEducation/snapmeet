@@ -70,19 +70,24 @@ Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-
 ## MongoDB
 Source: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
+### Install
 1. `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10`
 2. `echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list`
 3. `sudo apt-get update`
 4. `sudo apt-get install -y mongodb-org`
+
+### Security
+Note: Passwords for accounts are in `.env`
 5. `sudo vi /etc/mongod.conf`
 6. Uncomment line 28: auth = true
-7. Run `mongo` client from command line.
-8. `use admin`
-9. `db.createUser({user:'admin', pwd:'longpassword', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
-10. Exit from the mongo console
-11. Create a new mongo console: `mongo -u admin -p longpassword --authenticationDatabase admin`
-12. `use test`
-13. `db.createUser({user:'meetgun', pwd:'goodpassword', roles: [{role:"readWrite", db: "test"}]})`
+7. `sudo service mongod restart`
+8. Run `mongo` client from command line.
+9. `use admin`
+10. `db.createUser({user:'admin', pwd:'REPLACE_FROM_ENV', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
+11. Exit from the mongo console
+12. Create a new mongo console: `mongo -u admin -p REPLACE_FROM_ENV --authenticationDatabase admin`
+13. `use test`
+14. `db.createUser({user:'meetgun', pwd:'REPLACE_FROM_ENV', roles: [{role:"readWrite", db: "test"}]})`
 
 To run: `sudo service mongod start`
 

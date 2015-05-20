@@ -28,13 +28,13 @@
   `mongo`
   - Then create our admin user
   `use admin`
-  `db.createUser({user:'admin', pwd:'longpassword', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
+  `db.createUser({user:'admin', pwd:'REPLACE_FROM_ENV', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
   - Then `exit` from the mongo shell
   - Then start a new mongo shell as our admin
-  `mongo -u admin -p longpassword --authenticationDatabase admin`
+  `mongo -u admin -p REPLACE_FROM_ENV --authenticationDatabase admin`
   - Then create our working user
   `use test`
-  `db.createUser({user:'meetgun', pwd:'goodpassword', roles: [{role:"readWrite", db: "test"}]})`
+  `db.createUser({user:'meetgun', pwd:'REPLACE_FROM_ENV', roles: [{role:"readWrite", db: "test"}]})`
 
 - For neo4j
   - Copy the neo4j auth file from somewhere... Ian and Ben have it.
