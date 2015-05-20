@@ -41,6 +41,8 @@ Host meetgun
 
 # Server Setup
 ## Server Hardening
+- Better passwords and secret file management
+
 ### AWS Console
 Todo
 - Security group
@@ -72,6 +74,15 @@ Source: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 2. `echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list`
 3. `sudo apt-get update`
 4. `sudo apt-get install -y mongodb-org`
+5. `sudo vi /etc/mongod.conf`
+6. Uncomment line 28: auth = true
+7. Run `mongo` client from command line.
+8. `use admin`
+9. `db.createUser({user:'admin', pwd:'longpassword', roles: [{role:"userAdminAnyDatabase", db: "admin"}]})`
+10. Exit from the mongo console
+11. Create a new mongo console: `mongo -u admin -p longpassword --authenticationDatabase admin`
+12. `use test`
+13. `db.createUser({user:'meetgun', pwd:'goodpassword', roles: [{role:"readWrite", db: "test"}]})`
 
 To run: `sudo service mongod start`
 
