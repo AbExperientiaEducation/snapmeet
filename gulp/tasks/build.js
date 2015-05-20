@@ -1,3 +1,6 @@
 var gulp = require('gulp')
 
-gulp.task('build', ['less', 'sass', 'browserify', 'common-js', 'rev-replace'])
+gulp.task('build-assets', ['less', 'sass', 'browserify', 'common-js'])
+gulp.task('build', ['build-assets'], function() {
+  gulp.run('rev-replace')
+})
