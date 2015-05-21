@@ -74,6 +74,15 @@ Node-inspector looks/works a lot like the chrome inspector, and makes it signifi
 * Add to sublime settings:
     "tab_size": 2,
     "translate_tabs_to_spaces": true
+* Optional sublime settings (prevent built stuff from showing up in your search):
+  "binary_file_patterns":
+    [
+      "node_modules/*",
+      "public/js/bundle*",
+      "public/js/common*",
+      "public/style/addons*",
+      "public/style/app*"
+    ]
 
 ### Dev Environment Additions
 #### Git hooks
