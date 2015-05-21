@@ -3,7 +3,7 @@
 const uuid = require('shortid')
 const crypto = require('crypto')
 const _ = require('lodash')
-const ErrorLogger = require('./ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 const safeCb = (cb) => {
   const safeCb = cb instanceof Function ? cb : () => {}

@@ -2,7 +2,7 @@ const co = require('co')
 const neo4j = require('neo4j')
 const Cypher = require('../utils/cypher_client.es6')
 const singleCypher = Cypher.singleCypher
-const ErrorLogger = require('../utils/ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 const create = function(info){
   const query = { 

@@ -4,7 +4,7 @@ const handlers = {}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const _ = require('lodash')
 const SignalMaster = require('./SignalMaster.es6')
-const ErrorLogger = require('./ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 let _ioServer
 

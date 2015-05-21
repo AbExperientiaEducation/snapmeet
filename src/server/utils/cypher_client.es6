@@ -6,7 +6,7 @@ const db = new neo4j.GraphDatabase({
 })
 const co = require('co')
 const _ = require('lodash')
-const ErrorLogger = require('./ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 const promiseCypher = denodeify(db.cypher.bind(db), function(err, stdout, stderr){
   if(err) ErrorLogger.log(err)

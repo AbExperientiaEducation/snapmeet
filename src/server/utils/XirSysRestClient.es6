@@ -1,6 +1,6 @@
 const rest = require('restler')
 const co = require('co')
-const ErrorLogger = require('./ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 let _restClient
 

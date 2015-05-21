@@ -2,7 +2,7 @@ const co = require('co')
 const cypher = require('../utils/cypher_client.es6')
 const singleCypher = cypher.singleCypher
 const recordsWithRels = cypher.recordsWithRels
-const ErrorLogger = require('../utils/ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 const getWithRelations = function(ids) {
   return recordsWithRels(ids)

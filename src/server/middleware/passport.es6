@@ -3,7 +3,7 @@ const BasicStrategy = require('passport-http').BasicStrategy
 const LocalStrategy = require('passport-local').Strategy
 const co = require('co')
 const DBUsers = require('../db/users.es6')
-const ErrorLogger = require('../utils/ErrorLogger.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 passport.deserializeUser(function(id, done) {
   const errorHandler = function(err){done(err)}

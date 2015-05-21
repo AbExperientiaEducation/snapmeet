@@ -20,9 +20,10 @@ const UserEndpoints = require('./endpoints/UserEndpoints.es6')
 const VCRoomEndpoints = require('./endpoints/VCRoomEndpoints.es6')
 const InterestDB = require('./db/interest.es6')
 const rollbar = require('rollbar')
-const ErrorLogger = require('./utils/ErrorLogger.es6')
-
+const ErrorLogger = require('../shared/utils/ErrorLogger.es6')
 require('stackup')
+
+ErrorLogger.init(!!process.env.SNAPMEET_PRODUCTION)
 
 // Create an express instance and set a port variable
 const app = express()
@@ -105,7 +106,7 @@ const mainAppRoute = function (req, res) {
       }
       const userWithRels = yield DBUsers.getWithRelations(userId)
       req.login({id: userId}, function(err){ if(err) ErrorLogger.log(err) })
-      res.render('./built/index.html', {bootstrapData: {userId: userId, resources: userWithRels}})
+      res.render('./built/index.html', {bootstrapData: {isProd: process.env.SNAPMEET_PRODUCTION, userId: userId, resources: userWithRels}})
     }
     catch(err) {
       ErrorLogger.log(err)
