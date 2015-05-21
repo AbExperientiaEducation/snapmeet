@@ -2,6 +2,7 @@ const co = require('co')
 const cypher = require('../utils/cypher_client.es6')
 const singleCypher = cypher.singleCypher
 const recordsWithRels = cypher.recordsWithRels
+const ErrorLogger = require('../utils/ErrorLogger.es6')
 
 const getWithRelations = function(ids) {
   return recordsWithRels(ids)
@@ -14,7 +15,7 @@ const runQueryAndReturnNodeRelations = function(query) {
       return yield getWithRelations([modified.id])
     }
     catch(err) {
-      console.error(err.stack)
+      ErrorLogger.log(err)
     }
   })
 }

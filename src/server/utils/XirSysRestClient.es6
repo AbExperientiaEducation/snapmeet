@@ -1,5 +1,7 @@
 const rest = require('restler')
 const co = require('co')
+const ErrorLogger = require('./ErrorLogger.es6')
+
 let _restClient
 
 const getCredentials = function() {
@@ -35,7 +37,8 @@ const makeRequest = function(endpoint, data) {
     }
 
     const errFn = function(err){
-      console.error('XirSys API Error', err.request.options)
+      err.message = 'XirSys API Error: ' + err.message
+      ErrorLogger.log(err, err.request)
       reject('XirSys API Error')
     }
 

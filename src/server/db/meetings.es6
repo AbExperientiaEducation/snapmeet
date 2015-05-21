@@ -6,6 +6,7 @@ const singleCypher = Cypher.singleCypher
 const recordsWithRels = Cypher.recordsWithRels
 const VCRoomDB = require('./vcrooms.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
+const ErrorLogger = require('../utils/ErrorLogger.es6')
 
 const getWithRelations = function(ids) {
   return recordsWithRels(ids)
@@ -34,7 +35,7 @@ const create = function(meetingInfo){
       return result
     }
     catch(err) {
-      console.error(err.stack)
+      ErrorLogger.log(err)
     }
   })    
 

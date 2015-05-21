@@ -6,9 +6,10 @@ const db = new neo4j.GraphDatabase({
 })
 const co = require('co')
 const _ = require('lodash')
+const ErrorLogger = require('./ErrorLogger.es6')
 
 const promiseCypher = denodeify(db.cypher.bind(db), function(err, stdout, stderr){
-  if(err) console.error(err)
+  if(err) ErrorLogger.log(err)
   return [err, stdout, stderr]
 })
 
@@ -36,7 +37,7 @@ const getRecords = function(recordIds) {
       return groupResources(nodes)
     }
     catch (err) {
-      console.error(err)
+      ErrorLogger.log(err)
     }
   }) 
 }
@@ -56,7 +57,7 @@ const recordsWithRels = function(recordIds) {
       return res
     }
     catch (err) {
-      console.error(err, err.stack)
+      ErrorLogger.log(err)
     }
   })
 }

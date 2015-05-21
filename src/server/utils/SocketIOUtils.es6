@@ -4,6 +4,7 @@ const handlers = {}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const _ = require('lodash')
 const SignalMaster = require('./SignalMaster.es6')
+const ErrorLogger = require('./ErrorLogger.es6')
 
 let _ioServer
 
@@ -55,13 +56,14 @@ const runHandlerForData = function(data, socket) {
         }        
       }
       catch(err) {
-        console.error(err.stack)
+        ErrorLogger.log(err)
       }
     })
   }
   
   catch(err) {
-    console.error('socket.io Error', data, err, err.stack)
+    err.message = "Socket.io Error " + err.message
+    ErrorLogger.log(err, data)
   }
 }
 

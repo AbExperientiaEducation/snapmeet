@@ -3,7 +3,7 @@ const BasicStrategy = require('passport-http').BasicStrategy
 const LocalStrategy = require('passport-local').Strategy
 const co = require('co')
 const DBUsers = require('../db/users.es6')
-
+const ErrorLogger = require('../utils/ErrorLogger.es6')
 
 passport.deserializeUser(function(id, done) {
   const errorHandler = function(err){done(err)}
@@ -30,7 +30,10 @@ passport.use(new LocalStrategy({
         return done(null, false, { message: 'Incorrect password.' })
       }
       return done(null, user)
-    }).catch(function(err){console.error("Error on co in passport: " + err)})
+    }).catch(function(err){
+      err.message = "Error in passport: " + err.message
+      ErrorLogger.log(err)
+    })
   })
 )
 

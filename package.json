@@ -45,6 +45,7 @@
     "reqwest": "^1.1.5",
     "restler": "^3.2.2",
     "rich-text": "^1.1.0",
+    "rollbar": "^0.5.4",
     "share": "git://github.com/igmcdowell/ShareJS#v0.7.27-f",
     "shortid": "^2.2.1",
     "simplewebrtc": "git://github.com/igmcdowell/SimpleWebRTC#v1.15.7",

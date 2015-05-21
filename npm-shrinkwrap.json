@@ -7557,6 +7557,28 @@
         }
       }
     },
+    "rollbar": {
+      "version": "0.5.4",
+      "resolved": "https://registry.npmjs.org/rollbar/-/rollbar-0.5.4.tgz",
+      "dependencies": {
+        "async": {
+          "version": "0.9.2",
+          "resolved": "https://registry.npmjs.org/async/-/async-0.9.2.tgz"
+        },
+        "json-stringify-safe": {
+          "version": "5.0.1",
+          "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz"
+        },
+        "lru-cache": {
+          "version": "2.2.4",
+          "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-2.2.4.tgz"
+        },
+        "node-uuid": {
+          "version": "1.4.3",
+          "resolved": "https://registry.npmjs.org/node-uuid/-/node-uuid-1.4.3.tgz"
+        }
+      }
+    },
     "share": {
       "version": "0.7.27-f",
       "resolved": "git://github.com/igmcdowell/ShareJS.git#8ff3af3dfde929627653b037f51b49e026328832",

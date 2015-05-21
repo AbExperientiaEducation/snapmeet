@@ -19,6 +19,8 @@ const TaskEndpoints = require('./endpoints/TaskEndpoints.es6')
 const UserEndpoints = require('./endpoints/UserEndpoints.es6')
 const VCRoomEndpoints = require('./endpoints/VCRoomEndpoints.es6')
 const InterestDB = require('./db/interest.es6')
+const rollbar = require('rollbar')
+const ErrorLogger = require('./utils/ErrorLogger.es6')
 
 require('stackup')
 
@@ -27,6 +29,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // Setup middleware
+app.use(rollbar.errorHandler('***REMOVED***'))
 app.use(express.static(__dirname + '/../../public', {maxAge: '1y'}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -52,7 +55,10 @@ socketIOServer.use(passportSocketIo.authorize({
   , secret: process.env.SESSION_SECRET
   , store: sessionStore
   , success: function(data, accept){accept()}
-  , fail: function(data, message, error, accept){console.error('socket session error', message, error.stack)}
+  , fail: function(data, message, error, accept){
+    error.message = 'Socket Session Error: ' + error.message
+    ErrorLogger.log(error, message)
+  }
 }))
 
 syncDocHandling.init(socketIOServer)
@@ -75,7 +81,7 @@ app.post('/register', function(req, res) {
                   function(err){})
       res.status(200).json({user: req.user})
     } catch(error) {
-      console.error(error.stack)
+      ErrorLogger.log(error)
       res.status(500).json(error)
     }
   })
@@ -98,11 +104,11 @@ const mainAppRoute = function (req, res) {
         userId = user.id
       }
       const userWithRels = yield DBUsers.getWithRelations(userId)
-      req.login({id: userId}, function(err){if(err)console.error(err.stack)})
+      req.login({id: userId}, function(err){ if(err) ErrorLogger.log(err) })
       res.render('./built/index.html', {bootstrapData: {userId: userId, resources: userWithRels}})
     }
     catch(err) {
-      console.error(err.stack)
+      ErrorLogger.log(err)
       res.status(500).json(error)
     }    
   })

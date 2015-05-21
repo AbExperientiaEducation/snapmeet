@@ -3,6 +3,7 @@
 const uuid = require('shortid')
 const crypto = require('crypto')
 const _ = require('lodash')
+const ErrorLogger = require('./ErrorLogger.es6')
 
 const safeCb = (cb) => {
   const safeCb = cb instanceof Function ? cb : () => {}
@@ -121,9 +122,11 @@ const setup = (client, _ioServer) => {
     // support for logging full webrtc traces to stdout
     // useful for large-scale error monitoring
     client.on('trace', function (data) {
-      console.error('trace', JSON.stringify(
+      const e = new Error()
+      e.message = JSON.stringify(
         [data.type, data.session, data.prefix, data.peer, data.time, data.value]
-      ))
+      )
+      ErrorLogger.log(e)
     })
   }
 
