@@ -21,11 +21,11 @@ const ContactUs = React.createClass({
         actions={modalActions}
       >
       <p>
-        <strong>Ian</strong> (CTO): <a href="mailto:ian@picolab.co">ian@picolab.co</a> - Report bugs or technical issues.
+        <strong>Ian</strong> (CTO): <a href="mailto:ian@snapmeet.io">ian@snapmeet.io</a> - Report bugs or technical issues.
         <br />
-        <strong>Ben</strong> (CEO): <a href="mailto:ben@picolab.co">ben@picolab.co</a> - For sales and press inquiries.
+        <strong>Ben</strong> (CEO): <a href="mailto:ben@snapmeet.io">ben@snapmeet.io</a> - For sales and press inquiries.
         <br />
-        <strong>Feedback: </strong><a href="mailto:feedback@picolab.co">feedback@picolab.co</a> - For anything else.
+        <strong>Feedback: </strong><a href="mailto:feedback@snapmeet.io">feedback@snapmeet.io</a> - For anything else.
       </p>
       </MUI.Dialog>
       <a href="javascript:void()" onClick={()=>{this.refs.dialog.show()}} >Contact Us</a>

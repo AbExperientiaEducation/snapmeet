@@ -87,7 +87,7 @@ const SessionSignInForm = React.createClass({
       return <div>
         <MUI.Dialog
           ref="dialog"
-          title="Sign In To Meetgun"
+          title="Sign In To Snapmeet"
           actions={modalActions}
           className="sign-in"
         >

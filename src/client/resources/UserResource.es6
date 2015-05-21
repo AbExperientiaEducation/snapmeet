@@ -1,7 +1,7 @@
-const MGResource = require('./MGResource.es6')
+const SMResource = require('./SMResource.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
-const UserResource = new MGResource({
+const UserResource = new SMResource({
   type: ResourceConstants.User.LABEL
   , recordProperties: {
     id: null

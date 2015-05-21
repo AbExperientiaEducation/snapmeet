@@ -4,7 +4,7 @@ const ShareJS = require('share/lib/client/index.js')
 ShareJS.Doc.prototype.attachTextarea = require('share/lib/client/textarea.js')
 const TextOTType = require('ot-text')
 const Immutable = require('immutable')
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const SocketIOStore = require('../stores/SocketIOStore.es6')
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
@@ -69,7 +69,7 @@ module.exports = {
       }
 
       setTimeout(function(){
-        MeetgunDispatcher.dispatch({
+        SnapmeetDispatcher.dispatch({
           type: ActionTypes.RECEIVE_DOCUMENT
           , document: doc
         })

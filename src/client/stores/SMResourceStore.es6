@@ -1,4 +1,4 @@
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const Immutable = require('immutable')
 const RelationStore = require('../stores/RelationStore.es6')
@@ -6,7 +6,7 @@ const PubSubStore = require('./PubSubStore.es6')
 const CHANGE_EVENT = 'store_contents_change'
 const SocketConstants = require('../constants/SocketConstants.es6')
 
-class MGResourceStore {
+class SMResourceStore {
   constructor(opts) {
     Object.assign(this, PubSubStore)
     this.clientActions = opts.constants.ActionTypes
@@ -97,7 +97,7 @@ class MGResourceStore {
   }
 
   registerForDispatch() {
-    this.dispatchToken = MeetgunDispatcher.register((action) => {
+    this.dispatchToken = SnapmeetDispatcher.register((action) => {
       // Run any custom handler, and return early if handled.
       if(this.eventHandler && this.eventHandler(action)) return 
       switch(action.type) {
@@ -127,4 +127,4 @@ class MGResourceStore {
   }
 }
 
-module.exports = MGResourceStore
+module.exports = SMResourceStore

@@ -1,9 +1,9 @@
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const PubSubStore = require('./PubSubStore.es6')
 const SocketConstants = require('../constants/SocketConstants.es6');
 const ActionTypes = SocketConstants.ActionTypes
 const ConnectedStates = SocketConstants.ConnectedStates
-const MeetgunRouter = require('../components/MeetgunRouter.react.es6')
+const SnapmeetRouter = require('../components/SnapmeetRouter.react.es6')
 const _globalUIState = {connectStatus: ConnectedStates.CONNECTING}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
@@ -15,7 +15,7 @@ const GlobalUIStore = Object.assign({}, PubSubStore, {
   }
 })
 
-GlobalUIStore.dispatchToken = MeetgunDispatcher.register((action) => {
+GlobalUIStore.dispatchToken = SnapmeetDispatcher.register((action) => {
   const MEETING_LABEL = ResourceConstants.Meeting.LABEL
   switch(action.type) {
 
@@ -43,7 +43,7 @@ GlobalUIStore.dispatchToken = MeetgunDispatcher.register((action) => {
           }
         })
         if(match) {
-          const router = MeetgunRouter.getRouter()
+          const router = SnapmeetRouter.getRouter()
           router.transitionTo('meeting', {id: _pendingMeeting})
           _pendingMeeting = null
         }

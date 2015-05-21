@@ -1,10 +1,10 @@
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const ActionTypes = ResourceConstants.Task.ActionTypes
 
 module.exports = {
   createNewTask(meetingId) {
-    MeetgunDispatcher.dispatch({
+    SnapmeetDispatcher.dispatch({
       type: ActionTypes.CLIENT_CREATE
       , meetingId: meetingId
     })
@@ -12,7 +12,7 @@ module.exports = {
 
   , setTaskCompletion(task, isComplete) {
     task = task.set('completed', isComplete)
-    MeetgunDispatcher.dispatch({
+    SnapmeetDispatcher.dispatch({
       type: ActionTypes.CLIENT_PATCH
       , record: task
     })

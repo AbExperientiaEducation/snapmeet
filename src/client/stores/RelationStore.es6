@@ -1,4 +1,4 @@
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const Immutable = require('immutable')
 const PubSubStore = require('./PubSubStore.es6')
@@ -38,7 +38,7 @@ const RelationStore = Object.assign({}, PubSubStore, {
   }
 })
 
-RelationStore.dispatchToken = MeetgunDispatcher.register((action) => {
+RelationStore.dispatchToken = SnapmeetDispatcher.register((action) => {
   switch(action.type) {
     case ResourceConstants.RECEIVE_RAW_EVENT:
       if(!action.groupedRawResources.RELATIONS) return

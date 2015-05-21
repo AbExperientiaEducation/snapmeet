@@ -18,7 +18,7 @@ const getStateFromStore = () => {
   }
 }
 
-const MeetgunApp = React.createClass({
+const SnapmeetApp = React.createClass({
   mixins: [PureRenderMixin]
 
   , contextTypes: {
@@ -50,7 +50,7 @@ const MeetgunApp = React.createClass({
 
     switch(this.state.connectStatus) {
       case ConnectedStates.CONNECTING:
-        return <OverlaySpinner label="Loading Meetgun"/>
+        return <OverlaySpinner label="Loading Snapmeet"/>
       case ConnectedStates.RECONNECTING:
         return <OverlaySpinner label="Can't reach server. Reconnecting."/>
       case ConnectedStates.CONNECTED:
@@ -58,7 +58,7 @@ const MeetgunApp = React.createClass({
         return (
           <div className="meetingapp">
             <div className="topbar">
-              <h1><Link to="app"><span className="logo-start">Meet</span><span className="logo-end">gun</span></Link></h1>
+              <h1><Link to="app"><span className="logo-start">Snap</span><span className="logo-end">meet</span></Link></h1>
               <div className="right-content">
                 <ContactUs />
                 <ProComingSoon />
@@ -75,4 +75,4 @@ const MeetgunApp = React.createClass({
   }
 })
 
-module.exports = MeetgunApp
+module.exports = SnapmeetApp

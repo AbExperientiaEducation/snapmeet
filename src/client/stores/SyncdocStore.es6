@@ -1,5 +1,5 @@
 const ActionTypes = require('../constants/SocketConstants.es6').ActionTypes
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const SyncDocConn = require('../utils/SyncDocConn.es6')
 const Immutable = require('immutable')
 const EventEmitter = require('events').EventEmitter
@@ -40,7 +40,7 @@ const SyncdocStore = Object.assign({}, EventEmitter.prototype, {
 
 SyncdocStore.setMaxListeners(100)
 
-SyncdocStore.dispatchToken = MeetgunDispatcher.register((action) => {
+SyncdocStore.dispatchToken = SnapmeetDispatcher.register((action) => {
   switch(action.type) {
     case ActionTypes.RECEIVE_DOCUMENT:
       _addDocument(action.document)

@@ -1,4 +1,4 @@
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const SessionConstants = require('../constants/SessionConstants.es6')
 const SessionWebAPIUtils = require('../utils/SessionWebAPIUtils.es6')
 

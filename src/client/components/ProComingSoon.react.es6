@@ -57,10 +57,10 @@ const ProComingSoon = React.createClass({
     let doneLabel
     switch(this.state.modalState) {
       case modalStates[0]:
-        title = "Meetgun Pro Required"
+        title = "Snapmeet Pro Required"
         doneLabel = "Go Pro"
         contents = <div className="pro-box">
-          <p>Sign in is a Meetgun Pro feature. Upgrade to MeetGun Pro for:</p>
+          <p>Sign in is a Snapmeet Pro feature. Upgrade to Snapmeet Pro for:</p>
           <ul>
             <li><strong>Login by Email:</strong> Never worry about losing a meeting.</li>
             <li><strong>Enhanced Security:</strong> Restrict meeting access to authorized users.</li>
@@ -104,7 +104,7 @@ const ProComingSoon = React.createClass({
         doneLabel = "Notify Me"
         contents = (
           <div>
-            <p>Meetgun Pro is coming soon, but it's not here yet.<br />
+            <p>Snapmeet Pro is coming soon, but it's not here yet.<br />
             Enter your email to be notified as soon as it is launched.</p>
             <form>
               <MUI.TextField type="email" id="email" name="email" ref="email" hintText="Email"/>
@@ -112,11 +112,11 @@ const ProComingSoon = React.createClass({
           </div>)
         break
       case modalStates[2]:
-        title = "Meetgun Pro Coming Soon"
+        title = "Snapmeet Pro Coming Soon"
         doneLabel = "Close"
         contents = <div>
           <h3>Thanks for the interest!</h3>
-          <p>We'll let you know as soon as Meetgun Pro is available.</p>
+          <p>We'll let you know as soon as Snapmeet Pro is available.</p>
         </div>
         break
     }

@@ -1,15 +1,15 @@
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 const MeetingResource = require('../resources/MeetingResource.es6')
-const MGResourceStore = require('./MGResourceStore.es6')
-const MeetgunDispatcher = require('../dispatcher/MeetgunDispatcher.es6')
+const SMResourceStore = require('./SMResourceStore.es6')
+const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 
-const MeetingStore = new MGResourceStore({
+const MeetingStore = new SMResourceStore({
   constants: ResourceConstants.Meeting
   , ResourceAPI: MeetingResource
   , createFn: (data) => {
     const localResource = MeetingResource.createNewRecord({orgId: data.orgId})
     setTimeout(() => {
-      MeetgunDispatcher.dispatch({
+      SnapmeetDispatcher.dispatch({
         type: ResourceConstants.Meeting.ActionTypes.LOCAL_RESOURCE_CREATED
         , id: localResource.id
       })

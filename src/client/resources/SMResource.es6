@@ -5,7 +5,7 @@ const Immutable = require('immutable')
 const Shortid = require('shortid')
 const ServerResourceActionCreators = require('../actions/ServerResourceActionCreators.es6')
 
-class MGResource {
+class SMResource {
   constructor(opts) {
     this.type = opts.type
     this.socket = SocketIOStore.getSocket()
@@ -58,4 +58,4 @@ class MGResource {
   }
 }
 
-module.exports = MGResource
+module.exports = SMResource

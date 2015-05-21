@@ -12,7 +12,7 @@ const Route = Router.Route
 const DefaultRoute = Router.DefaultRoute
 const RouteHandler = Router.RouteHandler
 const HomePage = require('./HomePage.react.es6')
-const App = require('./MeetgunApp.react.es6')
+const App = require('./SnapmeetApp.react.es6')
 const MeetingDetailPage = require('./MeetingDetailPage.react.es6')
 
 const routes = (

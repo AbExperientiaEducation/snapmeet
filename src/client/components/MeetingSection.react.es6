@@ -56,7 +56,7 @@ const MeetingSection = React.createClass({
             : null}
           <h2>Meetings <NewMeetingButton /></h2>
           { empty ? 
-            <p>Meetgun lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
+            <p>Snapmeet lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
             : null }
 
           <ul className="meeting-list" ref="meetingList">

@@ -1,7 +1,7 @@
-const MGResource = require('./MGResource.es6')
+const SMResource = require('./SMResource.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
 
-const VCRoomResource = new MGResource({
+const VCRoomResource = new SMResource({
   type: ResourceConstants.VCRoom.LABEL
   , recordProperties: {
     credentials: null
