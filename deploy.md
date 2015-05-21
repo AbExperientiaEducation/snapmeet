@@ -297,6 +297,7 @@ env NODE_BIN_DIR="/home/ubuntu/.nvm/versions/v0.12.1/bin"
 env NODE_PATH="/home/ubuntu/.nvm/versions/v0.12.1/lib/node_modules"
 env APPLICATION_PATH="/home/ubuntu/meetgun"
 env NEW_RELIC_ENABLED=true
+env SNAPMEET_PRODUCTION=true
 
 script
     PATH=$NODE_BIN_DIR:$PATH
