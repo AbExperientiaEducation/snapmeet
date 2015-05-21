@@ -18,7 +18,7 @@ const MeetingDetailPage = require('./MeetingDetailPage.react.es6')
 const routes = (
   <Route name='app' path='/' handler={App}>
     <Route name='meeting' path='/meetings/:id' handler={MeetingDetailPage} />
-    <DefaultRoute handler={HomePage}/>
+    <DefaultRoute name='home' handler={HomePage}/>
   </Route>
 )
 

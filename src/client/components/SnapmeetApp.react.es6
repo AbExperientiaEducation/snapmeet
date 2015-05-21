@@ -10,6 +10,7 @@ const GlobalUIStore = require('../stores/GlobalUIStore.es6')
 const ConnectedStates = require('../constants/SocketConstants.es6').ConnectedStates
 const OverlaySpinner = require('./OverlaySpinner.react.es6')
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+const Analytics = require('../utils/Analytics.es6')
 
 const getStateFromStore = () => {
   const globalState = GlobalUIStore.globalUIState()
@@ -54,11 +55,14 @@ const SnapmeetApp = React.createClass({
       case ConnectedStates.RECONNECTING:
         return <OverlaySpinner label="Can't reach server. Reconnecting."/>
       case ConnectedStates.CONNECTED:
-        var name = this.context.router.getCurrentPath();
+        const name = this.context.router.getCurrentPath();
+        const trackLogoClick = function(){
+          Analytics.track('Logo Click')
+        }
         return (
           <div className="meetingapp">
             <div className="topbar">
-              <h1><Link to="app"><span className="logo-start">Snap</span><span className="logo-end">meet</span></Link></h1>
+              <h1><Link to="app" onClick={trackLogoClick}><span className="logo-start">Snap</span><span className="logo-end">meet</span></Link></h1>
               <div className="right-content">
                 <ContactUs />
                 <ProComingSoon />

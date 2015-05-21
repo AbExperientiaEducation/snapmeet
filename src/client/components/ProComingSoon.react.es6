@@ -3,6 +3,7 @@ const SessionClientActions = require('../actions/SessionClientActionCreators.es6
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const MUI = require('material-ui')
 const PriceBox = require('./PriceBox.react.es6')
+const Analytics = require('../utils/Analytics.es6')
 
 const modalStates = ['upsell', 'interested', 'submitted']
 
@@ -34,17 +35,25 @@ const ProComingSoon = React.createClass({
   }
 
   , makeLoginComponents() {
-    const showSignInModal = () => {this.refs.dialog.show()}
-    const hideSignInModal = () => {this.refs.dialog.dismiss()}
+    const showSignInModal = () => {
+      this.refs.dialog.show()
+      Analytics.track('Sign In')
+    }
+    const hideSignInModal = () => {
+      this.refs.dialog.dismiss()
+      Analytics.track('Hide Sign In')
+    }
     const submitFn = (e) => {
       switch(this.state.modalState) {
         case modalStates[0]:
           this.setState({modalState: modalStates[1]})
+          Analytics.track('Go Pro')
           break
         case modalStates[1]:
           this.handleSubmit(e)
           setTimeout(hideSignInModal, 2000)
           this.setState({modalState: modalStates[2]})
+          Analytics.track('Pro Email Signup')
           break
         case modalStates[2]:
           hideSignInModal()

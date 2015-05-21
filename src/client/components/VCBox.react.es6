@@ -11,6 +11,7 @@ const SelfVideo = require('./SelfVideo.react.es6')
 const Immutable = require('immutable')
 const MediaInputSelector = require('./MediaInputSelector.react.es6')
 const MUI = require('material-ui')
+const Analytics = require('../utils/Analytics.es6')
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
@@ -107,10 +108,12 @@ const VCBox = React.createClass({
 
   , joinChat() {
     this.setState({startVC: true}, this.setupWebRtcIfNecessary)
+    Analytics.track('VC_Join')
   }
 
   , leaveChat() {
     this.cleanupVC()
+    Analytics.track('VC_Leave')
   }
 
   , setupWebRtcIfNecessary() {
