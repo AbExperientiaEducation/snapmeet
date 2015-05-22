@@ -32,7 +32,7 @@ module.exports = {
     manifestFile: './public/manifest.json'
     , indexPath: './views/'
     , indexName: 'index.html'
-    , watch: ['./public/js/**', './public/style/**']
+    , watch: ['./public/js/**', './public/style/**', './views/index.html']
   }
   , nodemon: {
     script: 'src/server/server.es6'
