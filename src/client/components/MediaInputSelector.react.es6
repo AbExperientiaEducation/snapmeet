@@ -4,6 +4,7 @@ const PureRenderMixin = require('react/addons').addons.PureRenderMixin
 const AudioIndicator = require('./AudioIndicator.react.es6')
 const _ = require('lodash')
 const MUI = require('material-ui')
+const DropDownIcon = require('./SMDropdownIcon.react.es6')
 
 const labelSources = function(label, sources) {
   let inputNum = 0
@@ -33,10 +34,10 @@ const InputSelector = React.createClass({
   , getInitialState() {return {}}
 
   , makePicker(icon, sources, selectedId, callback) {
-    // const options = sources.map(s => {return <option  value={s.id}>{s.label}</option>})
     const options = sources.map(s => {return {text: s.label, payload: s.id}})
+    const selectedIndex = _.findIndex(sources, s => {return s.id == selectedId})
     return <div>
-      <MUI.DropDownIcon iconClassName={icon} menuItems={options} onChange={callback} />
+      <DropDownIcon iconClassName={icon} menuItems={options} onChange={callback} selectedIndex={selectedIndex} />
     </div>
   }
 
@@ -69,8 +70,8 @@ const InputSelector = React.createClass({
           audioDevices: audioSources
           , videoDevices: videoSources
           , ready: true
-          , activeAudio: audioSources[0]
-          , activeVideo: videoSources[0]
+          , activeAudio: audioSources[0].id
+          , activeVideo: videoSources[0].id
         })    
       })
     } else {
@@ -85,9 +86,7 @@ const InputSelector = React.createClass({
       // Firefox only allows selecting sources at the browser level
       return <span></span>
     } else {
-
-    
-      const audioOptions = this.makePicker('fa fa-microphone', this.state.audioDevices, this.state.activeAudio.id, this.changeAudio)
+      const audioOptions = this.makePicker('fa fa-microphone', this.state.audioDevices, this.state.activeAudio, this.changeAudio)
       const videoOptions = this.makePicker('fa fa-video-camera', this.state.videoDevices, this.state.activeVideo.id, this.changeVideo)
       return <div className="input-options">
         {audioOptions}
