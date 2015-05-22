@@ -11,6 +11,7 @@ Additional Dependencies:
 - aws pem file
 - .env file
 - SSL key and bundle
+- .s3config file
 
 All commands are on remote machine unless specified
 
@@ -20,7 +21,7 @@ All commands are on remote machine unless specified
 `sudo tail -f /var/log/nginx/error.log`
 `sudo tail -f /var/log/mongodb/mongod.log`
 `sudo tail -f /var/log/neo4j/neo4j.0.0.log`
-`sudo tail -f /var/log/meetgun/forever.log`
+`sudo tail -f /var/log/meetgun/server.log`
 
 `sudo service nginx restart`
 `sudo service neo4j-service restart`
@@ -346,3 +347,45 @@ The url https://rpm.newrelic.com/accounts/704410/applications/6049400 and the ac
 
 ### Server Monitoring
 We use newrelic. Install instructions are above. To view monitoring, visit https://rpm.newrelic.com/accounts/704410/servers with the account credentials stored in LastPass. 
+
+## Backups
+1. Install s3cmd: `sudo apt-get install s3cmd`
+2. Copy s3cmd config from secure store to `/home/ubuntu/.s3cfg`
+
+### MongoDB
+1. Backup script: `mongodb-backup.sh`
+```
+#!/bin/bash
+
+MONGODUMP_PATH="/usr/bin/mongodump"
+MONGO_HOST="127.0.0.1" #replace with your server ip
+MONGO_PORT="27017"
+MONGO_DATABASE="test" #replace with your database name
+MONGO_USERNAME="meetgun"
+MONGO_PASSWORD="REPLACE_FROM_ENV"
+
+TIMESTAMP=`date +%F-%H%M`
+# Store the current date in YYYY-mm-DD-HHMMSS
+DATE=$(date -u "+%F-%H%M%S")
+# Get current directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo $DIR
+FILE_NAME="backup-$DATE"
+ARCHIVE_NAME="$FILE_NAME.tar.gz"
+S3_BUCKET_NAME="snapmeet-db-backup-staging" #replace with your bucket name on Amazon S3
+S3_BUCKET_PATH="mongodb-backups"
+
+# Create backup
+$MONGODUMP_PATH -u $MONGO_USERNAME -p $MONGO_PASSWORD -h $MONGO_HOST:$MONGO_PORT -d $MONGO_DATABASE --out $DIR/backup/$FILE_NAME
+# Compress backup
+tar -C $DIR/backup/ -zcvf $DIR/backup/$ARCHIVE_NAME $FILE_NAME/
+# Remove the backup directory
+rm -r $DIR/backup/$FILE_NAME
+
+# Upload to S3
+s3cmd put $DIR/backup/$ARCHIVE_NAME s3://$S3_BUCKET_NAME/$S3_BUCKET_PATH/$ARCHIVE_NAME
+```
+2. `chmod +x mongodb-backup.sh`
+3. `crontab -e`
+4. Add an entry: `00 01 * * * /bin/bash /home/ubuntu/mongodb-backup.sh`
+5. Backups are now scheduled to run at 1 AM daily
