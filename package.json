@@ -37,7 +37,7 @@
     "passport-http": "^0.2.2",
     "passport-local": "^1.0.0",
     "passport.socketio": "^3.5.1",
-    "quill": "^0.19.1",
+    "quill": "git://github.com/igmcdowell/quill#v0.19.12-b",
     "react": "~0.13.0",
     "react-router": "^0.13.2",
     "react-spinkit": "^1.0.2",

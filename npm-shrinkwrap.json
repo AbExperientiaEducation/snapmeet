@@ -7406,18 +7406,8 @@
       "resolved": "https://registry.npmjs.org/pretty-hrtime/-/pretty-hrtime-1.0.0.tgz"
     },
     "quill": {
-      "version": "0.19.10",
-      "resolved": "https://registry.npmjs.org/quill/-/quill-0.19.10.tgz",
-      "dependencies": {
-        "eventemitter2": {
-          "version": "0.4.14",
-          "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz"
-        },
-        "lodash": {
-          "version": "3.5.0",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.5.0.tgz"
-        }
-      }
+      "version": "0.19.12-b",
+      "resolved": "git://github.com/igmcdowell/quill#d6cbcd57cebcb79f7419656f89c96f2fbae0cf1d"
     },
     "react": {
       "version": "0.13.1",
