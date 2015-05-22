@@ -10,6 +10,7 @@ const MeetingClientActionCreators = require('../actions/MeetingClientActionCreat
 const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 const SyncField = require('./SyncField.react.es6')
 const ShareWidget = require('./ShareWidget.react.es6')
+const Link = require('react-router').Link
 
 const getStateFromStore = (props) => {
   return {
@@ -48,6 +49,7 @@ const MeetingDetailPage = React.createClass({
             placeholder="Untitled Meeting"
             autoResize={true}
           /><ShareWidget /></h2>
+          <Link className="all-meetings" to="app">{'< All Meetings'}</Link>
           <VCBox 
             meetingId={ meetingId }
           />
