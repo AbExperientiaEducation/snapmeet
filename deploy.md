@@ -358,9 +358,9 @@ We use newrelic. Install instructions are above. To view monitoring, visit https
 #!/bin/bash
 
 MONGODUMP_PATH="/usr/bin/mongodump"
-MONGO_HOST="127.0.0.1" #replace with your server ip
+MONGO_HOST="127.0.0.1"
 MONGO_PORT="27017"
-MONGO_DATABASE="test" #replace with your database name
+MONGO_DATABASE="test"
 MONGO_USERNAME="meetgun"
 MONGO_PASSWORD="REPLACE_FROM_ENV"
 
@@ -372,7 +372,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $DIR
 FILE_NAME="backup-$DATE"
 ARCHIVE_NAME="$FILE_NAME.tar.gz"
-S3_BUCKET_NAME="snapmeet-db-backup-staging" #replace with your bucket name on Amazon S3
+S3_BUCKET_NAME="snapmeet-db-backup-production"
 S3_BUCKET_PATH="mongodb-backups"
 
 # Create backup
