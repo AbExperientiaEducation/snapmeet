@@ -12,6 +12,11 @@ const ShareWidget = React.createClass({
       Analytics.track('Share Meeting')
     }
     const link = window.location.href
+
+    const handleFocus = function(e) {
+      const target = e.target
+      setTimeout(function(){target.select()}, 0)
+    }
     return <span>
         <MUI.Dialog
           title="Share Meeting"
@@ -19,10 +24,15 @@ const ShareWidget = React.createClass({
           dismissOnClickAway={true}
           ref="dialog"
         >
-          <p>Others can join your meeting by visiting this page:</p>
-          <p>{link}</p>
+          <p>Share this link with anyone you want to join your meeting:</p>
+          <input className="share-box" autoFocus={true} onFocus={handleFocus}  value={link} />
         </MUI.Dialog>
-        <MUI.IconButton iconClassName="fa fa-share-alt" onClick={showSignInModal}/>
+        <MUI.RaisedButton onClick={showSignInModal}>
+          <span className="mui-raised-button-label share-label">
+            Share
+            <span className="fa fa-share-alt" />
+          </span>
+        </MUI.RaisedButton>
       </span>
   }
         
