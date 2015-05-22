@@ -10,6 +10,7 @@ Additional Dependencies:
 - neo4j auth file
 - aws pem file
 - .env file
+- SSL key and bundle
 
 All commands are on remote machine unless specified
 
@@ -112,17 +113,25 @@ Alt Source: http://blog.argteam.com/coding/hardening-node-js-for-production-part
 
 1. `sudo apt-get install nginx`
 2. `sudo mkdir /etc/nginx/ssl`
-3. `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt`
-  - Fill out the prompts appropriately. The most important line is the one that requests the Common Name (e.g. server FQDN or YOUR name). You need to enter the domain name that you want to be associated with your server. You can enter the public IP address instead if you do not have a domain name.
+3. SSL Cert is in our secure share. Installation instructions are: https://support.comodo.com/index.php?/Knowledgebase/Article/View/789/0/certificate-installation-nginx
 4. `sudo vi /etc/nginx/sites-available/default`
 ```
 server {
     listen 80;
     listen 443 ssl;
 
-    server_name www.meetgun.com;
-    ssl_certificate /etc/nginx/ssl/nginx.crt;
-    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+    server_name snapmeet.io www.snapmeet.io;
+    
+    ssl_certificate /etc/nginx/ssl/snapmeet-bundle.crt;
+    ssl_certificate_key /etc/nginx/ssl/snapmeet.key;
+
+    #enables all versions of TLS, but not SSLv2 or 3 which are weak and now deprecated.
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    #Disables all weak ciphers
+    ssl_ciphers "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
+
+    ssl_prefer_server_ciphers on;
     
     location ~ ^/(js/|css/|lib/|img/|style/) {
       root /home/ubuntu/meetgun/public;
