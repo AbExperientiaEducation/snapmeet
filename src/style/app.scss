@@ -56,6 +56,9 @@ html {
   margin: auto;
   background-color: white;
   border: 1px solid #ccc;
+  @media (max-width: $phone)  {
+    max-width: $phone-page-width;
+  }
 }
 
 .topbar, .topbar .right-content {
