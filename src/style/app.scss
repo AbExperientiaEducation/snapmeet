@@ -56,6 +56,9 @@ html {
   margin: auto;
   background-color: white;
   border: 1px solid #ccc;
+  @media (max-device-width: $phone)  {
+    max-width: $phone;
+  }
 }
 
 .topbar, .topbar .right-content {
