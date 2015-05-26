@@ -56,7 +56,7 @@ html {
   margin: auto;
   background-color: white;
   border: 1px solid #ccc;
-  @media (max-width: $phone)  {
+  @media (max-device-width: $phone)  {
     max-width: $phone-page-width;
   }
 }
