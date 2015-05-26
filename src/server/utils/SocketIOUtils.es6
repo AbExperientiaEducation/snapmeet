@@ -52,7 +52,7 @@ const runHandlerForData = function(data, socket) {
           // TODO: Add security to verify socket eligible to join resource
           // TODO: Is there a race condition here? What if changes came in while we were fetching?
           const ids = data.ids || [data.id]
-          ids.forEach(id => {socket.join(data.resourceType + data.id)})
+          ids.forEach(id => {socket.join(data.resourceType + id)})
         }        
       }
       catch(err) {
