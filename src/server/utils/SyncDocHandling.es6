@@ -6,6 +6,12 @@ const TextType = require('ot-text')
 const Duplex = require('stream').Duplex
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
+let _client = null
+
+module.exports.getClient = function(){
+  return _client
+}
+
 module.exports.init = function(socketIOServer){
   livedb.ot.registerType(richText.type)
   livedb.ot.registerType(TextType.type)
@@ -13,7 +19,7 @@ module.exports.init = function(socketIOServer){
     safe: false
   }))
 
-  const share = require('share').server.createClient({backend: docStore})
+  _client = sharejs.server.createClient({backend: docStore})
 
   socketIOServer.on('connect', function(socket) {
 
@@ -50,7 +56,7 @@ module.exports.init = function(socketIOServer){
         stream.end()
       })
 
-      share.listen(stream)
+      _client.listen(stream)
     })
   })
   return socketIOServer
