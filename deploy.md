@@ -281,6 +281,9 @@ http {
 
 To restart server: `sudo service nginx [start, restart, stop, status]`
 
+### Gotchas
+1. If you change the nginx conf files, you must fully stop then start the nginx server.
+
 ## Our code
 source: https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/
 upstart script
@@ -339,6 +342,9 @@ end script
 2. `npm install`
 3. `gulp build`
 4. `sudo restart meetgun`
+
+### Gotchas
+1. If you change the `upstart` config itself, you must stop then start the jobs, not restart (source: http://askubuntu.com/questions/236803/upstart-conf-changes-do-not-reload-after-edit)
 
 ## Monitoring
 ### App Monitoring
