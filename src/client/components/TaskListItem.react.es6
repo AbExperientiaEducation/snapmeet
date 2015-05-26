@@ -4,6 +4,7 @@ const TaskStore = require('../stores/TaskStore.es6')
 const SyncField = require('./SyncField.react.es6')
 const MUI = require('material-ui')
 const TaskActionCreators = require('../actions/TaskClientActionCreators.es6')
+const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -37,7 +38,7 @@ const TaskListItem = React.createClass({
             onCheck={this.onCheck}
           />
           <SyncField 
-            id={ this.state.task.id + '_task_title' } 
+            id={ this.state.task.id + SocketEventConstants.TASK_SUFFIX } 
             placeholder="Task Title"
           />
         </li>
