@@ -8,5 +8,7 @@ const constants = keyMirror({
 })
 
 constants.TASK_SUFFIX = '_task_title'
+constants.MEETING_TITLE_SUFFIX = '_meeting_title'
+constants.MEETING_NOTES_SUFFIX = '_notes'
 
 module.exports = constants

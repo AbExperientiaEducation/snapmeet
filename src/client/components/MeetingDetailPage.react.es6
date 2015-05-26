@@ -11,6 +11,7 @@ const CurrentUserHelpers = require('../utils/CurrentUserHelpers.es6')
 const SyncField = require('./SyncField.react.es6')
 const ShareWidget = require('./ShareWidget.react.es6')
 const Link = require('react-router').Link
+const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -45,7 +46,7 @@ const MeetingDetailPage = React.createClass({
       return (
         <div className="meeting-detail">
           <h2 className="no-underline meeting-title"><SyncField 
-            id={ meetingId + '_meeting_title' } 
+            id={ meetingId + SocketEventConstants.MEETING_TITLE_SUFFIX } 
             placeholder="Untitled Meeting"
             autoResize={true}
           /><ShareWidget /></h2>
@@ -56,7 +57,7 @@ const MeetingDetailPage = React.createClass({
           <div className="meeting-components">
             <div className="notes-card card" zDepth={1}>
               <h3>Notes</h3>
-              <SyncBox id={ meetingId + '_notes'} /> 
+              <SyncBox id={ meetingId + SocketEventConstants.MEETING_NOTES_SUFFIX} /> 
             </div>
             <div className="tasks-card card" zDepth={1}>
               <h3>Tasks <NewTaskButton meetingId={ meetingId }/></h3>
