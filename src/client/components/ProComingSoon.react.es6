@@ -133,10 +133,12 @@ const ProComingSoon = React.createClass({
     const modalActions = [
       <MUI.FlatButton
         label="Cancel"
+        key="Cancel"
         secondary={true}
         onClick={hideSignInModal}
       />,
       <MUI.RaisedButton
+        key="Done"
         label={doneLabel}
         primary={true}
         onClick={submitFn} 

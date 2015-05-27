@@ -8,6 +8,7 @@ const ContactUs = React.createClass({
   , render() {
     const modalActions = [
       <MUI.RaisedButton
+        key="DONE"
         label="DONE"
         primary={true}
         onClick={()=>{this.refs.dialog.dismiss()}} 
