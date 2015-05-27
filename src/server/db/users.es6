@@ -34,13 +34,13 @@ module.exports = {
     // do something hashy with password
     const hashedPassword = authSvc.generateHash(password)
     const query = { 
-      query: `CREATE (user:User{id:{uid},email:{email},password:{password}}) 
+      query: `CREATE (user:User{id:{uid},email:{email},password:{password}, createdTimestamp: {createdTimestamp}}) 
               RETURN user`
       , params: {
         email: email
         , password: hashedPassword
         , uid: shortid.generate()
-
+        , createdTimestamp: Date.now()
       }
     }
     return singleCypher(query, 'user')
@@ -48,9 +48,12 @@ module.exports = {
 
   , registerAnonymous(){
     const query = { 
-      query: `CREATE (user:User{id:{uid}}) 
+      query: `CREATE (user:User{id:{uid}, createdTimestamp: {createdTimestamp}}) 
               RETURN user`
-      , params: {uid: shortid.generate()}
+      , params: {
+        uid: shortid.generate()
+        , createdTimestamp: Date.now()
+      }
     }
     return singleCypher(query, 'user')
   }
