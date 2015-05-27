@@ -174,3 +174,11 @@ We use newrelic. Install instructions are above. To view monitoring, visit https
 4. `crontab -e`
 5. Add an entry: `00 01 * * * /bin/bash /home/ubuntu/mongodb-backup.sh`
 6. Backups are now scheduled to run at 1 AM daily
+
+### Neo4j
+1. `cp production_scripts/backup/neo4j.sh ~/neo4j-backup.sh`
+2. `cd ~`
+3. `chmod +x neo4j-backup.sh`
+4. `crontab -e`
+5. Add an entry: `15 01 * * * /bin/bash /home/ubuntu/neo4j-backup.sh`
+6. Backups are now scheduled to run at 1:15 AM daily
