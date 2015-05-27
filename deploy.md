@@ -13,7 +13,8 @@ Additional Dependencies:
 - SSL key and bundle
 - .s3config file
 
-All commands are on remote machine unless specified
+All commands are on remote machine unless specified  
+All copy commands are from the git repository root unless otherwise specified  
 
 # Special Troubleshooting Section
 ## LOGS AND RESTARTS:
@@ -23,6 +24,7 @@ All commands are on remote machine unless specified
 `sudo tail -f /var/log/neo4j/neo4j.0.0.log`
 `sudo tail -f /var/log/meetgun/server.log`
 
+`sudo ./production_scripts/status.sh`
 `sudo service nginx restart`
 `sudo service neo4j-service restart`
 `sudo service mongod restart`
@@ -115,206 +117,16 @@ Alt Source: http://blog.argteam.com/coding/hardening-node-js-for-production-part
 1. `sudo apt-get install nginx`
 2. `sudo mkdir /etc/nginx/ssl`
 3. SSL Cert is in our secure share. Installation instructions are: https://support.comodo.com/index.php?/Knowledgebase/Article/View/789/0/certificate-installation-nginx
-4. `sudo vi /etc/nginx/sites-available/default`
-```
-server {
-    listen 80;
-    listen 443 ssl;
-
-    server_name snapmeet.io www.snapmeet.io;
-    
-    ssl_certificate /etc/nginx/ssl/snapmeet-bundle.crt;
-    ssl_certificate_key /etc/nginx/ssl/snapmeet.key;
-
-    #enables all versions of TLS, but not SSLv2 or 3 which are weak and now deprecated.
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-
-    #Disables all weak ciphers
-    ssl_ciphers "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
-
-    ssl_prefer_server_ciphers on;
-    
-    location ~ ^/(js/|css/|lib/|img/|style/) {
-      root /home/ubuntu/meetgun/public;
-      access_log off;
-      expires max;
-    }
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-5. `sudo vi /etc/nginx/nginx.conf`
-```
-user www-data;
-worker_processes 4;
-pid /run/nginx.pid;
-
-events {
-	worker_connections 768;
-	# multi_accept on;
-}
-
-http {
-
-	##
-	# Basic Settings
-	##
-
-	sendfile on;
-	tcp_nopush on;
-	tcp_nodelay on;
-	keepalive_timeout 65;
-	types_hash_max_size 2048;
-	# server_tokens off;
-
-	# server_names_hash_bucket_size 64;
-	# server_name_in_redirect off;
-
-	include /etc/nginx/mime.types;
-	default_type application/octet-stream;
-
-	##
-	# Logging Settings
-	##
-
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
-
-	##
-	# Gzip Settings
-	##
-
-	gzip on;
-	gzip_disable "msie6";
-
-	gzip_vary on;
-	gzip_proxied any;
-	gzip_comp_level 5;
-	gzip_min_length 256;
-	gzip_types
-	    application/atom+xml
-	    application/javascript
-	    application/json
-	    application/ld+json
-	    application/manifest+json
-	    application/rdf+xml
-	    application/rss+xml
-	    application/schema+json
-	    application/vnd.geo+json
-	    application/vnd.ms-fontobject
-	    application/x-font-ttf
-	    application/x-javascript
-	    application/x-web-app-manifest+json
-	    application/xhtml+xml
-	    application/xml
-	    font/eot
-	    font/opentype
-	    image/bmp
-	    image/svg+xml
-	    image/vnd.microsoft.icon
-	    image/x-icon
-	    text/cache-manifest
-	    text/css
-	    text/javascript
-	    text/plain
-	    text/vcard
-	    text/vnd.rim.location.xloc
-	    text/vtt
-	    text/x-component
-	    text/x-cross-domain-policy
-	    text/xml;
-
-	##
-	# nginx-naxsi config
-	##
-	# Uncomment it if you installed nginx-naxsi
-	##
-
-	#include /etc/nginx/naxsi_core.rules;
-
-	##
-	# nginx-passenger config
-	##
-	# Uncomment it if you installed nginx-passenger
-	##
-
-	#passenger_root /usr;
-	#passenger_ruby /usr/bin/ruby;
-
-	##
-	# Virtual Host Configs
-	##
-
-	include /etc/nginx/conf.d/*.conf;
-	include /etc/nginx/sites-enabled/*;
-}
-
-
-#mail {
-#	# See sample authentication script at:
-#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
-#
-#	# auth_http localhost/auth.php;
-#	# pop3_capabilities "TOP" "USER";
-#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
-#
-#	server {
-#		listen     localhost:110;
-#		protocol   pop3;
-#		proxy      on;
-#	}
-#
-#	server {
-#		listen     localhost:143;
-#		protocol   imap;
-#		proxy      on;
-#	}
-#}
-```
+4. `sudo cp production_scripts/nginx/default.conf /etc/nginx/sites-available/default`
+5. `sudo cp production_scripts/nginx/nginx.conf /etc/nginx/nginx.conf`
 
 To restart server: `sudo service nginx [start, restart, stop, status]`
 
+### Gotchas
+1. If you change the nginx conf files, you must fully stop then start the nginx server.
+
 ## Our code
 source: https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/
-upstart script
-
-```  
-#!upstart
-description "Meetgun Management"
-
-start on startup
-stop on shutdown
-
-# Run as our user
-setuid ubuntu
-
-# Respan up to 10 times within 5 seconds
-respawn
-respawn limit 10 5
-
-# Set env variables
-env APP_RUNNER="/home/ubuntu/.nvm/versions/v0.12.1/bin/babel-node"
-env APP_EX="/home/ubuntu/meetgun/src/server/server.es6"
-env APP_LOG="/var/log/meetgun/server.log"
-env NODE_BIN_DIR="/home/ubuntu/.nvm/versions/v0.12.1/bin"
-env NODE_PATH="/home/ubuntu/.nvm/versions/v0.12.1/lib/node_modules"
-env APPLICATION_PATH="/home/ubuntu/meetgun"
-env NEW_RELIC_ENABLED=true
-env SNAPMEET_PRODUCTION=true
-
-script
-    PATH=$NODE_BIN_DIR:$PATH
-    cd $APPLICATION_PATH
-    exec $APP_RUNNER $APP_EX 2>&1 >> $APP_LOG
-end script
-```
 
 1. `sudo apt-get install git`
 2. `git clone git@bitbucket.org:igmcdowell/meetgun.git`
@@ -331,7 +143,7 @@ end script
 14. `sudo chown -R ubuntu:adm /var/log/meetgun`
 
 ### To Run
-1. Copy upstart script to /etc/init/meetgun.conf
+1. `sudo cp production_scripts/upstart.conf /etc/init/meetgun.conf`
 2. `sudo start meetgun`
 
 ### To update
@@ -339,6 +151,9 @@ end script
 2. `npm install`
 3. `gulp build`
 4. `sudo restart meetgun`
+
+### Gotchas
+1. If you change the `upstart` config itself, you must stop then start the jobs, not restart (source: http://askubuntu.com/questions/236803/upstart-conf-changes-do-not-reload-after-edit)
 
 ## Monitoring
 ### App Monitoring
@@ -353,39 +168,9 @@ We use newrelic. Install instructions are above. To view monitoring, visit https
 2. Copy s3cmd config from secure store to `/home/ubuntu/.s3cfg`
 
 ### MongoDB
-1. Backup script: `mongodb-backup.sh`
-```
-#!/bin/bash
-
-MONGODUMP_PATH="/usr/bin/mongodump"
-MONGO_HOST="127.0.0.1"
-MONGO_PORT="27017"
-MONGO_DATABASE="test"
-MONGO_USERNAME="meetgun"
-MONGO_PASSWORD="REPLACE_FROM_ENV"
-
-TIMESTAMP=`date +%F-%H%M`
-# Store the current date in YYYY-mm-DD-HHMMSS
-DATE=$(date -u "+%F-%H%M%S")
-# Get current directory
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo $DIR
-FILE_NAME="backup-$DATE"
-ARCHIVE_NAME="$FILE_NAME.tar.gz"
-S3_BUCKET_NAME="snapmeet-db-backup-production"
-S3_BUCKET_PATH="mongodb-backups"
-
-# Create backup
-$MONGODUMP_PATH -u $MONGO_USERNAME -p $MONGO_PASSWORD -h $MONGO_HOST:$MONGO_PORT -d $MONGO_DATABASE --out $DIR/backup/$FILE_NAME
-# Compress backup
-tar -C $DIR/backup/ -zcvf $DIR/backup/$ARCHIVE_NAME $FILE_NAME/
-# Remove the backup directory
-rm -r $DIR/backup/$FILE_NAME
-
-# Upload to S3
-s3cmd put $DIR/backup/$ARCHIVE_NAME s3://$S3_BUCKET_NAME/$S3_BUCKET_PATH/$ARCHIVE_NAME
-```
-2. `chmod +x mongodb-backup.sh`
-3. `crontab -e`
-4. Add an entry: `00 01 * * * /bin/bash /home/ubuntu/mongodb-backup.sh`
-5. Backups are now scheduled to run at 1 AM daily
+1. `cp production_scripts/backup/mongo.sh ~/mongodb-backup.sh`
+2. `cd ~`
+3. `chmod +x mongodb-backup.sh`
+4. `crontab -e`
+5. Add an entry: `00 01 * * * /bin/bash /home/ubuntu/mongodb-backup.sh`
+6. Backups are now scheduled to run at 1 AM daily
