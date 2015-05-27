@@ -89,14 +89,14 @@ const ProComingSoon = React.createClass({
             <li>
               <PriceBox
                 label="Team"
-                price="45"
+                price={45}
                 maxUsers={10}
               />
             </li>
             <li>
               <PriceBox 
                 label="Division"
-                price="199"
+                price={199}
                 maxUsers={50}
               />
             </li>
@@ -133,10 +133,12 @@ const ProComingSoon = React.createClass({
     const modalActions = [
       <MUI.FlatButton
         label="Cancel"
+        key="Cancel"
         secondary={true}
         onClick={hideSignInModal}
       />,
       <MUI.RaisedButton
+        key="Done"
         label={doneLabel}
         primary={true}
         onClick={submitFn} 
