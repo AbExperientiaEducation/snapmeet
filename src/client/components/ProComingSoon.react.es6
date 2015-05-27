@@ -89,14 +89,14 @@ const ProComingSoon = React.createClass({
             <li>
               <PriceBox
                 label="Team"
-                price="45"
+                price={45}
                 maxUsers={10}
               />
             </li>
             <li>
               <PriceBox 
                 label="Division"
-                price="199"
+                price={199}
                 maxUsers={50}
               />
             </li>
