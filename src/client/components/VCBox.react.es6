@@ -91,7 +91,7 @@ const VCBox = React.createClass({
         <MUI.IconButton iconClassName="fa fa-info-circle" tooltip="Chat with up to 4 other people in this meeting"/>
       </div>
     } else {
-      const videos = this.state.videos && this.state.videos.map(v => {return this.makeVideoComponent(v)})
+      const videos = this.state.videos && _.map(this.state.videos.toArray(), v => {return this.makeVideoComponent(v)})
       const localVideo = this.makeSelfVideoComponent()
       return <div className="meeting-join-widget">
         <div className="video-controls">

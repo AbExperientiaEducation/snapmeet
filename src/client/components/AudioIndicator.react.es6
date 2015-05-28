@@ -43,7 +43,7 @@ const AudioIndicator = React.createClass({
   , render() {
     return <meter 
         className="volume"
-        value={this.state.volume}
+        defaultValue={this.state.volume}
         min="-65"
         max="-20"
         low="-50"
