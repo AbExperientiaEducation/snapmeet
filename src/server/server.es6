@@ -23,7 +23,7 @@ const rollbar = require('rollbar')
 const ErrorLogger = require('../shared/utils/ErrorLogger.es6')
 require('stackup')
 
-ErrorLogger.init(!!process.env.SNAPMEET_PRODUCTION)
+ErrorLogger.init(!!process.env.SNAPMEET_PRODUCTION, true)
 
 // Create an express instance and set a port variable
 const app = express()

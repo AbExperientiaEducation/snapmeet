@@ -11,6 +11,8 @@ const ConnectedStates = require('../constants/SocketConstants.es6').ConnectedSta
 const OverlaySpinner = require('./OverlaySpinner.react.es6')
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 const Analytics = require('../utils/Analytics.es6')
+const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
+const BootstrapData = require('../utils/BootstrapData.es6')
 
 const getStateFromStore = () => {
   const globalState = GlobalUIStore.globalUIState()
@@ -41,6 +43,8 @@ const SnapmeetApp = React.createClass({
   , componentWillMount() {
     // Kick off bootstrapped data
     ServerResourceActionCreators.receiveBootstrapData()
+    ErrorLogger.init(BootstrapData.isProd, false)
+    window.onerror = ErrorLogger.log
   }
 
   , _onChange() {
