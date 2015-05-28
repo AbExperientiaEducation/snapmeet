@@ -22,9 +22,20 @@ module.exports.init = function(socketIOServer){
   _client = sharejs.server.createClient({backend: docStore})
 
   socketIOServer.on('connect', function(socket) {
+    let stream = null
+    let agent = null
+    const cleanup = function() {
+      stream.emit('close')
+      stream.emit('end')
+      stream.end()
+      socket.removeAllListeners()
+      agent.session._cleanup()      
+    }
+    socket.on('disconnect', cleanup)
+    socket.on('close', cleanup)
 
     socket.on(SocketEventConstants.SHARE_JS_READY, function(){
-      const stream = new Duplex({objectMode: true})
+      stream = new Duplex({objectMode: true})
       stream.headers = socket.request.headers
       stream.remoteAddress = socket.remoteAddress
 
@@ -51,12 +62,10 @@ module.exports.init = function(socketIOServer){
       socket.on(SocketEventConstants.CURSOR_UNSUBSCRIBE, socket.leave)
 
       socket.on('close', function (reason) {
-        stream.emit('close')
-        stream.emit('end')
-        stream.end()
+
       })
 
-      _client.listen(stream)
+      agent = _client.listen(stream)
     })
   })
   return socketIOServer
