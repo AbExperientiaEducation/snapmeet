@@ -1,11 +1,7 @@
 #!/bin/bash
 
-MONGODUMP_PATH="/usr/bin/mongodump"
-MONGO_HOST="127.0.0.1"
-MONGO_PORT="27017"
-MONGO_DATABASE="test"
-MONGO_USERNAME="meetgun"
-MONGO_PASSWORD="REPLACE_FROM_ENV"
+NEO4J_BACKUP_PATH="/usr/bin/neo4j-backup"
+NEO4J_HOST="127.0.0.1"
 
 TIMESTAMP=`date +%F-%H%M`
 # Store the current date in YYYY-mm-DD-HHMMSS
@@ -13,13 +9,13 @@ DATE=$(date -u "+%F-%H%M%S")
 # Get current directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $DIR
-FILE_NAME="mongo-backup-$DATE"
+FILE_NAME="neo4j-backup-$DATE"
 ARCHIVE_NAME="$FILE_NAME.tar.gz"
 S3_BUCKET_NAME="snapmeet-db-backup-production"
-S3_BUCKET_PATH="mongodb-backups"
+S3_BUCKET_PATH="neo4j-backups"
 
 # Create backup
-$MONGODUMP_PATH -u $MONGO_USERNAME -p $MONGO_PASSWORD -h $MONGO_HOST:$MONGO_PORT -d $MONGO_DATABASE --out $DIR/backup/$FILE_NAME
+$NEO4J_BACKUP_PATH -to $DIR/backup/$FILE_NAME -host 127.0.0.1
 # Compress backup
 tar -C $DIR/backup/ -zcvf $DIR/backup/$ARCHIVE_NAME $FILE_NAME/
 # Remove the backup directory

@@ -96,12 +96,12 @@ Note: Passwords for accounts are in `.env`
 To run: `sudo service mongod start`
 
 ## Neo4j
-Source: https://www.digitalocean.com/community/tutorials/how-to-install-neo4j-on-an-ubuntu-vps
+Source: http://debian.neo4j.org
 
 1. `wget -O - http://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -`
 2. `sudo sh -c "echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list"`
 3. `sudo apt-get update`
-4. `sudo apt-get install neo4j`
+4. `sudo apt-get install neo4j-enterprise`
 
 auth lives in: `/var/lib/neo4j/data/dbms/auth` and we want to copy our local version there from `/usr/local/Cellar/neo4j/2.2.0/libexec/data/dbms/auth`
 6. On local machine: `scp /usr/local/Cellar/neo4j/2.2.0/libexec/data/dbms/auth ubuntu@meetgun:.`
@@ -174,3 +174,11 @@ We use newrelic. Install instructions are above. To view monitoring, visit https
 4. `crontab -e`
 5. Add an entry: `00 01 * * * /bin/bash /home/ubuntu/mongodb-backup.sh`
 6. Backups are now scheduled to run at 1 AM daily
+
+### Neo4j
+1. `cp production_scripts/backup/neo4j.sh ~/neo4j-backup.sh`
+2. `cd ~`
+3. `chmod +x neo4j-backup.sh`
+4. `crontab -e`
+5. Add an entry: `15 01 * * * /bin/bash /home/ubuntu/neo4j-backup.sh`
+6. Backups are now scheduled to run at 1:15 AM daily
