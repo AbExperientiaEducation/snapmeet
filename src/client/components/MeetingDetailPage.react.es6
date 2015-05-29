@@ -12,6 +12,7 @@ const SyncField = require('./SyncField.react.es6')
 const ShareWidget = require('./ShareWidget.react.es6')
 const Link = require('react-router').Link
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
+const GlobalUIStore = require('../stores/GlobalUIStore.es6')
 
 const getStateFromStore = (props) => {
   return {
@@ -24,6 +25,15 @@ const MeetingDetailPage = React.createClass({
 
   , getInitialState() {
     return getStateFromStore(this.props)
+  }
+
+  , statics: {
+    willTransitionFrom(transition, component) {
+      if(GlobalUIStore.globalUIState().vcOpen) {
+        const doClose = window.confirm("Leaving this page will close video chat. Continue?")
+        if(!doClose) transition.abort()
+      }
+    }
   }
 
   , componentDidMount() {

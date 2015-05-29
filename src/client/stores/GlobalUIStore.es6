@@ -6,6 +6,7 @@ const ConnectedStates = SocketConstants.ConnectedStates
 const SnapmeetRouter = require('../components/SnapmeetRouter.react.es6')
 const _globalUIState = {connectStatus: ConnectedStates.CONNECTING}
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
+const UIConstants = require('../constants/UIConstants.es6')
 
 let _pendingMeeting = null
 
@@ -47,6 +48,16 @@ GlobalUIStore.dispatchToken = SnapmeetDispatcher.register((action) => {
           router.transitionTo('meeting', {id: _pendingMeeting})
           _pendingMeeting = null
         }
+
+    case UIConstants.VC_OPENED:
+      _globalUIState.vcOpen = true
+      GlobalUIStore.emitChange()
+      break
+      
+    case UIConstants.VC_CLOSED:
+      _globalUIState.vcOpen = false
+      GlobalUIStore.emitChange()
+      break
 
     default:
       // no op

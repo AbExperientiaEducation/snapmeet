@@ -1,22 +1,26 @@
+const _ = require('lodash')
 const React = require('react')
 const ReactPropTypes = React.PropTypes
 const PureRenderMixin = require('react/addons').addons.PureRenderMixin
+const Immutable = require('immutable')
 const VCRoomStore = require('../stores/VCRoomStore.es6')
-const _ = require('lodash')
+const GlobalUIStore = require('../stores/GlobalUIStore.es6')
 const SocketStore = require('../stores/SocketIOStore.es6')
 const SimpleWebRTC = require('simplewebrtc')
 const SimpleWebRTCConnection = require ('../utils/SimpleWebRTCSocketConnection.es6')
 const PeerVideo = require('./PeerVideo.react.es6')
 const SelfVideo = require('./SelfVideo.react.es6')
-const Immutable = require('immutable')
 const MediaInputSelector = require('./MediaInputSelector.react.es6')
 const MUI = require('material-ui')
 const Analytics = require('../utils/Analytics.es6')
+const MeetingClientActionCreators = require('../actions/MeetingClientActionCreators.es6')
+
 
 const getStateFromStore = (props) => {
   const relatedRoomArray = VCRoomStore.getResourcesFromRelation(props.meetingId, 'MEETING_VCROOM')
   return {
     vcRoom: relatedRoomArray ? relatedRoomArray.first() : null
+    , vcOpen: GlobalUIStore.globalUIState().vcOpen
   }
 }
 
@@ -54,11 +58,13 @@ const VCBox = React.createClass({
 
   , componentDidMount() {
     VCRoomStore.addChangeListener(this._onChange)
+    GlobalUIStore.addChangeListener(this._onChange)
   }
 
   , componentWillUnmount() {
-    this.cleanupVC()
+    this.leaveChat()
     VCRoomStore.removeChangeListener(this._onChange)
+    GlobalUIStore.removeChangeListener(this._onChange)
   }
 
   , cleanupVC() {
@@ -72,7 +78,11 @@ const VCBox = React.createClass({
   }
 
   , _onChange() {
-    this.setState(getStateFromStore(this.props))
+    this.setState(getStateFromStore(this.props), this.setupWebRtcIfNecessary)
+  }
+
+  ,  componentDidUpdate() {
+    
   }
 
   , render() {
@@ -107,17 +117,20 @@ const VCBox = React.createClass({
   }
 
   , joinChat() {
-    this.setState({startVC: true}, this.setupWebRtcIfNecessary)
+    MeetingClientActionCreators.openVideoChat()
     Analytics.track('VC_Join')
   }
 
   , leaveChat() {
-    this.cleanupVC()
-    Analytics.track('VC_Leave')
+    if(this.state.vcOpen) {
+      Analytics.track('VC_Leave')
+      MeetingClientActionCreators.closeVideoChat()
+      this.cleanupVC()
+    }
   }
 
   , setupWebRtcIfNecessary() {
-    if(this.state.webRtcComponent || !this.state.startVC) return
+    if(this.state.webRtcComponent || !this.state.vcOpen) return
     this.setState({videos: Immutable.Map(), localVideo: Immutable.Map({volume: -65})})
     // Create our WebRTC connection
     const webrtc = new SimpleWebRTC({
