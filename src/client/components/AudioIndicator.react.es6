@@ -23,7 +23,7 @@ const AudioIndicator = React.createClass({
   }
 
   , componentWillMount() {
-    this.throttledVolumeChange = _.throttle(this.updateVolume, 200, true)
+    this.throttledVolumeChange = _.throttle(this.updateVolume, 200, {trailing: false})
   }
 
   , getInitialState() {
@@ -43,7 +43,7 @@ const AudioIndicator = React.createClass({
   , render() {
     return <meter 
         className="volume"
-        defaultValue={this.state.volume}
+        value={this.state.volume}
         min="-65"
         max="-20"
         low="-50"
