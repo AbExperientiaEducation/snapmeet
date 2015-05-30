@@ -1,6 +1,5 @@
 const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const SessionConstants = require('../constants/SessionConstants.es6')
-const Immutable = require('immutable')
 const PubSubStore = require('./PubSubStore.es6')
 
 const ActionTypes = SessionConstants.ActionTypes

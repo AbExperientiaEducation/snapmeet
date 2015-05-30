@@ -1,6 +1,5 @@
 const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const ResourceConstants = require('../../shared/constants/ResourceConstants.es6')
-const Immutable = require('immutable')
 const PubSubStore = require('./PubSubStore.es6')
 const SocketConstants = require('../constants/SocketConstants.es6')
 
