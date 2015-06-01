@@ -2,6 +2,7 @@ const ColorUtils = require('./ColorUtils.es6')
 const Quill = require('quill')
 const CursorTracking = require('./CursorTracking.es6')
 const Shortid = require('shortid')
+const _ = require('lodash')
 
 const DOMString = `
 <div>
@@ -151,7 +152,12 @@ class QuillManager {
 
     quillBox.on('text-change', (delta, source) => {
       if(source !== 'user') return
-      onOpFn(delta.ops)
+      // Quill changes ops after it emits the text change event. This
+      // is to support atomic undo in their editor. It has the nasty side-effect
+      // that if there is a delay before we submit the op, it could change on us
+      // Deep clone to guard against this possibility.
+      const ops = _.cloneDeep(delta.ops)
+      onOpFn(ops)
     })
 
     return quillBox
@@ -175,7 +181,10 @@ class QuillManager {
 
     this.colorGenerator = ColorUtils.uniqueColorGenerator()
     CursorTracking.addCursorChangeListener(this.docId, (userId, displayString, cursorPos) => {
-      if(userId !== this.authorId) {
+      const docLength = this.quillBox.getLength()
+      // There is a race condition where we get a cursor position before a text change. 
+      // Ensure we never try to set an index > document length
+      if(userId !== this.authorId && docLength > cursorPos) {
         cursorModule.setCursor(userId, cursorPos, displayString, this.colorGenerator.colorForId(userId))  
       }
     })
