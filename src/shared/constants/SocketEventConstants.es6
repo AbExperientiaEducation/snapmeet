@@ -5,9 +5,6 @@ const constants = keyMirror({
   , CURSOR_SUBSCRIBE: null
   , CURSOR_UNSUBSCRIBE: null
   , CURSOR_DATA: null
-  , CLIENT_JOIN_PRESENCE: null
-  , CLIENT_LEAVE_PRESENCE: null
-  , SERVER_BROADCAST_PRESENCE: null
 })
 
 constants.TASK_SUFFIX = '_task_title'

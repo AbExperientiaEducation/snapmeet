@@ -5,7 +5,6 @@ const ResourceConstants = require('../../shared/constants/ResourceConstants.es6'
 const _ = require('lodash')
 const SignalMaster = require('./SignalMaster.es6')
 const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
-const PresenceHandling = require('./PresenceHandling.es6')
 
 let _ioServer
 
@@ -72,16 +71,11 @@ const createServer = function(server){
   if(_ioServer) throw("Attempted to create duplicate server")
   _ioServer = socketio(server)
   _ioServer.on('connection', function(socket){
-    socket.on('error', ErrorLogger.log)
     console.log('a user connected')
     SignalMaster.setup(socket, _ioServer)
-    PresenceHandling.initializePresenceHandling(socket, socket.request.user.id)
+
     socket.on(ResourceConstants.REST_ACTION_EVENT, function(data) {
       runHandlerForData(data, socket) 
-    })
-
-    socket.on('disconnect', function(){
-      socket.removeAllListeners()
     })
   })
   return _ioServer
