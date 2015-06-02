@@ -25,11 +25,16 @@ module.exports.init = function(socketIOServer){
     let stream = null
     let agent = null
     const cleanup = function() {
-      stream.emit('close')
-      stream.emit('end')
-      stream.end()
       socket.removeAllListeners()
-      agent.session._cleanup()      
+      if(stream) {
+        stream.emit('close')
+        stream.emit('end')
+        stream.end()        
+      }
+      if(agent) {
+        agent.session._cleanup()        
+      }
+      
     }
     socket.on('disconnect', cleanup)
     socket.on('close', cleanup)
