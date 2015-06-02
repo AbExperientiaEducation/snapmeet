@@ -22,7 +22,9 @@ All copy commands are from the git repository root unless otherwise specified
 `sudo tail -f /var/log/nginx/error.log`
 `sudo tail -f /var/log/mongodb/mongod.log`
 `sudo tail -f /var/log/neo4j/neo4j.0.0.log`
+`sudo tail -f /var/log/neo4j/http.log`
 `sudo tail -f /var/log/meetgun/server.log`
+`sudo tail -f /var/log/upstart/meetgun.log``
 
 `sudo ./production_scripts/status.sh`
 `sudo service nginx restart`
