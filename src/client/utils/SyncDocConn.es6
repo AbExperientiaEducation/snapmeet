@@ -9,20 +9,21 @@ const SocketIOStore = require('../stores/SocketIOStore.es6')
 const SocketEventConstants = require('../../shared/constants/SocketEventConstants.es6')
 
 let _requestedDocuments = Immutable.Map()
+const _webSockAdapter = {
+    readyState: 1
+    , close() {      
+    }
+  }
 
 const _makeWebSockAdapter = function(ioSocket){
   // ShareJS Requires an object that conforms to websocket protocol.
   // It calls socket.send and socket.close. 
   // It also expects other methods to be called. See _registerListeners
-  return {
-    readyState: 1
-    , send(msg) {
-      ioSocket.emit(SocketEventConstants.SHARE_JS_DATA, msg)
-    }
-    , close() {
-      
-    }
+  _webSockAdapter.readyState = 1
+  _webSockAdapter.send = (msg) => {
+    ioSocket.emit(SocketEventConstants.SHARE_JS_DATA, msg)
   }
+  return _webSockAdapter
 }
 
 let _syncConn = null
