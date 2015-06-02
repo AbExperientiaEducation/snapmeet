@@ -1,7 +1,6 @@
 const SessionServerActions = require('../actions/SessionServerActionCreators.es6')
 const reqwest = require('reqwest')
 const co = require('co')
-const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
 
 module.exports = {
 
@@ -17,9 +16,8 @@ module.exports = {
         SessionServerActions.signInSucceeded(session)
       }
       catch (error) {
-        error.message = "Login failed: " + error.message
-        ErrorLogger.log(error, error.response)
         SessionServerActions.signInFailed()
+        throw(error)
       }
     })
   }
@@ -35,9 +33,8 @@ module.exports = {
         SessionServerActions.signUpSucceeded(session)
       }
       catch (error) {
-        error.message = "Registration failed: " + error.message
-        ErrorLogger.log(error, error.response)
         SessionServerActions.signUpFailed()
+        throw(error)
       }
     })
   }
