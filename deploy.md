@@ -22,7 +22,9 @@ All copy commands are from the git repository root unless otherwise specified
 `sudo tail -f /var/log/nginx/error.log`
 `sudo tail -f /var/log/mongodb/mongod.log`
 `sudo tail -f /var/log/neo4j/neo4j.0.0.log`
+`sudo tail -f /var/log/neo4j/http.log`
 `sudo tail -f /var/log/meetgun/server.log`
+`sudo tail -f /var/log/upstart/meetgun.log``
 
 `sudo ./production_scripts/status.sh`
 `sudo service nginx restart`
@@ -107,6 +109,25 @@ auth lives in: `/var/lib/neo4j/data/dbms/auth` and we want to copy our local ver
 6. On local machine: `scp /usr/local/Cellar/neo4j/2.2.0/libexec/data/dbms/auth ubuntu@meetgun:.`
 7. On remote: `sudo mv auth /var/lib/neo4j/data/dbms/auth`
 8. `sudo chown neo4j:nogroup /var/lib/neo4j/data/dbms/auth`
+
+### Configuration
+Source: http://neo4j.com/docs/stable/linux-performance-guide.html
+
+1. `sudo vi /var/lib/neo4j/conf/logging.properties`
+  - Change logging level to `FINE` for `.level` and `org.neo4j.server.level`
+2. `sudo vi /var/lib/neo4j/conf/neo4j-server.properties`
+  - Change `org.neo4j.server.http.log.enabled` to `true`
+3. `sudo vi /etc/security/limits.conf`
+  - Add these two lines:
+    ```
+    neo4j   soft    nofile  40000
+    neo4j   hard    nofile  40000
+    ```
+4. `sudo vi /etc/pam.d/su`
+  - Uncomment or add: 
+    ```
+    session    required   pam_limits.so
+    ```
 
 To restart server: `service neo4j-service [start, stop, restart]`
 
