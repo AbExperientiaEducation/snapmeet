@@ -36,7 +36,19 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
 
-const sessionStore = new MongoStore({url:process.env.MONGO_URL})
+const sessionStore = new MongoStore({
+  url: process.env.MONGO_URL
+  , mongoOptions: {
+     server: { 
+      auto_reconnect: true 
+      , socketOptions:{
+        keepAlive: 1
+        , connectTimeoutMS:3600000
+        , socketTimeoutMS:3600000
+      }
+    }
+  }
+})
 app.use(session({
   secret: process.env.SESSION_SECRET,
   store: sessionStore,
