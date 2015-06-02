@@ -108,6 +108,25 @@ auth lives in: `/var/lib/neo4j/data/dbms/auth` and we want to copy our local ver
 7. On remote: `sudo mv auth /var/lib/neo4j/data/dbms/auth`
 8. `sudo chown neo4j:nogroup /var/lib/neo4j/data/dbms/auth`
 
+### Configuration
+Source: http://neo4j.com/docs/stable/linux-performance-guide.html
+
+1. `sudo vi /var/lib/neo4j/conf/logging.properties`
+  - Change logging level to `FINE` for `.level` and `org.neo4j.server.level`
+2. `sudo vi /var/lib/neo4j/conf/neo4j-server.properties`
+  - Change `org.neo4j.server.http.log.enabled` to `true`
+3. `sudo vi /etc/security/limits.conf`
+  - Add these two lines:
+    ```
+    neo4j   soft    nofile  40000
+    neo4j   hard    nofile  40000
+    ```
+4. `sudo vi /etc/pam.d/su`
+  - Uncomment or add: 
+    ```
+    session    required   pam_limits.so
+    ```
+
 To restart server: `service neo4j-service [start, stop, restart]`
 
 ## Nginx
