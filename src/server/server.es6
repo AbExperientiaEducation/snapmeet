@@ -43,8 +43,8 @@ const sessionStore = new MongoStore({
       auto_reconnect: true 
       , socketOptions:{
         keepAlive: 1
-        , connectTimeoutMS:3600000
-        , socketTimeoutMS:3600000
+        , connectTimeoutMS:36000000
+        , socketTimeoutMS:36000000
       }
     }
   }
