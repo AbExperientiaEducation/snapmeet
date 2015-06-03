@@ -3,7 +3,7 @@ const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
 const io = require('socket.io-client')()
 const EventEmitter = require('events').EventEmitter
 const CHANGE_EVENT = 'change'
-const Immutable = require('Immutable')
+const Immutable = require('immutable')
 
 let _presences = Immutable.Map()
 
