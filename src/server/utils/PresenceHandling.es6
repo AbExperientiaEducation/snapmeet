@@ -12,7 +12,9 @@ const addToTable = function(table, key, value) {
 const removeFromTable = function(table, key, value, tableName) {
   const currentValues = table[key] || []
   const index = currentValues.indexOf(value)
-  if(index === -1) ErrorLogger.log(`Attempted to remove ${value} from key: ${key} in ${tableName}, but value was not found.`)
+  if(index === -1) {
+    return ErrorLogger.log(`Attempted to remove ${value} from key: ${key} in ${tableName}, but value was not found.`)
+  }
   table[key].splice(index, 1)
   if(table[key].length == 0) delete table[key]
 }
