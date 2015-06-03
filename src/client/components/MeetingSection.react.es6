@@ -51,9 +51,6 @@ const MeetingSection = React.createClass({
       const empty = meetingListItems.length === 0
       return (
         <div className="meeting-section">
-          { empty ? 
-            <h2>Create a meeting to get started</h2> 
-            : null}
           <h2>Meetings <NewMeetingButton /></h2>
           { empty ? 
             <p>Snapmeet lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>

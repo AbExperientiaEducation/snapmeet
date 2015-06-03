@@ -135,8 +135,7 @@ class QuillManager {
 
   quillBoxForDom(domTarget, onOpFn) {
     domTarget.innerHTML = DOMString
-
-    const quillBox = new Quill('#editor', {
+    const quillOptions = {
       modules: {
         'authorship': {
           authorId: this.authorId
@@ -148,7 +147,17 @@ class QuillManager {
         , 'link-tooltip': true
       },
       theme: 'snow'
-    })
+    }
+
+    if (window.matchMedia('(max-device-width: 767px)').matches) {
+      quillOptions.styles = {
+        '.ql-editor': {
+          'font-size': '40px'  
+        }
+      }
+    }
+
+    const quillBox = new Quill('#editor', quillOptions)
 
     quillBox.on('text-change', (delta, source) => {
       if(source !== 'user') return

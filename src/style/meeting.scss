@@ -1,6 +1,6 @@
 .meeting-section {
   h2 {
-    font-size: 2.5em;
+    font-size: 36px;
     @include display(flex);
     color: $standard-text-color;
   }
@@ -30,6 +30,10 @@
   .meeting-title {
     font-size: 15px;
     font-weight: bold;
+
+    .mui-text-field {
+      height: 30px;
+    }
   }
 
   .meeting-time {
@@ -58,6 +62,14 @@
 
 .tasks-card {
   width: 370px;
+
+  h3 {
+    @include display(flex);
+
+    .mui-raised-button {
+      margin-left: 10px;
+    }
+  }
 }
 
 .task-item-completed .mui-text-field-input {
@@ -91,6 +103,11 @@
   min-width: 200px;
 }
 
+.all-meetings {
+  display: block;
+  margin: 5px 0 10px 0;
+}
+
 .video-controls {
   @include display(flex);
 
@@ -111,11 +128,51 @@
 
 .presence {
   color: $secondary-text-color;
-  position: relative;
-  top: -10px;  
 }
 
-.all-meetings {
-  position: relative;
-  top: -10px;
+@media (max-device-width: $phone-width)  {
+  .tasks-card, .notes-card {
+    width: 100%;
+  }
+
+  .sync-box {
+    max-width: 100%;
+  }
+
+  .meeting-title .mui-text-field {
+    min-width: 350px;
+    height: 54px;
+  }
+
+  .task-list p {
+    font-size: 24px;
+  }
+
+  .share-widget {
+    font-size: 44px;
+
+    p {
+      font-size: 24px;
+    }
+  }
+
+  .meeting-section h2 {
+    font-size: 65px;
+  }
+
+  .meeting-list-item {
+    padding: 16px;
+
+    .meeting-title {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    .meeting-time {
+      font-size: 20px;
+      line-height: 24px;
+    }
+    
+  }
 }
+

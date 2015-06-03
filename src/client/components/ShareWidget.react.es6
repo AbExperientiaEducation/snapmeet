@@ -24,8 +24,10 @@ const ShareWidget = React.createClass({
           dismissOnClickAway={true}
           ref="dialog"
         >
-          <p>Share this link with anyone you want to join your meeting:</p>
-          <input className="share-box" autoFocus={true} onFocus={handleFocus}  defaultValue={link} />
+          <div className="share-widget">
+            <p>Share this link with anyone you want to join your meeting:</p>
+            <input className="share-box" autoFocus={true} onFocus={handleFocus}  defaultValue={link} />
+          </div>
         </MUI.Dialog>
         <MUI.RaisedButton onClick={showSignInModal}>
           <span className="mui-raised-button-label share-label">
