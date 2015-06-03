@@ -19,6 +19,7 @@ module.exports = {
     }
 
     if(_logToConsole) {
+      console.error(new Date())
       console.error(error, error.stack)
       console.log('EXTRA ERROR DATA: ', bonusData)      
     }

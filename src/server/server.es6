@@ -69,8 +69,12 @@ socketIOServer.use(passportSocketIo.authorize({
   , store: sessionStore
   , success: function(data, accept){accept()}
   , fail: function(data, message, error, accept){
-    error.message = 'Socket Session Error: ' + error.message
-    ErrorLogger.log(error, message)
+    if(error) {
+      error.message = 'Socket Session Error: ' + error.message
+      ErrorLogger.log(error, message)
+    } else {
+      ErrorLogger.log("Socket Session Failure, but no error: " + JSON.stringify(data))
+    }
   }
 }))
 
