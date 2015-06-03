@@ -60,7 +60,7 @@ const MeetingDetailPage = React.createClass({
   , render() {
     if(this.state.meeting) {
       const meetingId = this.state.meeting.id
-      const presentCount = this.state.presentUsers && this.state.presentUsers.length
+      const presentCount = this.state.presentUsers && (this.state.presentUsers.length - 1)
       return (
         <div className="meeting-detail">
           <h2 className="no-underline meeting-title"><SyncField 
@@ -69,7 +69,7 @@ const MeetingDetailPage = React.createClass({
             autoResize={true}
           /><ShareWidget />
           </h2>
-          <div className="presence">{presentCount} {presentCount > 1 ? 'people' : 'person'} in this meeting</div>
+          <div className="presence">{presentCount} other {presentCount == 1 ? 'person' : 'people'} in this meeting</div>
           <Link className="all-meetings" to="app">{'< All Meetings'}</Link>
           <VCBox 
             meetingId={ meetingId }
