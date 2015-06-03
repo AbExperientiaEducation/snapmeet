@@ -109,6 +109,12 @@
   }
 }
 
+.presence {
+  color: $secondary-text-color;
+  position: relative;
+  top: -10px;  
+}
+
 .all-meetings {
   position: relative;
   top: -10px;
