@@ -48,6 +48,7 @@ GlobalUIStore.dispatchToken = SnapmeetDispatcher.register((action) => {
           router.transitionTo('meeting', {id: _pendingMeeting})
           _pendingMeeting = null
         }
+      break
 
     case UIConstants.VC_OPENED:
       _globalUIState.vcOpen = true
