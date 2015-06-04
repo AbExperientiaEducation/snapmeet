@@ -1,6 +1,8 @@
 const React = require('react')
 const SyncdocStore = require('../stores/SyncdocStore.es6')
 const MUI = require('material-ui')
+// Needed to add attach to prototype
+require('share/lib/client/textarea.js')
 
 const getStateFromStore = (props) => {
   return {
@@ -62,7 +64,10 @@ const SyncField = React.createClass({
     this.refs.input.setValue(this.state.doc.getSnapshot())
     const syncField = this.state.doc.attachTextarea(domTarget)
     this.setState({syncField: syncField})
-    syncField._doc.on('after op', this.onTextChange)
+    this.state.doc.on('after op', () => {
+      this.refs.input.setValue(this.state.doc.getSnapshot())
+      this.onTextChange()
+    })
     this.onTextChange()
     this.refs.input.getDOMNode().querySelector('input').placeholder = this.props.placeholder
   }

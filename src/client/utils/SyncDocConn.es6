@@ -1,7 +1,6 @@
 const ActionTypes = require('../constants/SocketConstants.es6').ActionTypes
 const RichText = require('rich-text')
 const ShareJS = require('share/lib/client/index.js')
-ShareJS.Doc.prototype.attachTextarea = require('share/lib/client/textarea.js')
 const TextOTType = require('ot-text')
 const Immutable = require('immutable')
 const SnapmeetDispatcher = require('../dispatcher/SnapmeetDispatcher.es6')
