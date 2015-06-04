@@ -14,9 +14,11 @@ const RouteHandler = Router.RouteHandler
 const HomePage = require('./HomePage.react.es6')
 const App = require('./SnapmeetApp.react.es6')
 const MeetingDetailPage = require('./MeetingDetailPage.react.es6')
+const NewMeeting = require('./NewMeeting.react.es6')
 
 const routes = (
   <Route name='app' path='/' handler={App}>
+    <Route name='new' path='/meetings/new' handler={NewMeeting} />
     <Route name='meeting' path='/meetings/:id' handler={MeetingDetailPage} />
     <DefaultRoute name='home' handler={HomePage}/>
   </Route>
