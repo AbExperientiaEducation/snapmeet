@@ -78,7 +78,7 @@ socketIOServer.use(passportSocketIo.authorize({
         stringData = JSON.stringify(data)
       }
       finally {
-        ErrorLogger.log("Socket Session Failure, but no error: " + JSON.stringify(data))
+        ErrorLogger.log("Socket Session Failure, but no error: " + stringData)
       }
     }
   }
