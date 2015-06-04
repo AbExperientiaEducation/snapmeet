@@ -16,7 +16,7 @@ const CreateMeetingButton = React.createClass({
       <MUI.RaisedButton 
         onClick={this.createMeeting}
         primary={true}
-        label="Create New"
+        label="Create New Meeting"
       />
     )
   }

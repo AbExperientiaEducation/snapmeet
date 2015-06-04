@@ -88,6 +88,10 @@ app.post('/login', passport.authenticate('local'),
     res.json({ user: req.user })
 })
 
+app.get('/about', function(req, res) {
+  res.render('./built/about.html')
+})
+
 const DBUsers = require('./db/users.es6')
 app.post('/register', function(req, res) {
   const registration = req.body

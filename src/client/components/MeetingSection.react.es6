@@ -50,11 +50,50 @@ const MeetingSection = React.createClass({
       const meetingListItems = this.state.meetings.map(getMeetingListItem).toArray()
       const empty = meetingListItems.length === 0
       return (
-        <div className="meeting-section">
-          <h2>Meetings <NewMeetingButton /></h2>
+        <div className="meeting-section">          
           { empty ? 
-            <p>Snapmeet lets you collaborate in real time with notes, tasks, and video chat. Make a meeting to try it out.</p>
-            : null }
+            <div className='about'>
+              <div className="content">
+                <div className="header">
+                  <h1>Remote Meetings in a Snap</h1>
+                  <p>
+                    Everything you need to have remote meetings, and nothing else. No accounts or downloads required.
+                  </p>
+                  <NewMeetingButton />
+                </div>
+                <hr />
+                <div className="features Grid Grid--gutters Grid--full large-Grid--fit">
+                  <div className="Grid-cell">
+                    <div className="feature">
+                      <h3>Video Chat</h3>
+                      <p>
+                        Chat with your colleagues
+                      </p>
+                      <img src="img/about/video.png" alt="" />
+                    </div>
+                  </div>
+                  <div className="Grid-cell">
+                    <div className="feature">
+                      <h3>Collaborative Notes</h3>
+                      <p>
+                        Take notes as a team
+                      </p>
+                      <img src="img/about/notes.png" alt="" />
+                    </div>
+                  </div>
+                  <div className="Grid-cell">
+                    <div className="feature">
+                      <h3>Tasks</h3>
+                      <p>
+                        Create tasks easily &amp; quickly
+                      </p>
+                      <img src="img/about/tasks.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+            : <h2>Meetings <NewMeetingButton /></h2> }
 
           <ul className="meeting-list" ref="meetingList">
           <ReactCSSTransitionGroup transitionName="slide">

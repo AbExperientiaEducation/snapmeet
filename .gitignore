@@ -6,7 +6,7 @@ public/style/**
 public/css/**
 public/lib/**
 public/manifest.json
-views/built/index.html
+views/built/**
 src/server/migrations/.migrate
 public/css/addons.css
 newrelic_agent.log

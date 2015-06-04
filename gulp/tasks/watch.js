@@ -16,6 +16,9 @@ gulp.task('watch', ['watchify'], function(callback) {
   watch(config.revReplace.watch, {events: ['add', 'change']}, function() {
     gulp.run('rev-replace')
   })
+  watch(config.aboutReplace.watch, {events: ['add', 'change']}, function() {
+    gulp.run('about-replace')
+  })
   // gulp.watch(config.revReplace.watch, ['rev-replace'])
   // gulp.watch(config.images.src, ['images'])
   // gulp.watch(config.markup.src, ['markup'])

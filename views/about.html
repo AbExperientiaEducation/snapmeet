@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/0.19.10/quill.snow.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style/addons.css" />
+    <link rel="stylesheet" href="/style/app.css" />
+    <link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png?v1">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png?v1">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png?v1">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png?v1">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png?v1">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png?v1">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png?v1">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png?v1">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png?v1">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png?v1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v1">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png?v1">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v1">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <title>Snapmeet: Instant Collaboration | About</title>
+    <meta name="Description" content="Collaborate in real time with Snapmeet. Instantly create video chat, tasks, and shared notes, all with the click of a button.">
+
+    <!-- start Mixpanel --><script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+      for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+    mixpanel.init("c31e563f16e98432e3265b1fce70f342");
+    </script><!-- end Mixpanel -->
+    <style media="screen">
+      html, body {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body class="about">
+    <div class="content">
+      <div class="header">
+        <h1>SnapMeet</h1>
+        <h2>Remote Meetings in a Snap</h2>
+        <p>
+          Everything you need to have remote meetings, and nothing else. No accounts or downloads required.
+        </p>
+        <a href="https://snapmeet.io" class="button raised start-meeting">
+          <div class="center" fit>Start Meeting Now</div>
+          <paper-ripple fit></paper-ripple>
+        </a>
+      </div>
+      <hr />
+      <div class="features Grid Grid--gutters Grid--full large-Grid--fit">
+        <div class="Grid-cell">
+          <div class="feature">
+            <h3>Video Chat</h3>
+            <p>
+              Chat with your colleagues
+            </p>
+            <img src="img/about/video.png" alt="" />
+          </div>
+        </div>
+        <div class="Grid-cell">
+          <div class="feature">
+            <h3>Collaborative Notes</h3>
+            <p>
+              Take notes as a team
+            </p>
+            <img src="img/about/notes.png" alt="" />
+          </div>
+        </div>
+        <div class="Grid-cell">
+          <div class="feature">
+            <h3>Tasks</h3>
+            <p>
+              Create tasks easily &amp; quickly
+            </p>
+            <img src="img/about/tasks.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="guided-tour Grid">
+        <div class="Grid-cell Grid--fit">
+          <img src="img/about/meeting.png" alt="" class="meeting"/>
+        </div>
+      </div>
+    </div>
+    <script src="/js/common.js"></script>
+    <script type="text/javascript">
+      mixpanel.track_links(".start-meeting", "Clicked Start Meeting from About");
+    </script>
+  </body>
+</html>
