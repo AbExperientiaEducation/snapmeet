@@ -1,5 +1,5 @@
 const _resourcePresenceTable = {}
-const _userPresenceTable = {}
+const _socketPresenceTable = {}
 const SocketConstants = require('../../shared/constants/SocketEventConstants.es6')
 const _ = require('lodash')
 const ErrorLogger = require('../../shared/utils/ErrorLogger.es6')
@@ -33,13 +33,13 @@ const broadcastPresenceData = function(socket, resourceId) {
 
 const addToPresenceTables = function(socket, resourceId, userId) {
   addToTable(_resourcePresenceTable, resourceId, userId)
-  addToTable(_userPresenceTable, userId, resourceId)
+  addToTable(_socketPresenceTable, socket.id, resourceId)
   broadcastPresenceData(socket, resourceId)
 }
 
 const removeFromPresenceTables = function(socket, resourceId, userId) {
   removeFromTable(_resourcePresenceTable, resourceId, userId, "Resource Presence Table")
-  removeFromTable(_userPresenceTable, userId, resourceId, "Socket Presence Table")
+  removeFromTable(_socketPresenceTable, socket.id, resourceId, "Socket Presence Table")
   broadcastPresenceData(socket, resourceId)
 }
 
@@ -59,7 +59,7 @@ const initializePresenceHandling = function(socket, userId) {
 
   // Handle disconnect
   socket.on('disconnect', () => {
-    const resourceIds = _userPresenceTable[userId] || []
+    const resourceIds = _socketPresenceTable[socket.id] || []
     resourceIds.forEach(resourceId => {
       removeFromPresenceTables(socket, resourceId, userId)
     })
