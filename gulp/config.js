@@ -34,12 +34,6 @@ module.exports = {
     , indexName: 'index.html'
     , watch: ['./public/js/**', './public/style/**', './views/index.html']
   }
-  , aboutReplace: {
-    manifestFile: './public/manifest.json'
-    , indexPath: './views/'
-    , indexName: 'about.html'
-    , watch: ['./public/js/**', './public/style/**', './views/about.html']
-  }
   , nodemon: {
     script: 'src/server/server.es6'
     , watch: ['src/server/', 'src/shared/']
