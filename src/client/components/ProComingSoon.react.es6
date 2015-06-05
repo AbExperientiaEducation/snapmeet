@@ -37,11 +37,11 @@ const ProComingSoon = React.createClass({
   , makeLoginComponents() {
     const showSignInModal = () => {
       this.refs.dialog.show()
-      Analytics.track('Sign In')
+      Analytics.track('Sign Up')
     }
     const hideSignInModal = () => {
       this.refs.dialog.dismiss()
-      Analytics.track('Hide Sign In')
+      Analytics.track('Hide Sign Up')
     }
     const submitFn = (e) => {
       switch(this.state.modalState) {
@@ -154,7 +154,7 @@ const ProComingSoon = React.createClass({
       >
       {contents}
       </MUI.Dialog>
-      <MUI.RaisedButton onClick={showSignInModal}>Sign In
+      <MUI.RaisedButton onClick={showSignInModal}>Sign Up
       </MUI.RaisedButton>
     </div>
   }
