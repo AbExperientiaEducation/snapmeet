@@ -10,6 +10,15 @@
   }
 }
 
+.meeting-title {
+  @include display(flex);
+  @include align-items(center);
+
+  .mui-raised-button {
+    margin-left: 10px;
+  }  
+}
+
 .meeting-list {
   margin-top: 10px;
   @include materialShadow(1);

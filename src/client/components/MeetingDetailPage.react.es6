@@ -76,7 +76,7 @@ const MeetingDetailPage = React.createClass({
           />
           <div className="meeting-components">
             <div className="notes-card card" zDepth={1}>
-              <h3>Notes</h3>
+              <h3>Notepad</h3>
               <SyncBox id={ meetingId + SocketEventConstants.MEETING_NOTES_SUFFIX} /> 
             </div>
             <div className="tasks-card card" zDepth={1}>
