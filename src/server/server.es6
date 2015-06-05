@@ -75,11 +75,12 @@ socketIOServer.use(passportSocketIo.authorize({
     } else {
       let stringData = null
       try {
-        stringData = JSON.stringify(data)
+        stringData = JSON.stringify(message)
       }
-      finally {
-        ErrorLogger.log("Socket Session Failure, but no error: " + stringData)
+      catch(err) {
+        // no-op. If we can't stringify, it's okay.
       }
+      ErrorLogger.log("Socket Session Failure, but no error: " + stringData)
     }
   }
 }))
