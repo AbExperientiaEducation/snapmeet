@@ -162,6 +162,9 @@ source: https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple
 12. Copy the `.env` file from somewhere
 13. `sudo mkdir /var/log/meetgun`
 14. `sudo chown -R ubuntu:adm /var/log/meetgun`
+15. `crontab -e`
+    - Set to restart the app server at 10 PM PST every day. We do this to avoid running out of memory.
+    - eg `0 22 * * * /bin/bash sudo restart meetgun`
 
 ### To Run
 1. `sudo cp production_scripts/upstart.conf /etc/init/meetgun.conf`
