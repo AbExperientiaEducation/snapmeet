@@ -67,7 +67,8 @@ socketIOServer.use(passportSocketIo.authorize({
   , key: 'connect.sid'
   , secret: process.env.SESSION_SECRET
   , store: sessionStore
-  , success: function(data, accept){accept()}
+  , success: function(data, accept){
+    accept()}
   , fail: function(data, message, error, accept){
     if(error) {
       error.message = 'Socket Session Error: ' + error.message
@@ -75,7 +76,11 @@ socketIOServer.use(passportSocketIo.authorize({
     } else {
       let stringData = null
       try {
-        stringData = JSON.stringify(message)
+        stringData = JSON.stringify({
+          message: message
+          , sessionId: data.sessionID
+          , cookie: data.cookie
+        })
       }
       catch(err) {
         // no-op. If we can't stringify, it's okay.
