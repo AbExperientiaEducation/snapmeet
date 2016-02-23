@@ -1,7 +1,7 @@
 ## Getting started
 
 ### Install Global Dependencies
-- Install node through nvm. See https://github.com/creationix/nvm
+- Install node v0.12.1 through nvm. See https://github.com/creationix/nvm
 - Install babel
 `npm install --global babel`
 - Install gulp
@@ -45,9 +45,8 @@
 ### Run Migrations
 `migrate`
 
-### Start build process/server
+### Start build process/server/mongod
 `gulp`
-`mongod --auth`
 
 ### Server-side Debugging
 Node-inspector looks/works a lot like the chrome inspector, and makes it significantly easier to debug node.

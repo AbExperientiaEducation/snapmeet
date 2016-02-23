@@ -23,17 +23,18 @@ const getHeaders = function() {
 }
 
 const makeRequest = function(endpoint, data) {
-  const rootPath = 'https://api.xirsys.com/'
+  const rootPath = 'https://service.xirsys.com/'
   data = Object.assign(data, getCredentials())
   const args = {
     headers: getHeaders()
     , data: data
   }
+
   return new Promise(function(resolve, reject){
     const completeFn = function(data, response) {
       // parsed response body as js object
       // raw response
-      resolve(JSON.parse(data))
+      resolve(data)
     }
 
     const errFn = function(err){
@@ -48,6 +49,17 @@ const makeRequest = function(endpoint, data) {
   })
 }
 
+const makeRoom = function(roomName) {
+  const data = {
+    room: roomName
+  }
+
+  return co(function * (){
+    const result = yield makeRequest('room', data)
+    return result.d
+  })
+}
+
 const getServers = function(roomName) {
   const data = {
     secure: 1
@@ -55,7 +67,8 @@ const getServers = function(roomName) {
   }
 
   return co(function* (){
-    const result = yield makeRequest('getIceServers', data)
+    yield makeRoom(roomName)
+    const result = yield makeRequest('ice', data)
     return result.d
   })
 }

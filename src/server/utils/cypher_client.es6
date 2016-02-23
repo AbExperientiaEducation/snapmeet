@@ -1,8 +1,8 @@
 const neo4j = require('neo4j')
 const denodeify = require('denodeify')
 const db = new neo4j.GraphDatabase({
-  url: '***REMOVED***'
-  , auth: '***REMOVED***'
+  url: process.env.NEO_4J_URL
+  , auth: process.env.NEO_4J_AUTH
 })
 const co = require('co')
 const _ = require('lodash')
