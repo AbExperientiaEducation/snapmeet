@@ -30,7 +30,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // Setup middleware
-app.use(rollbar.errorHandler('***REMOVED***'))
+app.use(rollbar.errorHandler(process.env.ROLLBAR_SERVER_TOKEN))
 app.use(express.static(__dirname + '/../../public', {maxAge: '1y'}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

@@ -59,7 +59,7 @@ Source: NewRelic
 2. `wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -`
 3. `sudo apt-get update`
 4. `sudo apt-get install newrelic-sysmond`
-5. !!!SPECIAL License Key is per server...: `sudo nrsysmond-config --set license_key=***REMOVED***`
+5. !!!SPECIAL License Key is per server...: `sudo nrsysmond-config --set license_key={from .env file}`
 6. `sudo /etc/init.d/newrelic-sysmond start`
 
 ## Node

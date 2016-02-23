@@ -12,7 +12,7 @@ exports.config = {
   /**
    * Your New Relic license key.
    */
-  license_key: '***REMOVED***',
+  license_key: process.env.NEW_RELIC_KEY,
   agent_enabled: false,
   logging: {
     /**
