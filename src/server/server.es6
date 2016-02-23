@@ -30,11 +30,19 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // Setup middleware
-app.use(rollbar.errorHandler('***REMOVED***'))
+app.use(rollbar.errorHandler(process.env.ROLLBAR_SERVER_TOKEN))
 app.use(express.static(__dirname + '/../../public', {maxAge: '1y'}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('combined'))
+
+// Force HTTPS (needed for WebRTC)
+if (process.env.SNAPMEET_PRODUCTION === true) {
+  app.all('*', function(req, res, next) {
+    if(req.secure) return next()
+    res.redirect('https://'+req.host+req.url)
+  })
+}
 
 const sessionStore = new MongoStore({
   url: process.env.MONGO_URL
