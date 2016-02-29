@@ -36,8 +36,10 @@ const VCBox = React.createClass({
   }
 
   , makeVideoComponent(videoObj) {
+    const video = videoObj.get('video')
     return <PeerVideo 
-      video={videoObj.get('video')}
+      key={video.id}
+      video={video}
       connectionState={videoObj.get('connectionState')}
       volume={videoObj.get('volume')}
     />
@@ -72,7 +74,7 @@ const VCBox = React.createClass({
       const webrtc = this.state.webRtcComponent
       webrtc.stopLocalVideo()
       webrtc.leaveRoom()
-      webrtc.cleanup()
+      // webrtc.cleanup()
     }
     this.setState({localVideo: null, webRtcComponent: null})
   }
