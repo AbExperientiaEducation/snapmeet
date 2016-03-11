@@ -60,14 +60,9 @@ const SyncField = React.createClass({
     }
     if(this.state.syncField || !this.state.doc) return
     const domTarget = React.findDOMNode(this).getElementsByTagName('input')[0]
-    // Manually set value once. This will clear out hint text/prevent visual bug.
-    this.refs.input.setValue(this.state.doc.getSnapshot())
     const syncField = this.state.doc.attachTextarea(domTarget)
     this.setState({syncField: syncField})
-    this.state.doc.on('after op', () => {
-      this.refs.input.setValue(this.state.doc.getSnapshot())
-      this.onTextChange()
-    })
+    this.state.doc.on('after op', this.onTextChange)
     this.onTextChange()
     this.refs.input.getDOMNode().querySelector('input').placeholder = this.props.placeholder
   }
